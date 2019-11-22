@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="ImageTranslucentTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+    </style>
+    <style name="AppTheme" parent="BaseAppTheme">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="status_bar_color">@color/white</item>
+
+    </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme.Immense" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="status_bar_color">@color/white</item>
+    </style>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_10"
+    android:orientation="vertical">
+
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_send_report"
+    android:layout_width="280dp"
+    android:layout_height="50dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="@dimen/dp_30"
+    android:layout_marginTop="30dp"
+    android:background="@drawable/button_shape"
+    android:gravity="center"
+    android:text="生成报告"
+    android:textColor="@color/white"
+    android:visibility="visible" />
+</LinearLayout>

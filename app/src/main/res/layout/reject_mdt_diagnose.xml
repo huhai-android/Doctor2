@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:paddingStart="@dimen/dp_20"
+        android:paddingEnd="@dimen/dp_20"
+        android:orientation="vertical"
+        android:background="@drawable/boder_white_oval"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/title"
+            android:text="退诊提示"
+            android:textSize="@dimen/sp_16"
+            android:layout_width="match_parent"
+            android:textColor="@color/plugin_camera_black"
+            android:gravity="center"
+            android:layout_height="@dimen/dp_50" />
+        <EditText
+            android:visibility="gone"
+            android:textSize="@dimen/sp_12"
+            android:id="@+id/remark"
+            android:hint="请输入退诊理由"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_10"
+            android:textColorHint="@color/gray"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:background="@drawable/edit_shape"
+            android:layout_height="@dimen/dp_50" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="@dimen/dp_50">
+
+            <TextView
+                android:id="@+id/cancel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:text="@string/cancel"
+                android:gravity="center"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/sure"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="确定"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

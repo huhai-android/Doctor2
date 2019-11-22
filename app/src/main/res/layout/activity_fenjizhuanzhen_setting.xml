@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ll_activity">
+
+    <include layout="@layout/layout_titlebar" />
+
+
+    <com.newdjk.doctor.views.ItemView
+        android:id="@+id/disease_setting"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+
+        app:SetRightImg="@drawable/ic_right"
+        app:leftTVText="疾病标签设置" />
+    <View
+        style="@style/limit_line"
+        />
+
+    <com.newdjk.doctor.views.ItemView
+        android:id="@+id/fenzu_disease_setting"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        app:SetRightImg="@drawable/ic_right"
+        app:leftTVText="分级转诊默认设置" />
+    <View
+        style="@style/limit_line"
+        />
+</LinearLayout>

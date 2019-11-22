@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    style="@style/ll_activity">
+
+    <include layout="@layout/layout_titlebar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+          <LinearLayout
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/dp_10"
+                  android:layout_marginLeft="@dimen/dp_10"
+                  android:layout_marginBottom="10dp"
+                  android:text="常用应用"
+                  android:textColor="@color/black"
+                  android:textSize="16sp" />
+
+              <TextView
+                  android:layout_marginTop="@dimen/dp_10"
+                  android:layout_marginBottom="10dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="（按住拖动调整顺序）"
+                  android:textColor="@color/font_hint"
+                  android:textSize="13sp" />
+          </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/re_user_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                android:text="全部应用"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/re_all_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

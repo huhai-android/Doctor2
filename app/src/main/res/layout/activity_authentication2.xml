@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ll_activity">
+    <include layout="@layout/layout_titlebar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_height="100dp">
+        <ImageView
+            android:background="@mipmap/register_step_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="TODO" />
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="150dp">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/rl_background1"
+            android:background="@drawable/boder_white_oval"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="7.5dp"
+            android:gravity="center"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_positive"
+                android:text="@string/update_id_card"
+                android:layout_centerInParent="true"
+                android:textColor="#8c8c8c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/id_card_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="TODO" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_background2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/boder_white_oval"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="7.5dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_other_side"
+                android:text="@string/update_other_side"
+                android:layout_centerInParent="true"
+                android:textColor="#8c8c8c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/hand_id_card_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="TODO" />
+        </RelativeLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:background="@color/white"
+        android:paddingRight="20dp"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/name_tip"
+            android:text="@string/name"
+            android:textSize="14sp"
+            android:textColor="@color/plugin_camera_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/name"
+            android:background="@null"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/name_tip"
+            android:gravity="right"
+            android:textSize="14sp"
+            android:textColor="@color/plugin_camera_black"
+            android:textColorHint="@color/line"
+            android:hint="@string/name_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:background="@color/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:paddingLeft="16dp"
+        android:paddingRight="20dp"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/id_card"
+            android:text="@string/id_card"
+            android:textSize="14sp"
+             android:textColor="@color/plugin_camera_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/id_card_number"
+            android:background="@null"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/id_card"
+            android:gravity="right"
+            android:textSize="14sp"
+            android:digits="1234567890xX"
+            android:inputType="phone|number|text"
+            android:textColorHint="@color/line"
+            android:textColor="@color/plugin_camera_black"
+            android:hint="@string/id_card_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"
+        />
+    <TextView
+        android:id="@+id/next_step"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/button_shape"
+        android:text="@string/NextStep"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_width="280dp"
+        android:layout_height="50dp" />
+</LinearLayout>

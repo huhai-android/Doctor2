@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/ll_activity">
+    <include layout="@layout/layout_titlebar"/>
+    <com.newdjk.doctor.views.ItemView
+        android:id="@+id/picture_record"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        app:SetRightImg="@drawable/ic_right"
+        app:leftTVText="图文记录"
+        app:leftTVTextDrawLeftImg="@drawable/me_record_icon1" />
+
+    <View style="@style/limit_line" />
+    <com.newdjk.doctor.views.ItemView
+        android:id="@+id/renewal_record"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        app:SetRightImg="@drawable/ic_right"
+        app:leftTVText="续方记录"
+        app:leftTVTextDrawLeftImg="@drawable/me_record_icon2" />
+
+    <View style="@style/limit_line"
+        android:id="@+id/video_line"
+        android:visibility="gone"
+        />
+    <com.newdjk.doctor.views.ItemView
+        android:id="@+id/video_record"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        app:SetRightImg="@drawable/ic_right"
+        app:leftTVText="视频记录"
+        android:visibility="gone"
+        app:leftTVTextDrawLeftImg="@drawable/shipin" />
+
+    <View style="@style/limit_line" />
+    <com.newdjk.doctor.views.ItemView
+        android:id="@+id/mFunReport"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        app:SetRightImg="@drawable/ic_right"
+        app:leftTVText="服务包记录"
+        android:visibility="visible"
+        app:leftTVTextDrawLeftImg="@drawable/me_record_icon3" />
+
+    <View style="@style/limit_line" />
+    <com.newdjk.doctor.views.ItemView
+        android:id="@+id/mSecondDiagnose"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        app:SetRightImg="@drawable/ic_right"
+        app:leftTVText="第二诊疗记录"
+        android:visibility="visible"
+        app:leftTVTextDrawLeftImg="@drawable/dier" />
+    <View style="@style/limit_line" />
+
+    <com.newdjk.doctor.views.ItemView
+        android:id="@+id/mMianzhen"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        app:SetRightImg="@drawable/ic_right"
+        app:leftTVText="面诊预约记录"
+        android:visibility="visible"
+        app:leftTVTextDrawLeftImg="@drawable/mianzhenrecode" />
+    <!--<View style="@style/limit_line" />-->
+
+
+</LinearLayout>

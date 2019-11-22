@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:orientation="vertical"
+    android:background="@drawable/boder_white_oval"
+    android:layout_height="100dp">
+    <TextView
+        android:id="@+id/photograph"
+        android:text="@string/photograph"
+        android:textColor="@color/plugin_camera_black"
+        android:gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="50dp" />
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/line"
+        android:layout_height="1dp"/>
+    <TextView
+        android:id="@+id/album"
+        android:text="@string/album"
+        android:textColor="@color/plugin_camera_black"
+        android:gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="50dp" />
+</LinearLayout>

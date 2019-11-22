@@ -1,0 +1,211 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion 28
+    signingConfigs {
+        // your debug keystore
+        debug {
+            storeFile file("doctor.jks")
+            storePassword "doctor"
+            keyAlias "xqd"
+            keyPassword "doctor"
+        }
+        release {
+            storeFile file("doctor.jks")
+            storePassword "doctor"
+            keyAlias "xqd"
+            keyPassword "doctor"
+        }
+    }
+    greendao {
+        schemaVersion 11
+        daoPackage 'com.newdjk.doctor.greendao.gen'
+        targetGenDir 'src/main/java'
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+    defaultConfig {
+        applicationId "com.newdjk.doctor"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 45
+        versionName "2.7.1"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        ndk {
+            //   abiFilters "armeabi", "armeabi-v7a"
+            abiFilters "armeabi"
+        }
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "IP", "\"https://api.newstartcare.com\""
+            buildConfigField "String", "CLIENTID", "\"2018090313463149\""
+            buildConfigField "String", "APKNAME", "\"yunyisheng.apk\""
+            buildConfigField "Boolean", "IS_DEBUG", "false"
+            buildConfigField "Boolean", "IS_SWITCH_ENVIRONMENT", "false"
+
+            buildConfigField "String", "SHOP_IP", "\"http://cflz.newstartcare.com/#/\""
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
+        }
+        debug {
+            signingConfig signingConfigs.debug
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+            minifyEnabled false
+            buildConfigField "String", "IP", "\"http://testapi.newstarthealth.cn\""
+            buildConfigField "String", "CLIENTID", "\"2018090310541968\""
+            buildConfigField "String", "APKNAME", "\"yunyisheng_test.apk\""
+            buildConfigField "Boolean", "IS_DEBUG", "true"
+            buildConfigField "Boolean", "IS_SWITCH_ENVIRONMENT", "true"
+            buildConfigField "String", "SHOP_IP", "\"http://cf.newstarthealth.cn/#/\""
+
+
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            if (variant.buildType.name.equals('release')) {
+                outputFileName = "yunyisheng.apk"
+            } else if (variant.buildType.name.equals('debug')) {
+                outputFileName = "yunyisheng_test.apk"
+            }
+        }
+    }
+    /*  buildTypes {
+          debug {
+              //debug版本也使用release签名
+              signingConfig signingConfigs.release
+          }
+          release {
+              //使用release签名
+              signingConfig signingConfigs.release
+              minifyEnabled false
+              proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+              //添加的内容
+              lintOptions {
+                  checkReleaseBuilds false
+                  abortOnError false
+              }
+          }
+      }*/
+    buildToolsVersion '28.0.3'
+
+}
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    jcenter()
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.android.support:support-v4:${appcompat}"
+    implementation "com.android.support:appcompat-v7:${appcompat}"
+    implementation "com.android.support:design:${appcompat}"
+
+    // implementation 'com.android.support.constraint:constraint-custom_tab:1.1.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation('com.yalantis:ucrop:2.2.0') {
+        exclude group: 'com.android.support'
+        exclude group: 'com.squareup.okio'
+        exclude group: 'com.squareup.okhttp3'
+    }
+    implementation files('libs/core-3.3.3-sources.jar')
+    implementation files('libs/pinyin4j-2.5.0.jar')
+    implementation(name: 'doctor-sdk-3.2.1', ext: 'aar')
+    implementation(name: 'qrLib', ext: 'aar')
+    implementation project(path: ':jnilib')
+    implementation project(path: ':okhttp')
+    implementation "com.android.support.constraint:constraint-layout:${constraint}"
+    testImplementation "junit:junit:${junit}"
+    androidTestImplementation "com.android.support.test:runner:${runner}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${espresso_core}"
+    implementation files('libs/guideshowlib.jar')
+    implementation "com.youth.banner:banner:1.4.9"
+    implementation "com.kyleduo.switchbutton:library:${switchbutton}"
+    implementation "org.greenrobot:greendao:${greenrobot_greendao}"
+    implementation "org.greenrobot:greendao-generator:${greendao_generator}"
+    implementation "com.github.anzaizai:EasyRefreshLayout:${EasyRefreshLayout}"
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:${BaseRecyclerViewAdapterHelper}"
+    implementation "com.bilibili:boxing-impl:${boxing_impl}"
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    implementation 'jp.wasabeef:glide-transformations:2.0.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
+
+    // Optional, if you use support library fragments:
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.2'
+    implementation "com.chensl.rotatephotoview:rotatephotoview:${rotatephotoview}"
+    implementation "jp.wasabeef:glide-transformations:${transformations}"
+    implementation "com.jakewharton:butterknife:${butterknife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_compiler}"
+    implementation "com.google.code.gson:gson:${gson}"
+    implementation "com.github.bumptech.glide:glide:${glide}"
+    implementation "com.squareup.okhttp3:okhttp:${okhttp}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${logging_interceptor}"
+    implementation "com.squareup.okio:okio:${okio}"
+    implementation "com.tsy:PersistentCookieJar:${PersistentCookieJar}"
+    implementation "org.greenrobot:eventbus:${eventbus}"
+
+    implementation "com.tencent.ilivesdk:ilivesdk:${ilivesdk}"
+    implementation "com.tencent.callsdk:callsdk:${callsdk}"
+    implementation "com.tencent.livesdk:livesdk:${livesdk}"
+
+
+    implementation "com.github.lzyzsd:jsbridge:${jsbridge}"
+    implementation "com.android.support:multidex:${multidex}"
+    implementation "pub.devrel:easypermissions:${easypermissions}"
+    implementation "com.tencent.bugly:crashreport:${bugly}"
+    implementation files('libs/jcore-android-1.2.6.jar')
+    implementation files('libs/jpush-android-3.1.8.jar')
+    implementation files('libs/MiPush_SDK_Client_3_6_17.jar')
+    //mplementation files('libs/hmssdk-2.6.3.301.jar')
+//    implementation "com.arialyy.aria:aria-core:${aria}"
+//    annotationProcessor 'com.arialyy.aria:aria-compiler:3.5.1'
+    implementation 'com.kailashdabhi:om-recorder:1.1.5'
+    implementation 'com.yanzhenjie:recyclerview-swipe:1.2.0'
+
+    //抓包工具
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
+    //    implementation 'es.voghdev.pdfviewpager:library:1.0.6'
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+    implementation project(':mupdf')
+
+    implementation 'com.liulishuo.filedownloader:library:1.7.6'
+    implementation 'com.google.android:flexbox:1.0.0'
+
+    implementation 'com.xdandroid:hellodaemon:+'
+    implementation 'com.huawei.android.hms:push:2.6.3.301'
+    implementation 'com.amap.api:location:latest.integration'
+
+    implementation 'org.threeten:threetenbp:1.3.5'
+    implementation 'io.gsonfire:gson-fire:1.8.3'
+
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.github.huburt-Hu:NewbieGuide:v2.0.1'
+
+    implementation 'com.github.huburt-Hu:NewbieGuide:v2.4.0'
+    //视频播放器
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
+}
+

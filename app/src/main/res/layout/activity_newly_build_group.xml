@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ll_activity">
+
+    <include layout="@layout/layout_titlebar" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_15">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            android:background="@drawable/patient_remind"
+            android:contentDescription="TODO" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_toRightOf="@id/icon"
+            android:text="医助提醒"
+            android:textColor="@color/font_gray_4" />
+
+        <TextView
+            android:id="@+id/mDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/font_gray_3" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/mEditContent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_210"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="@drawable/edit_bg"
+            android:gravity="left"
+            android:hint="开始编辑发送内容"
+            android:padding="@dimen/dp_5"
+            android:textColor="@color/font_gray_3"
+            android:textColorHint="#cccccc"
+            android:textSize="12sp" />
+
+
+        <com.newdjk.doctor.views.RoundImageUploadView
+            android:id="@+id/upload_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="30dp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/mChoosePerson"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_15">
+
+        <ImageView
+            android:id="@+id/icon_1"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            android:background="@drawable/patient_recipient"
+            android:contentDescription="TODO" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_toRightOf="@id/icon_1"
+            android:text="收件人"
+            android:textColor="@color/font_gray_4" />
+
+        <ImageView
+            android:id="@+id/icon_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_right"
+            android:contentDescription="TODO" />
+
+        <TextView
+            android:id="@+id/mPersonContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_toLeftOf="@id/icon_2"
+            android:ellipsize="end"
+            android:maxEms="18"
+            android:singleLine="true"
+            android:textColor="@color/font_gray_3" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/mGroupBtn"
+        android:layout_width="@dimen/dp_280"
+        android:layout_height="@dimen/dp_40"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginTop="82dp"
+        android:background="@drawable/btn_bg"
+        android:gravity="center"
+        android:text="群发"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>

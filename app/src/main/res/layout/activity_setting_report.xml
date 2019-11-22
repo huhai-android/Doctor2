@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ll_activity">
+
+    <include layout="@layout/layout_titlebar" />
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44">
+
+        <TextView
+            android:layout_weight="1"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textColor="@color/plugin_camera_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="判读开通开关" />
+
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/accepts_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:kswAnimationDuration="300"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:kswBackDrawable="@drawable/ios_back_drawable"
+            app:kswThumbDrawable="@drawable/ios_thumb_selector"
+            app:kswThumbMarginBottom="-8dp"
+            app:kswThumbMarginLeft="-5dp"
+            app:kswThumbMarginRight="-5dp"
+            app:kswThumbMarginTop="-2.5dp"
+            app:kswThumbRangeRatio="1.4"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="50dp">
+        <TextView
+            android:text="@string/accept_account"
+            android:textColor="@color/plugin_camera_black"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/accept_account"
+            android:textColor="#000000"
+            android:background="@null"
+            android:textColorHint="@color/line"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_50"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <View style="@style/limit_line" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:layout_height="50dp">
+        <TextView
+            android:text="判读单价"
+            android:textColor="@color/plugin_camera_black"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/consult_price"
+                android:textColor="#000000"
+                android:background="@null"
+                android:textColorHint="@color/line"
+                android:layout_width="@dimen/dp_50"
+                android:gravity="right"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/plugin_camera_black"
+                android:text="元"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="50dp">
+        <TextView
+            android:text="判读优惠价"
+            android:layout_centerVertical="true"
+            android:textColor="@color/plugin_camera_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/consult_discount"
+                android:textColor="#000000"
+                android:textColorHint="@color/line"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/plugin_camera_black"
+                android:text="元"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+    <View style="@style/limit_line" />
+    <TextView
+        android:id="@+id/save"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/button_shape"
+        android:text="@string/save"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_width="280dp"
+        android:layout_height="50dp" />
+</LinearLayout>

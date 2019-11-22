@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+
+
+    >
+
+    <!--   <com.newdjk.doctor.views.CircleImageView
+           android:id="@+id/avatar"
+           android:layout_width="45dp"
+           android:layout_height="45dp"
+           android:src="@drawable/head_deafult" />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_11"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+
+            <com.newdjk.doctor.views.CircleImageView
+
+                android:id="@+id/civImg"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
+                android:src="@drawable/doctor_default_img" />
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="#ff666666"
+                    android:textSize="14sp"
+                    tools:text="姓名" />
+
+
+                <TextView
+
+                    android:id="@+id/tv_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="#ff666666"
+                    android:textSize="14sp"
+                    android:visibility="visible"
+                    tools:text="年龄" />
+
+                <TextView
+
+                    android:id="@+id/tv_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="#ff666666"
+                    android:textSize="14sp"
+                    tools:text="性别" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginRight="@dimen/dp_10"
+                android:id="@+id/tv_comedown_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:gravity="right"
+                android:textColor="#ff666666"
+                android:textSize="14sp"
+                tools:text="时间" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_patient_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:padding="@dimen/dp_3"
+        android:textColor="#ff333333"
+        android:textSize="16sp"
+        tools:text="病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉病情主诉。" />
+
+    <View
+        android:id="@+id/line1"
+        style="@style/limit_line"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        tools:visibility="gone"
+        android:id="@+id/recylevie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <View
+        style="@style/limit_line"
+        android:layout_marginTop="10dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/to_group_chat"
+                android:layout_width="123dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@drawable/btn_input_advice"
+                android:gravity="center"
+                android:text="进入会话"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/accept_text"
+                android:layout_width="123dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@drawable/btn_input_advice"
+                android:gravity="center"
+                android:text="填写结论性意见"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

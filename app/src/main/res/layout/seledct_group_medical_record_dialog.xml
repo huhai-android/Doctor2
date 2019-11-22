@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/boder_white_oval"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <TextView
+        android:textColor="@color/plugin_camera_black"
+        android:text="选择病历"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30" />
+    <View style="@style/limit_line"/>
+    <RadioGroup
+        android:id="@+id/radioGroup_gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+        <RadioButton
+            android:id="@+id/medical_record1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:checked="true"
+            android:textColor="@color/plugin_camera_black"
+            android:text="补充MDT资料" />
+        <RadioButton
+            android:visibility="gone"
+            android:id="@+id/medical_record2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/plugin_camera_black"
+            android:layout_gravity="center_horizontal"
+            android:checked="false"
+            android:text="喉癌病历" />
+    </RadioGroup>
+    <View style="@style/limit_line"/>
+    <TextView
+        android:id="@+id/sure"
+        android:text="确定"
+        android:textColor="@color/plugin_camera_black"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50" />
+
+</LinearLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ll_activity">
+
+    <include layout="@layout/layout_titlebar" />
+
+
+   <ImageView
+       android:layout_marginTop="38dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:src="@drawable/sendreport"/>
+
+
+
+    <TextView
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/tv_review_report"
+        android:layout_width="91dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shape_send_report"
+        android:gravity="center"
+        android:text="查看报告"
+        android:textColor="@color/white" />
+
+</LinearLayout>

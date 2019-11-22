@@ -1,0 +1,188 @@
+<resources>
+
+    <string name="app_name">芸医生</string>
+
+    <!-- 图片浏览 -->
+    <string name="finish">完成</string>
+    <string name="album">相册</string>
+    <!--/////////////////////-->
+    <string name="digits">0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
+    <string name="step_over">跳过</string>
+    <string name="agreement">協議</string>
+    <string name="NextStep">下一步</string>
+    <string name="my_advice">图文问诊</string>
+    <string name="my_physician_visits">视频问诊</string>
+    <string name="online_renewal_party">在线续方</string>
+    <string name="my_pharmacy">我的药房</string>
+    <string name="name">姓名</string>
+    <string name="hospital">医院</string>
+    <string name="department">科室</string>
+    <string name="profession">职业</string>
+    <string name="post">职称</string>
+    <string name="hospital_title">医院信息</string>
+    <string name="department_title">科室信息</string>
+    <string name="profession_title">职业信息</string>
+    <string name="post_title">职称信息</string>
+    <string name="name_tip">请输入姓名</string>
+    <string name="update_id_card">上传身份证正面</string>
+    <string name="update_other_side">上传身份证反面</string>
+    <string name="doctor">医生</string>
+    <string name="id_card">身份证号</string>
+    <string name="id_card_tip">请输入身份证号</string>
+    <string name="nurse">护士</string>
+    <string name="photograph">拍照</string>
+    <string name="practice_message_tip1">我们需要您上传执业证照片进行护士资格审核请保证照片清晰，识别您的相关信息</string>
+    <string name="practice_message_tip2">您的执业证如有延期注册或变更注册，请补充相关图片</string>
+    <string name="practice_license_number">执业证编号</string>
+    <string name="practice_license_number_tip">请输入执业证编号</string>
+    <string name="practice_license_number_tip_zi_ge">请输入医师资格证编号</string>
+    <string name="register_date">首次注册日期</string>
+    <string name="register_validity">注册有效期至</string>
+    <string name="licensed_first">执业证编号与首次注册号</string>
+    <string name="licensed_second">执业证延续注册页</string>
+    <string name="register_data_not_select_tip">请先确认首次注册日期</string>
+    <string name="register_validity_not_invalid">有效时间必须大于注册时间</string>
+    <string name="prescription">开处方</string>
+    <string name="video_interrogation">视频问诊</string>
+    <string name="add_your_resume">补充病历</string>
+    <string name="the_quick_reply">快速回复</string>
+    <string name="interrogation_table">问诊表</string>
+    <string name="plus_sign">加号</string>
+    <string name="mission">宣教</string>
+    <string name="submit_certification">提交认证</string>
+    <string name="submit_success_tip1">认证资料提交成功</string>
+    <string name="submit_success_tip2">请内心等待审核，审核通过前不能获取出诊派单</string>
+    <string name="set">设置</string>
+    <string name="cumulative_reply">图文问诊量</string>
+    <string name="cumulative_report">累计报告</string>
+    <string name="video_reply">视频问诊量</string>
+    <string name="prompt_response_rate">24小时回复率</string>
+    <string name="cumulative_party">续方问诊量</string>
+    <string name="satisfaction">好评率</string>
+    <string name="accepts_switch">接诊开关</string>
+    <string name="accept_account">每日接诊数量</string>
+    <string name="consult_price">咨询单价</string>
+    <string name="consult_discount">咨询优惠价</string>
+    <string name="my_online_party">我的在线续方</string>
+    <string name="party_switch">续方开通开关</string>
+    <string name="party_price">续方诊金单价</string>
+    <string name="party_discount">诊金优惠价</string>
+    <string name="interration_price">问诊单价</string>
+    <string name="interration_discount">问诊优惠价</string>
+    <string name="interration_schedule">问诊排班</string>
+    <string name="party_setting">续方问诊设置</string>
+    <string name="interrogation_list">预约列表</string>
+    <string name="consult_setting">图文问诊设置</string>
+    <string name="treat_setting">第二诊疗意见设置</string>
+    <string name="save">保存</string>
+    <string name="check_detail">查看详情</string>
+    <string name="accept_tip">请在%1$s内接诊，超时将自动退诊</string>
+
+    <!--复用 腾讯云im的demo 的属性-->
+    <string name="cancel">取消</string>
+    <string name="chat_press_talk">按住说话</string>
+    <string name="chat_release_send">松开结束</string>
+    <string name="chat_release_cancel">松开手指，取消发送</string>
+    <string name="chat_image">图片</string>
+    <string name="chat_photo">拍摄</string>
+
+    <!-- time -->
+    <string name="time_yesterday">昨天</string>
+    <string name="time_day">日</string>
+    <string name="time_month">月</string>
+    <string name="time_year">年</string>
+    <!-- call -->
+    <string name="tip_end_call">挂断</string>
+
+    <string name="tip_close_camera">关闭摄像头</string>
+    <string name="tip_open_camera">打开摄像头</string>
+    <string name="tip_switch_camera">切换摄像头</string>
+    <string name="tip_close_mic">关闭麦克风</string>
+    <string name="tip_open_mic">打开麦克风</string>
+    <string name="tip_set_speaker">切换到扬声器</string>
+    <string name="tip_set_headset">切换到听筒</string>
+    <string name="tip_set_beauty">设置美颜</string>
+    <string name="invite">邀请</string>
+    <string name="invite_tip">输入邀请用户id</string>
+    <string name="all_order">全部记录</string>
+    <!--分享相关-->
+    <string name="not_installed_weixin">没安装微信</string>
+    <string name="share_wechat_friend">微信好友</string>
+    <string name="share_wechat_zone">微信朋友圈</string>
+    <string name="common_cancel">取消</string>
+    <string name="about_copy_right">CopyRight @ 芸医生2018</string>
+    <string name="doctorZigeNumber">医师资格证编号:</string>
+    <string name="checkVersionFailed">版本信息获取失败</string>
+    <string name="versionUpdate">版本更新</string>
+    <string name="findNewVersionContent">发现新版本，是否立即更新？</string>
+    <string name="agreementTitle">《医护人员入驻服务协议》</string>
+
+    <string name="mobile_empty">手机号格式不正确</string>
+    <string name="password_empty">密码不能为空</string>
+    <string name="password_length">密码为6-12位数字和字母</string>
+    <string name="update_pass">修改密码</string>
+    <string name="enter_mobile_empty">手机号码不能为空</string>
+    <string name="accountOrPassError">账号或密码错误！</string>
+    <string name="send_agin">再发一条</string>
+    <string name="person_size">收件人:</string>
+    <string name="heart_check">胎心判读</string>
+
+    <string name="total_check_number">累计判读</string>
+    <string name="thirty_minutes_check_number">30分钟响应率</string>
+    <string name="title_check_center">胎心判读</string>
+    <string name="title_custody_report">监护报告</string>
+    <string name="title_custody_report_number">咨询单号:</string>
+    <string name="title_custody_report_date">监测日期:</string>
+    <string name="age">年龄: </string>
+    <string name="name_point">姓名: </string>
+    <string name="week">孕周期: </string>
+    <string name="phone">联系电话: </string>
+    <string name="check_duration">监测时长: </string>
+    <string name="check_start_time">监测开始时间: </string>
+    <string name="check_end_time">监测结束时间: </string>
+    <string name="check_report_image">胎心监测图 </string>
+    <string name="check_setting_report">判读设置 </string>
+    <string name="min">已是最小比例</string>
+    <string name="max">已是最大比例</string>
+    <string name="check_report_result">结果判读</string>
+    <string name="check_report_sign_time">判读时间：</string>
+    <string name="check_report_sign_name">医生签名：</string>
+    <string name="check_report_sign">签发报告</string>
+    <string name="check_report_method">评分方式：</string>
+    <string name="check_report_result_point">结果得分：</string>
+    <string name="calc">计算中...</string>
+    <string name="download">开始下载</string>
+    <string name="sdError">sd卡错误</string>
+    <string name="findNewVersion">发现新版本</string>
+    <string name="data_none">---</string>
+    <string name="manaul_ncheck">手动标记</string>
+    <string name="auto_check">自动标记</string>
+
+    <string name="hchufang_check">处方审核</string>
+    <string name="invitate_patient">邀请患者</string>
+    <string name="performance_record">履约记录</string>
+    <string name="diagnosis_and_treatment">第二诊疗意见</string>
+    <string name="total_deal">累计处理</string>
+
+    <!--第二诊疗-->
+    <string name="my_diagnose">第二诊疗意见</string>
+    <string name="my_document">病历档案</string>
+    <string name="add_document">选择补充材料</string>
+    <string name="diagnse_number">问诊量</string>
+    <string name="diagnse_price">单  价</string>
+    <string name="diagnse__discount_price">优惠价</string>
+    <string name="submit">提交</string>
+    <string name="sex">性别</string>
+    <string name="sex_man">男</string>
+    <string name="sex_mail">女</string>
+    <string name="beGoodAt">擅长：</string>
+    <string name="miaoishu">\t\t\t\t按照国家政策要求，为了保证医师的合法权益，根据互联网医院管理办法，互联网医院应当严格遵守《处方管理办法》等处方管理规定，电子签名有效期一年，过期后需重新下载电子证书。所有在线诊断、处方必须有医师电子签名。芸医平台接入国家承认的第三方CA证书和电子签名平台——医网信，电子签名使用需要完成以下三个步骤：\n\n第一步：下载电子证书，设置签名口令（注：此口令是电子证书的保护口令，不是APP用户密码）\n\n第二步：设置电子签章，采集医生笔迹\n\n第三步：发送处方时，输入签名口令，完成电子签名（注：可记忆口令，选择记忆天数，避免每次输入口令）
+    </string>
+    <string name="tuwenwenzhen">1.图文问诊是由患者向医生发起的付费图文问诊服务，您可以通过【设置】开启该项服务并自主定价单次问诊价格；\n\n2.咨询优惠价单价设置后即刻生效，当日已生成的图文问诊订单不受价格更新影响；\n\n3.建议定价区间：（0-200元/次），定价过高及频繁调整会影响平台患者付费转化率，用户的购买生效的为咨询优惠价。\n\n4.平台鼓励推荐其他医生进行推荐服务，如开启允许推荐功能，推荐人将获取一定的服务费。\n\n</string>
+
+    <string name="videowenzhen">1.视频问诊是由患者向医生发起的付费视频问诊服务，您可以通过【设置】开启该项服务并自主定价、灵活设置您的视频问诊排班时间；\n\n2.咨询优惠价单价设置后立即生效，当日已生成的视频问诊订单不受价格更新影响；\n\n3.建议定价区间：（0-200元/次），定价过高及频繁调整会影响平台患者付费转化率，用户的购买生效的为咨询优惠价。\n\n4.平台鼓励推荐其他医生进行推荐服务，如开启允许推荐功能，推荐人将获取一定的服务费。</string>
+
+    <string name="onlinewenzhen">1.在线续方是由患者向医生发起的付费电子处方功能，包含图文问诊，处方药品等，您可以通过【设置】开启该项服务并自主定价单次在线续方价格；\n\n2.咨询优惠价单价设置后立即生效，当日已生成的在线续方订单不受价格更新影响；\n\n3.建议定价区间：（0-200元/次），定价过高及频繁调整会影响平台患者付费转化率，用户的购买生效的为咨询优惠价。\n\n4.平台鼓励推荐其他医生进行推荐服务，如开启允许推荐功能，推荐人将获取一定的服务费。</string>
+
+    <string name="dierzhenliaowenzhen">1. 在线续方是患者向医生发起的在线付费开具电子处方功能，同时可包含图文问诊服务，您可以开通服务并设置服务价格。\n\n2. 单价设置后立即生效，不影响当日已生成的在线续方订单。\n\n3. 建议价格0-200元，定价过高会影响到患者付费的转化率。</string>
+</resources>

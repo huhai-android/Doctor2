@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ll_activity">
+
+    <include layout="@layout/layout_titlebar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F3F3F3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@color/white"
+                    android:paddingTop="@dimen/dp_20">
+
+                    <TextView
+                        android:id="@+id/patient_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:text="姓名："
+                        android:textColor="@color/text_doctor_report"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/patient_report"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:background="@drawable/shape_patient_archives"
+                        android:padding="@dimen/dp_3"
+                        android:text="患者档案"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="性别："
+                        android:textColor="@color/text_doctor_report"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingBottom="@dimen/dp_40"
+                    android:paddingTop="@dimen/dp_20">
+
+                    <TextView
+                        android:id="@+id/age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:text="年龄："
+                        android:textColor="@color/text_doctor_report"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/medical_record_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:text=""
+                        android:textColor="@color/text_doctor_report"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:lineSpacingExtra="5dp"
+                android:textColor="@color/gray"
+                android:text="病情描述：" />
+
+            <TextView
+                android:lineSpacingExtra="5dp"
+                android:id="@+id/illness_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_20"
+                android:background="@drawable/symptoms_style"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="患者主要问题:"
+                android:textColor="@color/black" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyleview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10" />
+
+            <LinearLayout
+                android:id="@+id/operate_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_30"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/reject"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <com.newdjk.doctor.views.ButtonView
+                        android:id="@+id/reject_text"
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="退单"
+                        android:textColor="@color/black"
+                        app:radius="@dimen/dp_20"
+                        app:solid_color="@color/limit_line1"
+                        app:stroke="@dimen/dp_1"
+                        app:stroke_color="@color/limit_line1" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/accept"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <com.newdjk.doctor.views.ButtonView
+                        android:id="@+id/accept_text"
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_gravity="center"
+                        android:background="@drawable/symptoms_style"
+                        android:gravity="center"
+                        android:text="接单"
+                        android:textColor="@color/white"
+                        app:radius="@dimen/dp_20"
+                        app:solid_color="@color/blue"
+                        app:stroke="@dimen/dp_1"
+                        app:stroke_color="@color/blue" />
+                </FrameLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

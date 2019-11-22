@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/selec_itemview"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="0dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/item_left_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@mipmap/info"
+            android:drawablePadding="8dp"
+            android:gravity="left|center_vertical"
+            android:singleLine="true"
+            android:text="测试数据a"
+            android:textColor="#15171C"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_100">
+            <!--android:visibility="gone"-->
+            <ImageView
+                android:id="@+id/item_right_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@drawable/ic_right"
+                android:contentDescription="TODO" />
+            <TextView
+                android:id="@+id/item_right_text"
+                android:layout_toLeftOf="@+id/item_right_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:drawablePadding="2dp"
+                android:gravity="right"
+                android:ellipsize="end"
+                android:maxEms="18"
+                android:singleLine="true"
+                android:text="描述"
+                android:textColor="#706F75"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:id="@+id/function"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_marginBottom="@dimen/dp_7"
+    android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_marginTop="@dimen/dp_7"
+                android:id="@+id/im_picture"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/icon_zhuankexiezuo" />
+
+            <RelativeLayout
+                android:id="@+id/unread_num_layout"
+                android:layout_width="@dimen/dp_15"
+                android:layout_height="@dimen/dp_15"
+                android:layout_marginLeft="-5dp"
+                android:layout_toRightOf="@id/im_picture"
+                android:background="@drawable/oval_style"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+
+                <TextView
+                    android:id="@+id/unread_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_8"
+                    tools:text="158" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <!--图标和消息图标-->
+
+
+        <TextView
+            android:id="@+id/mFuncOne"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="7dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/my_advice"
+            android:textColor="@color/plugin_camera_black" />
+</LinearLayout>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBack">
+
+    <com.tencent.ilivesdk.view.AVRootView
+        android:id="@+id/arv_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp" />
+
+    <!-- 标题 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:id="@+id/user_data_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.newdjk.doctor.views.CircleImageView
+                android:layout_marginLeft="@dimen/dp_10"
+                android:id="@+id/face_url"
+                android:layout_width="@dimen/dp_65"
+                android:layout_height="@dimen/dp_65"
+                android:clickable="true"
+                android:contentDescription="TODO"
+                android:gravity="center" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nick_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="开播"
+                    android:textColor="@color/white"
+                    android:textSize="23dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="正在等待对方接受邀请..."
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+        <!--<ImageView
+            android:id="@+id/iv_switch"
+            android:src="@mipmap/ic_switch_camera"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            android:contentDescription="TODO" />-->
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ScrollView
+            android:id="@+id/sv_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:textColor="@color/white" />
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btn_end"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/shape_cancel_circle"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="@string/tip_end_call"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <Chronometer
+                android:visibility="gone"
+                android:id="@+id/chronometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:focusable="true"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_switch"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="@dimen/dp_25"
+            android:clickable="true"
+            android:contentDescription="TODO"
+            android:onClick="onClick"
+            android:src="@mipmap/ic_camera_on"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <!-- 控制栏 -->
+    <LinearLayout
+        android:id="@+id/ll_controller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/icon_height"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_info"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            android:clickable="true"
+            android:contentDescription="TODO"
+            android:onClick="onClick"
+            android:src="@mipmap/ic_info_on"
+            android:visibility="visible" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/icon_height"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_role"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            android:clickable="true"
+            android:contentDescription="TODO"
+            android:onClick="onClick"
+            android:src="@mipmap/ic_role"
+            android:visibility="visible" />
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/icon_height"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_camera"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            android:clickable="true"
+            android:contentDescription="TODO"
+            android:onClick="onClick"
+            android:src="@mipmap/ic_camera_on"
+            android:visibility="visible" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/icon_height"
+            android:layout_weight="1" />
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/icon_height"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_flash"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            android:clickable="true"
+            android:contentDescription="TODO"
+            android:onClick="onClick"
+            android:src="@drawable/btn_flash"
+            android:visibility="visible" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/icon_height"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_mic"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            android:clickable="true"
+            android:contentDescription="TODO"
+            android:onClick="onClick"
+            android:src="@mipmap/ic_mic_on"
+            android:visibility="invisible" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/icon_height"
+            android:layout_weight="1" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/video_schdule_layout"
+    style="@style/ll_activity">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:id="@+id/refresh_layout"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <com.newdjk.doctor.views.ItemView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                app:RightImgShow="false"
+                app:leftTVText="今日任务"
+                app:leftTVTextDrawLeftImg="@mipmap/starting" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line"/>
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:paddingStart="@dimen/dp_20"
+                android:paddingEnd="@dimen/dp_20"
+                android:gravity="center_vertical"
+                android:layout_height="80dp">
+                <TextView
+                    android:id="@+id/not_task_tip"
+                    android:text="无任务"
+                    android:visibility="gone"
+                    android:textSize="18sp"
+                    android:textColor="@color/plugin_camera_black"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RelativeLayout
+                    android:id="@+id/today_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="8月31号"
+                        android:textColor="@color/plugin_camera_black"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:id="@+id/today_task_message"
+                        android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_toRightOf="@id/date"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_horizontal"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="待问诊处理"
+                                android:textColor="@color/plugin_camera_black"
+                                android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/num"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_width="wrap_content"
+                            android:textSize="@dimen/sp_22"
+                            android:textStyle="bold"
+                            android:textColor="@color/plugin_camera_black"
+                            android:layout_height="wrap_content" />
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/time"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/plugin_camera_black"
+                            android:layout_marginTop="5dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:src="@mipmap/left_icon"
+                        android:layout_centerVertical="true"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="TODO" />
+                </RelativeLayout>
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/line"
+                android:layout_height="10dp"/>
+
+                <com.newdjk.doctor.views.ItemView
+                    android:id="@+id/now_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    app:SetRightImg="@mipmap/left_icon"
+                    app:leftTVText="即将开始"
+                    app:leftTVTextDrawLeftImg="@mipmap/start" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line"/>
+            <LinearLayout
+                android:id="@+id/no_data_tip"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/line"
+                    android:text="无数据"
+                    />
+                <TextView
+                    android:id="@+id/click_refresh"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/plugin_camera_black"
+                    android:gravity="center"
+                    android:text="点击刷新"
+                    />
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/appointment_visits_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

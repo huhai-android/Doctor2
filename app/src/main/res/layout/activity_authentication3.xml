@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ll_activity">
+    <include layout="@layout/layout_titlebar"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_height="100dp">
+        <ImageView
+            android:background="@mipmap/register_step_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="TODO" />
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="15dp"
+            android:paddingRight="7.5dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/boder_white_oval"
+            android:gravity="center"
+            android:layout_height="100dp">
+            <TextView
+                android:text="@string/licensed_first"
+                android:layout_centerInParent="true"
+                android:textColor="#8c8c8c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/licensed_first_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="TODO" />
+        </RelativeLayout>
+            <TextView
+                android:textSize="12sp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/line"
+                android:text="@string/practice_message_tip1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="7.5dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/boder_white_oval"
+            android:gravity="center"
+            android:layout_height="100dp">
+            <TextView
+                android:text="@string/licensed_second"
+                android:layout_centerInParent="true"
+                android:textColor="#8c8c8c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/licensed_second_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="TODO" />
+        </RelativeLayout>
+            <TextView
+                android:textSize="12sp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/line"
+                android:text="@string/practice_message_tip2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:background="@color/white"
+        android:paddingRight="20dp"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/practice_license_number"
+            android:text="@string/practice_license_number"
+            android:textSize="14sp"
+            android:textColor="@color/plugin_camera_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/practice_license"
+            android:background="@null"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/practice_license_number"
+            android:digits="1234567890"
+            android:inputType="phone|number"
+            android:gravity="right"
+            android:textSize="14sp"
+            android:textColor="@color/plugin_camera_black"
+            android:textColorHint="@color/line"
+            android:hint="@string/practice_license_number_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:background="@color/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <RelativeLayout
+        android:id="@+id/register_date_select_layout"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:paddingLeft="16dp"
+        android:paddingRight="20dp"
+        android:layout_height="50dp">
+        <TextView
+            android:text="@string/register_date"
+            android:textSize="14sp"
+            android:textColor="@color/plugin_camera_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/register_date"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="#000000"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@mipmap/left_icon"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="TODO" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"
+        />
+    <RelativeLayout
+        android:id="@+id/register_validity_select_layout"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:paddingLeft="16dp"
+        android:paddingRight="20dp"
+        android:layout_height="50dp">
+        <TextView
+            android:text="@string/register_validity"
+            android:textSize="14sp"
+            android:textColor="@color/plugin_camera_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/register_validity"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="#000000"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@mipmap/left_icon"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="TODO" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"
+        />
+    <TextView
+        android:id="@+id/next_step"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/button_shape"
+        android:text="@string/submit_certification"
+        android:gravity="center"
+        android:layout_width="280dp"
+        android:layout_height="50dp" />
+</LinearLayout>

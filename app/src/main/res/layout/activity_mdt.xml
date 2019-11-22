@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ll_activity">
+
+    <include layout="@layout/layout_titlebar" />
+
+    <com.ajguan.library.EasyRefreshLayout
+
+        android:id="@+id/easylayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <android.support.v7.widget.CardView
+
+                    android:id="@+id/crd_mdt_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_15"
+                    app:cardBackgroundColor="@color/font_gray_0"
+                    app:cardCornerRadius="@dimen/dp_5">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.newdjk.doctor.views.ItemView
+                            android:id="@+id/mFunReport"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_40"
+                            android:textColor="#ff333333"
+                            android:textSize="16sp"
+                            app:RightTVText=""
+                            app:SetRightImg="@drawable/ic_right"
+                            app:leftTVText="我的团队" />
+
+                        <View style="@style/limit_line" />
+
+                        <LinearLayout
+                            android:clickable="false"
+                            android:id="@+id/lv_hos_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_40"
+                                android:layout_height="@dimen/dp_40"
+                                android:layout_margin="@dimen/dp_10"
+                                android:src="@drawable/huanzhebaodao" />
+
+                            <TextView
+                                android:id="@+id/tv_hos_group"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                tools:text="肺癌肿瘤团队（5）"
+                                android:textColor="#ff333333"
+
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:background="@color/white"
+                    app:cardBackgroundColor="@color/font_gray_0"
+                    app:cardCornerRadius="@dimen/dp_5">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_91"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/iv_mdtfenzhen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/image_picture"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dp_15"
+                                    android:src="@mipmap/icon_mdthuizhen" />
+
+                                <RelativeLayout
+                                    android:id="@+id/unread_num_layout"
+                                    android:layout_width="@dimen/dp_15"
+                                    android:layout_height="@dimen/dp_15"
+                                    android:layout_marginLeft="-10dp"
+                                    android:layout_marginTop="@dimen/dp_10"
+                                    android:layout_toRightOf="@id/image_picture"
+                                    android:background="@drawable/oval_style"
+                                    android:visibility="gone"
+                                    tools:visibility="visible">
+
+
+                                    <TextView
+                                        android:id="@+id/unread_num"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:gravity="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/sp_8"
+                                        tools:text="158" />
+
+                                </RelativeLayout>
+                            </RelativeLayout>
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginBottom="@dimen/dp_15"
+                                android:layout_marginTop="@dimen/dp_4"
+                                android:text="MDT会诊"
+                                android:textColor="#ff333333"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/lv_zhuanzhen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_15"
+                                android:src="@mipmap/icon_faqizhuanzhen" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/dp_4"
+                                android:text="发起转诊"
+                                android:textColor="#ff333333"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/myreport"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/image_picture2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dp_15"
+                                    android:src="@mipmap/icon_wode_baogao" />
+
+                                <RelativeLayout
+                                    android:id="@+id/unread_num_layout_myreport"
+                                    android:layout_width="@dimen/dp_15"
+                                    android:layout_height="@dimen/dp_15"
+                                    android:layout_marginLeft="-10dp"
+                                    android:layout_marginTop="@dimen/dp_10"
+                                    android:layout_toRightOf="@id/image_picture2"
+                                    android:background="@drawable/oval_style"
+                                    android:visibility="gone"
+                                    tools:visibility="visible">
+
+
+                                    <TextView
+                                        android:id="@+id/unread_num_myreport"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:gravity="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/sp_8"
+                                        tools:text="158" />
+
+                                </RelativeLayout>
+                            </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/dp_4"
+                                android:text="我的报告"
+                                android:textColor="#ff333333"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.RecyclerView
+
+                    android:id="@+id/message_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:background="@color/white" />
+
+            </LinearLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </com.ajguan.library.EasyRefreshLayout>
+</LinearLayout>
+

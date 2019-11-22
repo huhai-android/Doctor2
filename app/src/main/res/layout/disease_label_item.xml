@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/patient_item"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/dp_5"
+    android:layout_marginTop="@dimen/dp_10"
+    android:background="@drawable/shape_disease_label"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_7"
+        android:layout_marginRight="@dimen/dp_7"
+        android:padding="2dp"
+        android:text="hahahhahaha"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp" />
+
+
+    <ImageView
+        android:id="@+id/im_delete"
+        android:layout_marginRight="@dimen/dp_5"
+        android:layout_gravity="center_vertical"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:src="@drawable/ic_cancel_blue" />
+
+</LinearLayout>

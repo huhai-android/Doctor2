@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/meterLine"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_titlebar" />
+
+    <TextView
+        android:id="@+id/tv_last_update_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/dp_15"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/font_gray_3"
+        android:text="更新于2018.02.02" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_3"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_15">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:drawableLeft="@drawable/me_businesslicenses1"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:text="执业证"
+                    android:textColor="@color/font_gray_3" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.newdjk.doctor.views.RoundImageUploadView
+                        android:id="@+id/upload_view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_pic_number1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="10dp"
+                        android:text="(0/9)"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/font_gray_3" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_3"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_15">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:drawableLeft="@mipmap/businesslicense2"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:text="医师资格证"
+                    android:textColor="@color/font_gray_3" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.newdjk.doctor.views.RoundImageUploadView
+                        android:id="@+id/upload_view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_pic_number2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="10dp"
+                        android:text="(0/9)"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/font_gray_3" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_3"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_15">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:drawableLeft="@drawable/businesslicense3"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:text="职称证"
+                    android:textColor="@color/font_gray_3" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.newdjk.doctor.views.RoundImageUploadView
+                        android:id="@+id/upload_view3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_pic_number3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="10dp"
+                        android:text="(0/9)"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/font_gray_3" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/practice_license_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/practice_license_number"
+                    android:textColor="@color/plugin_camera_black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/practice_license"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/practice_license_number"
+                    android:background="@null"
+                    android:digits="1234567890"
+                    android:gravity="right"
+                    android:hint="@string/practice_license_number_tip"
+                    android:inputType="phone|number"
+                    android:textColor="@color/plugin_camera_black"
+                    android:textColorHint="@color/line"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/dp_3"
+                android:paddingLeft="16dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/practice_license_number_zi_ge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/doctorZigeNumber"
+                    android:textColor="@color/plugin_camera_black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/practice_license_zi_ge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/practice_license_number_zi_ge"
+                    android:background="@null"
+                    android:digits="1234567890"
+                    android:gravity="right"
+                    android:hint="@string/practice_license_number_tip_zi_ge"
+                    android:inputType="phone|number"
+                    android:textColor="@color/plugin_camera_black"
+                    android:textColorHint="@color/line"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_3"
+        android:background="@color/white">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/login_out"
+            style="@style/btn_default"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/dp_24"
+            android:minHeight="@dimen/dp_40"
+            android:text="提交"
+            android:textColor="@color/font_white_gray"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+
+</LinearLayout>

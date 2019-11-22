@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ll_activity">
+
+    <include layout="@layout/layout_titlebar" />
+
+    <RadioGroup
+        android:layout_marginRight="@dimen/dp_14"
+        android:layout_marginLeft="@dimen/dp_14"
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_8"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RadioButton
+
+            android:textSize="14sp"
+            android:id="@+id/rb_tab1"
+            android:layout_width="138dp"
+            android:layout_height="@dimen/dp_30"
+            android:background="@drawable/bg_wait_selector"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="待就诊"
+            android:textColor="@drawable/text_choose_selectot" />
+
+        <RadioButton
+
+
+            android:textSize="14sp"
+            android:id="@+id/rb_tab2"
+            android:layout_width="138dp"
+            android:layout_height="@dimen/dp_30"
+            android:background="@drawable/bg_have_selector"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:text="已完成"
+            android:textColor="@drawable/text_choose_selectot" />
+    </RadioGroup>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dp_14"
+        android:layout_marginRight="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_weight="1" />
+</LinearLayout>

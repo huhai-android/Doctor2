@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+    >
+
+    <ImageView
+        android:src="@drawable/lunach"
+        android:id="@+id/splash_image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/dp_30"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp_30">
+
+
+        <TextView
+            android:id="@+id/splash_timeCount"
+            style="@style/tv_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:text="3s" />
+
+        <Button
+            android:id="@+id/step_over"
+            style="@style/tv_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:background="@drawable/step_over_bg"
+            android:gravity="center"
+            android:text="@string/step_over" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="2019年8月15日 18:29"
+        android:textColor="#ff999999"
+        android:textSize="15sp" />
+
+
+    <FrameLayout
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_160"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_7"
+        android:background="@drawable/shape_check_order">
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/guide1"
+            android:scaleType="fitXY"
+            app:riv_border_width="0dip"
+            app:riv_corner_radius="6dp" />
+        <!--
+        <item android:width="362dp" android:height="40dp">
+          <shape android:shape="rectangle">
+            <gradient android:type="linear" android:useLevel="true" android:startColor="#ffeeeeee" android:endColor="#ff333333" android:angle="180" />
+          </shape>
+        </item>
+        -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="bottom"
+            android:background="@drawable/shape_gonggao">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_18"
+                android:gravity="center_vertical"
+                android:text="标题标题标题标题标题标题标题"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+    </FrameLayout>
+</LinearLayout>

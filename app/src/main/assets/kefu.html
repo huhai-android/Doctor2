@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,minimum-scale=1.0, maximum-scale=1.0,width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .selfTitle{
+            display: flex;
+            height: 46px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5px;
+            position: fixed;
+            z-index: 21474836475;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #3069cf;
+            color: #fff;
+        }
+        .selfTitle span{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 46px;   
+            min-height: 46px;
+        }
+        .selfTitle span i{
+            display: block;
+            width: 12px;
+            height: 12px;
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            transform: rotate(-45deg)
+        }
+    </style>
+</head>
+<script>
+    var query = {}
+    var queryStr = location.href.split('?')[1]
+    var optionsArr = queryStr.split('&')
+    optionsArr.forEach(v => {
+        const key = v.split('=')[0],
+            val = v.split('=')[1]
+        query[key] = val	  
+    })
+    if(query.sex == '1'){
+        query.sex = '男'
+    }
+    else{
+        query.sex = '女'
+    }
+    qimoClientId = { userId: query.userId, nickName: "医护："+query.nickName, customField: { "姓名": "医护："+query.nickName, "性别": query.sex, "电话号码": query.phone } };
+</script>
+<script type='text/javascript' src='https://webchat.7moor.com/javascripts/7moorInit.js?accessId=9b0539a0-044b-11e9-a87a-035d1ba628e8&autoShow=false&language=ZHCN' asy async='async'></script>
+
+<body>
+    <div class="selfTitle">
+        <span id="backToApp"><i></i></span>
+        <span>客服</span>
+        <span></span>
+    </div>
+    
+    <script>
+        window.onload = function(){
+            document.getElementById('qimo_chatpup').style.cssText = 'position: fixed;bottom:0 !important;top:5vh !important;z-index: 99 !important;';
+            var backIcon = document.getElementById('backToApp')
+            backIcon.onclick = function(){
+                setupWebViewJavascriptBridge(function (bridge) {
+                    bridge.callHandler('Back')
+                })
+            }
+            function setupWebViewJavascriptBridge(callback) {
+                //Android使用
+                if (window.WebViewJavascriptBridge) {
+                    callback(WebViewJavascriptBridge)
+                } else {
+                    document.addEventListener(
+                        'WebViewJavascriptBridgeReady'
+                        , function() {
+                            callback(WebViewJavascriptBridge)
+                        },
+                        false
+                    );
+                }
+                //iOS使用
+                if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+                window.WVJBCallbacks = [callback];
+                var WVJBIframe = document.createElement('iframe');
+                WVJBIframe.style.display = 'none';
+                WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+                document.documentElement.appendChild(WVJBIframe);
+                setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+            }
+            qimoChatClick()
+        }
+    </script>
+
+</body>
+</html>

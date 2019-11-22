@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+
+        style="@style/ll_activity">
+
+        <include layout="@layout/layout_titlebar" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/personal_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_6"
+                    android:layout_marginTop="@dimen/dp_1"
+                    android:background="@color/white"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:textSize="@dimen/dp_15"
+                        android:text="头像"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        android:id="@+id/mArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/ic_right"
+                        android:contentDescription="TODO" />
+
+                    <com.newdjk.doctor.views.CircleImageView
+                        android:id="@+id/mCircleImageView"
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/mArrow" />
+
+                </RelativeLayout>
+
+                <com.newdjk.doctor.views.ItemView
+                    android:id="@+id/mFunName"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    app:RightImgShow="false"
+                    app:RightTVText="马先生"
+                    app:SetRightImg="@drawable/ic_right"
+                    app:leftTVText="姓名" />
+
+                <View style="@style/limit_line" />
+
+                <com.newdjk.doctor.views.ItemView
+                    android:id="@+id/mFunGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginBottom="@dimen/dp_6"
+                    app:RightImgShow="false"
+                    app:SetRightImg="@drawable/ic_right"
+                    app:leftTVText="性别" />
+
+                <View style="@style/limit_line" />
+
+                <com.newdjk.doctor.views.ItemView
+                    android:id="@+id/mFunPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    app:RightImgShow="true"
+                    app:RightTVText="已认证"
+                    app:SetRightImg="@drawable/ic_right"
+                    app:leftTVText="实名认证" />
+
+                <View style="@style/limit_line" />
+
+                <com.newdjk.doctor.views.ItemView
+                    android:id="@+id/fun_yu_e"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:visibility="gone"
+                    app:RightImgShow="true"
+                    app:SetRightImg="@drawable/ic_right"
+                    app:leftTVText="更新资质" />
+
+                <View style="@style/limit_line" />
+
+                <com.newdjk.doctor.views.ItemView
+                    android:id="@+id/mFunBirth"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginBottom="@dimen/dp_6"
+                    app:RightImgShow="true"
+                    app:SetRightImg="@drawable/ic_right"
+                    app:leftTVText="二维码名片" />
+
+
+                <com.newdjk.doctor.views.ItemView
+                    android:id="@+id/mFunHospitol"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    app:RightImgShow="false"
+                    app:leftTVText="医院" />
+
+                <View style="@style/limit_line" />
+
+                <com.newdjk.doctor.views.ItemView
+                    android:id="@+id/mFunDepartment"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    app:RightImgShow="false"
+                    app:leftTVText="科室" />
+
+                <View style="@style/limit_line" />
+
+                <com.newdjk.doctor.views.ItemView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    app:RightImgShow="false"
+                    app:leftTVText="职称" />
+
+                <View style="@style/limit_line" />
+
+                <com.newdjk.doctor.views.ItemView
+                    android:id="@+id/mFunTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:ellipsize="end"
+                    android:maxEms="18"
+                    android:singleLine="true"
+                    app:RightImgShow="true"
+                    app:SetRightImg="@drawable/ic_right"
+                    app:leftTVText="专治" />
+
+                <View style="@style/limit_line" />
+
+                <com.newdjk.doctor.views.ItemView
+                    android:id="@+id/mFunGoodAt"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:ellipsize="end"
+                    android:maxEms="18"
+                    android:singleLine="true"
+                    app:RightImgShow="true"
+                    app:SetRightImg="@drawable/ic_right"
+                    app:leftTVText="擅长" />
+
+                <View style="@style/limit_line" />
+
+                <com.newdjk.doctor.views.ItemView
+                    android:id="@+id/mFunIntroduction"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:ellipsize="end"
+                    android:maxEms="18"
+                    android:singleLine="true"
+                    app:RightImgShow="true"
+                    app:SetRightImg="@drawable/ic_right"
+                    app:leftTVText="简介" />
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+</LinearLayout>

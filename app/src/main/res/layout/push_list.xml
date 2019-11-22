@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ll_activity">
+
+    <include layout="@layout/layout_titlebar"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <com.ajguan.library.EasyRefreshLayout
+        android:id="@+id/easylayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/message_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    </com.ajguan.library.EasyRefreshLayout>
+    <RelativeLayout
+        android:id="@+id/mNodataContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/doctor_pharmacy_no"
+            android:layout_centerInParent="true"
+            android:contentDescription="TODO" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/iv_no"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="暂无数据"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>

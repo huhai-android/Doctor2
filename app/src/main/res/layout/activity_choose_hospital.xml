@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_titlebar" />
+
+    <LinearLayout
+        android:id="@+id/mSearchContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@color/white"
+        android:visibility="visible">
+
+
+        <LinearLayout
+            android:id="@+id/lv_choosearea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_8">
+
+
+            <TextView
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_5"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="全国"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/downarrow" />
+        </LinearLayout>
+
+        <TextView
+
+            android:drawableLeft="@drawable/search"
+            android:id="@+id/et_patient_msg"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15.0dip"
+            android:background="@drawable/patient_edit_bg"
+            android:gravity="center_vertical"
+            android:hint="请输入医院相关信息"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLength="30"
+            android:paddingLeft="@dimen/dp_8"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/line"
+            android:textSize="12sp"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/mTvAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/font_gray_3" />
+
+    <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:id="@+id/lv_custom_hospital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textSize="@dimen/sp_15"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="自定义"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:text="（找不到所在医院，可点击此处填写）"
+            android:textColor="@color/line" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/font_gray_3" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.ajguan.library.EasyRefreshLayout
+            android:id="@+id/easylayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/mRecyclerview_hospital"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.ajguan.library.EasyRefreshLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRecyclerview_city"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+</LinearLayout>

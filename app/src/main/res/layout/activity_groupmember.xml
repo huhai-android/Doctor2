@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/line_btn">
+
+    <LinearLayout
+        style="@style/ll_activity"
+        android:background="@color/white">
+
+        <include layout="@layout/layout_titlebar" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/message_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_10"
+            android:background="@color/font_gray_0"
+            ></View>
+
+        <com.newdjk.doctor.views.ItemView
+            android:id="@+id/tv_groupName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            app:SetRightImg="@drawable/ic_right"
+            app:leftTVText="群聊名称"
+            app:RightTVText="" />
+        <View
+            android:id="@+id/line1"
+            style="@style/limit_line"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10" />
+        <com.newdjk.doctor.views.ItemView
+            android:id="@+id/tv_Archives"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            app:SetRightImg="@drawable/ic_right"
+            app:leftTVText="患者档案"
+            app:RightTVText="" />
+        <View
+            android:id="@+id/line2"
+            style="@style/limit_line"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10" />
+        <com.newdjk.doctor.views.ItemView
+            android:id="@+id/tv_patient_mdt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            app:SetRightImg="@drawable/ic_right"
+            app:leftTVText="患者上传MDT病历资料"
+            app:RightTVText="" />
+        <View
+            android:id="@+id/line3"
+            style="@style/limit_line"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

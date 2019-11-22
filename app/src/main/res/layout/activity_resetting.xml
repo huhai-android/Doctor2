@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ll_activity">
+
+    <include layout="@layout/layout_titlebar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_90"
+            android:paddingTop="@dimen/dp_30"
+            android:background="@color/white"
+            android:paddingRight="@dimen/dp_50"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_70"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/dp_35">
+
+                <EditText
+                    android:id="@+id/input_Password"
+                    style="@style/et_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/login_boder_selectot"
+                    android:digits="@string/digits"
+                    android:hint="请输入新密码"
+                    android:inputType="textPassword"
+                    android:maxLength="12"
+                    android:minHeight="@dimen/dp_35"
+                    android:paddingLeft="@dimen/dp_35"
+                    android:textColor="@color/font_gray_3"  />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:src="@mipmap/login_key2"
+                    android:contentDescription="TODO" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_18"
+                android:minHeight="@dimen/dp_35">
+
+                <EditText
+                    android:id="@+id/input_new_Password"
+                    style="@style/et_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/login_boder_selectot"
+                    android:digits="@string/digits"
+                    android:hint="请确认密码"
+                    android:inputType="textPassword"
+                    android:maxLength="12"
+                    android:minHeight="@dimen/dp_35"
+                    android:paddingLeft="@dimen/dp_35"
+                    android:paddingRight="@dimen/dp_45"
+                    android:textColor="@color/font_gray_3"  />
+
+
+                <ImageView
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:src="@mipmap/login_key2"
+                    android:contentDescription="TODO" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_91">
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_submit"
+                    style="@style/btn_default"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:minHeight="@dimen/dp_40"
+                    android:text="@string/finish"
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="@color/font_white_gray" />
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

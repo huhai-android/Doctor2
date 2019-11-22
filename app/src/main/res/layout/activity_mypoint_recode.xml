@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ll_activity">
+
+
+    <FrameLayout
+        android:layout_marginTop="20dp"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.github.lzyzsd.jsbridge.BridgeWebView
+            android:id="@+id/test_bridge_webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+        <View
+            android:visibility="visible"
+            android:id="@+id/view_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"></View>
+    </FrameLayout>
+
+
+
+</LinearLayout>

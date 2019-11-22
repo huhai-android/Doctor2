@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="VerifyCode">
+        <attr name="codeTextSize" format="dimension"/>
+        <attr name="codeBackground" format="color"/>
+        <attr name="codeLength" format="integer"/>
+        <attr name="isContainChar" format="boolean"/>
+        <attr name="pointNum" format="integer"/>
+        <attr name="linNum" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="WheelView">
+        <attr name="itemVisibleNum" format="integer"/>
+
+        <attr name="textColorOuter" format="color" />
+        <attr name="textSizeOuter" format="dimension" />
+        <attr name="textColorCenter" format="color" />
+        <attr name="textSizeCenter" format="dimension" />
+
+        <attr name="lineColor" format="color" />
+
+        <attr name="isLoop" format="boolean"/>
+        <attr name="lineSpaceingDimens" format="dimension"/>
+
+        <attr name="wheelGravity" format="enum" >
+            <enum name="left" value="234"/>
+            <enum name="center" value="354"/>
+            <enum name="right" value="894"/>
+        </attr>
+
+    </declare-styleable>
+
+    <declare-styleable name="ItemAttrs">
+        <attr name="text_size" format="integer" />
+        <attr name="text_color" format="color" />
+        <attr name="icon_margin_left" format="integer" />
+        <attr name="icon_text_margin" format="integer" />
+        <attr name="margin_right" format="integer" />
+        <attr name="item_height" format="integer" />
+        <attr name="line_color" format="color" />
+        <attr name="right_text_size" format="integer" />
+        <attr name="right_text_color" format="color" />
+        <attr name="right_text_margin" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="DrawableTextView">
+        <attr name="drawableWidth" format="dimension" />
+        <attr name="drawableHeight" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="BottomTabRadioButton">
+        <attr name="hint_mode" format="enum">
+            <enum name="none" value="0" />
+            <enum name="point" value="1" />
+            <enum name="num" value="2" />
+        </attr>
+        <attr name="drawableWidths" format="dimension" />
+        <attr name="drawableHeights" format="dimension" />
+        <attr name="hint_color" format="color" />
+        <attr name="hint_toppadding" format="dimension" />
+        <attr name="hint_rightpadding" format="dimension" />
+        <attr name="point_radius" format="dimension" />
+        <attr name="num" format="integer" />
+        <attr name="num_radius" format="dimension" />
+        <attr name="num_size" format="dimension" />
+        <attr name="num_color" format="color" />
+    </declare-styleable>
+    <!--</declare-styleable>-->
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+    <declare-styleable name="ProgressBarHorizontal">
+        <attr name="pbhBgSrc" format="reference" />
+        <attr name="pbhBgColorStart" format="color" />
+        <attr name="pbhBgColorEnd" format="color" />
+        <attr name="pbhBgRadius" format="dimension" />
+        <attr name="pbhBgLtRadius" format="dimension" />
+        <attr name="pbhBgLbRadius" format="dimension" />
+        <attr name="pbhBgRbRadius" format="dimension" />
+        <attr name="pbhBgRtRadius" format="dimension" />
+
+        <attr name="pbhCoverSrc" format="reference" />
+        <attr name="pbhCoverColorStart" format="color" />
+        <attr name="pbhCoverColorEnd" format="color" />
+        <attr name="pbhCoverRadius" format="dimension" />
+        <attr name="pbhCoverLtRadius" format="dimension" />
+        <attr name="pbhCoverLbRadius" format="dimension" />
+        <attr name="pbhCoverRbRadius" format="dimension" />
+        <attr name="pbhCoverRtRadius" format="dimension" />
+
+        <attr name="pbhProgress" format="integer" />
+        <attr name="pbhScaleType">
+            <enum name="match_parent" value="0" />
+            <enum name="wrap_content" value="1" />
+        </attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="ViewfinderView">
+        <attr name="inner_width" format="dimension"/>
+        <attr name="inner_height" format="dimension"/>
+        <attr name="inner_margintop" format="dimension" />
+        <attr name="inner_corner_color" format="color" />
+        <attr name="inner_corner_length" format="dimension" />
+        <attr name="inner_corner_width" format="dimension" />
+        <attr name="inner_scan_bitmap" format="reference" />
+        <attr name="inner_scan_speed" format="integer" />
+        <attr name="inner_scan_iscircle" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="PDFViewPager">
+        <attr name="assetFileName" format="string" /> <!-- Load PDF from Asset -->
+        <attr name="pdfUrl" format="string" /> <!-- Load PDF from remote URL -->
+        <attr name="scale" format="float" /> <!-- Set initial scale for PDF -->
+    </declare-styleable>
+    <declare-styleable name="MyTextView">
+        <attr name="stroke_color" format="color|reference"/>
+        <attr name="solid_color" format="color|reference"/>
+        <attr name="text" format="string|reference"/>
+        <attr name="radius" format="dimension" />
+        <attr name="stroke" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="FitWindowLayoutV2">
+        <attr name="status_bar_color" format="color|reference"/>
+        <attr name="bar_color_enabled" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="JCameraView">
+        <attr name="iconSize" />
+        <attr name="iconMargin" />
+        <attr name="iconSrc" />
+        <attr name="iconLeft" />
+        <attr name="iconRight" />
+        <attr name="duration_max" />
+    </declare-styleable>
+</resources>

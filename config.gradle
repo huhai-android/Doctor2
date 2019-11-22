@@ -1,0 +1,48 @@
+ext {
+
+    sdkMinVersion = 16
+    sdkTargetVersion = 26
+
+    sdkCompileVersion = 28
+    toolsBuildVersion = "27.0.3"
+
+    appVersionCode = 1
+    appVersionName = "yunyi_1.0.0.181002_Alpha"
+
+    appcompat = "28.0.0-beta01"
+    espresso_core = "3.0.2"
+    runner = "1.0.2"
+    junit = "4.12"
+
+    constraint = "1.1.3"
+    butterknife = "8.8.1"
+    butterknife_compiler = "8.8.1"
+    gson = "2.8.0"
+    glide = "3.7.0"
+    okhttp = "3.10.0"
+    logging_interceptor = "3.9.1"
+    okio = "1.9.0"
+    PersistentCookieJar = "1.0.0"
+    eventbus = "3.1.1"
+
+    ilivesdk="1.9.4"
+    callsdk="1.0.31"
+    livesdk="1.1.2"
+
+    jsbridge="1.0.4"
+    multidex="1.0.2"
+    easypermissions="0.2.0"
+    banner="1.4.10"
+    switchbutton="2.0.0"
+    greenrobot_greendao="3.1.0"
+    greendao_generator="3.1.0"
+    EasyRefreshLayout="1.3.1"
+    BaseRecyclerViewAdapterHelper="2.9.24"
+    boxing_impl="1.0.4"
+    rotatephotoview="1.0.5"
+    transformations="2.0.1"
+    bugly="2.6.6"
+    aria = "3.5.1"
+
+}
+

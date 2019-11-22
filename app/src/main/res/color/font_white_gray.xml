@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--<selector xmlns:android="http://schemas.android.com/apk/res/android">--><!--<base_item android:drawable="@color/dodgerblue" android:state_checked="true" />--><!--<base_item android:drawable="@color/dodgerblue" android:state_pressed="true" />--><!--<base_item android:drawable="@color/dodgerblue" android:state_activated="true" />--><!--<base_item android:drawable="@color/font_hei" />--><!--</selector>-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/font_gray_01" android:state_checked="true" />
+    <item android:color="@color/font_gray_01" android:state_activated="true" />
+    <item android:color="@color/font_gray_01" android:state_selected="true" />
+    <item android:color="@color/font_gray_01" android:state_pressed="true" />
+    <item android:color="@color/white" />
+</selector>

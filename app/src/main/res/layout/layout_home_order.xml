@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?><!--头部菜单-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lv_today_task"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginLeft="@dimen/dp_15"
+    android:layout_marginRight="@dimen/dp_15"
+    android:layout_marginTop="@dimen/dp_15"
+    android:background="@drawable/bg_home_tab"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+
+        android:id="@+id/lv_today_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="1"
+
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_today_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今日任务"
+            android:textColor="#ff999999"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/today_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            tools:text="5" />
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="39dp"
+        android:layout_gravity="center_vertical"
+        android:background="#F1F1F1"></View>
+
+    <LinearLayout
+
+        android:id="@+id/lv_accept_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_accept_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="接诊中"
+            android:textColor="#ff999999"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/accept_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            tools:text="5" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="39dp"
+        android:layout_gravity="center_vertical"
+        android:background="#F1F1F1"></View>
+
+    <LinearLayout
+
+        android:id="@+id/lv_future_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_future_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未来预约"
+            android:textColor="#ff999999"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/future_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            tools:text="5" />
+
+    </LinearLayout>
+
+    <!--</android.support.v7.widget.CardView>-->
+</LinearLayout>

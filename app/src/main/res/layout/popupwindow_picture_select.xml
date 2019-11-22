@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
+    android:gravity="center"
+    android:id="@+id/pop_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:gravity="center"
+        android:textColor="@color/plugin_camera_black"
+        android:text="拍照上传" />
+    <View style="@style/limit_line" />
+    <TextView
+        android:textColor="@color/plugin_camera_black"
+        android:id="@+id/albums"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:gravity="center"
+        android:text="相册上传" />
+    <View style="@style/limit_line" />
+    <TextView
+        android:textColor="@color/plugin_camera_black"
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:gravity="center"
+        android:text="@string/cancel" />
+</LinearLayout>
