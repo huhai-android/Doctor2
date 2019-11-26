@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/ll_activity">
 
     <include layout="@layout/layout_titlebar" />
+
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
 
     <EditText
         android:id="@+id/et_content"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_260"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/bg_round_white"
         android:gravity="left|top"
         android:padding="8dp"
@@ -29,16 +43,30 @@
         android:text="0/300"
         android:textColor="@color/plugin_camera_black" />
 
-
     <TextView
-        android:layout_margin="@dimen/dp_10"
-        android:textColor="@color/colorRetry"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_lizi"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="     示例：简介：主任医师，临床医学博士，教授，博士研究生导师，中华中医药学会肿瘤专业委员会常务委员、中国中西医结合学会肿瘤专业委员会委员。近5年来发表学术论文8篇，参编医学著作3部。主持及参加国家级、市局级课题4项。擅长各种恶性肿瘤中西医结合综合治疗及内科疑难杂症的中西医结合诊治，尤其致力于肿瘤转移规范化、
-个体化、多学科（MDT）综合治疗理念的普及和新技术的推广"></TextView>
+        android:text="示例："
+        android:textColor="#ff333333"
+        android:textSize="16sp"
+        />
+    <TextView
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:id="@+id/tv_example"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="#ff666666"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/shanchang"></TextView>
 
     <TextView
+        android:layout_marginBottom="@dimen/dp_30"
         android:id="@+id/next_step"
         android:layout_width="280dp"
         android:layout_height="@dimen/dp_50"
@@ -48,4 +76,6 @@
         android:gravity="center"
         android:text="提交"
         android:textColor="@color/white" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
 </LinearLayout>

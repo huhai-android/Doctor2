@@ -4,6 +4,10 @@
     android:layout_height="match_parent"
    >
 
+    <!--    <ImageView
+            android:src="@drawable/bg_lead"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ImageView>-->
     <TextView
         android:id="@+id/jump_step"
         android:layout_width="wrap_content"
@@ -17,32 +21,31 @@
         android:text="跳过"
         android:textColor="@color/white"
         android:textSize="17sp"></TextView>
-    <!--    <ImageView
-            android:src="@drawable/bg_lead"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ImageView>-->
+
 
     <TextView
-        android:paddingTop="@dimen/dp_17"
-        android:paddingBottom="@dimen/dp_17"
-        android:paddingLeft="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10"
-        android:background="@drawable/but_biankuangzuo"
+        android:id="@+id/tv_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center"
+        android:background="@drawable/but_biankuangyou"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_17"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_17"
+        android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="320dp"
-        android:text="点此可查看您的二维码名片来邀请患者"></TextView>
-
-
+        android:text="点击此处可查看并管理您的药房"></TextView>
     <TextView
-        android:background="@drawable/but_biankuang"
         android:id="@+id/next_step"
-        android:layout_marginBottom="58dp"
+        android:background="@drawable/but_biankuang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="58dp"
         android:paddingLeft="@dimen/dp_26"
         android:paddingTop="9dp"
         android:paddingRight="@dimen/dp_26"

@@ -172,9 +172,8 @@ public class ArchivesActivity extends BasicActivity {
                     H5PictureMessageEntity mH5PictureList = mGson.fromJson(data, H5PictureMessageEntity.class);
 //                    Intent intent = new Intent(ArchivesActivity.this, PictureViewerActivity.class);
 //                    intent.putExtra("pic_all", (ArrayList<String>) mH5PictureList.getUrl());
-//                    intent.putExtra("pic_position", mH5PictureList.getPosition());
-//                    startActivity(intent);
-//                    H5PictureMessageEntity mH5PictureList = mGson.fromJson(data, H5PictureMessageEntity.class);
+//                    intent.putExtra("pic_position", mH5PictureList.g
+//                    omJson(data, H5PictureMessageEntity.class);
 
                     Intent intent = new Intent(mContext, ShowOriginPictureActivity.class);
                     intent.putExtra("path", mH5PictureList.getUrl().get(mH5PictureList.getPosition()).getDisplayPath());

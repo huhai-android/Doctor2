@@ -40,7 +40,10 @@ import android.widget.Toast;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.app.hubert.guide.NewbieGuide;
+import com.app.hubert.guide.core.Controller;
+import com.app.hubert.guide.listener.OnLayoutInflatedListener;
 import com.app.hubert.guide.model.GuidePage;
+import com.app.hubert.guide.model.HighLight;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.kyleduo.switchbutton.SwitchButton;
@@ -158,8 +161,6 @@ import cn.org.bjca.sdk.core.kit.BJCASDK;
 import cn.org.bjca.sdk.core.kit.YWXListener;
 import lib_zxing.activity.CaptureActivity;
 import lib_zxing.activity.CodeUtils;
-
-import static com.newdjk.doctor.basic.BasicActivity.activity;
 
 
 /**
@@ -390,6 +391,10 @@ public class HomeFragment extends BasicFragment {
     LinearLayout lvFutureJob;
     @BindView(R.id.easylayout)
     EasyRefreshLayout easylayout;
+    @BindView(R.id.im_bg)
+    ImageView imBg;
+    @BindView(R.id.lv_today_job_child)
+    LinearLayout lvTodayJobChild;
 
 
     // private MessageAdapter mAdapter;
@@ -1562,6 +1567,57 @@ public class HomeFragment extends BasicFragment {
                 GetNoticeManagePageList();
 
                 break;
+
+            case 12:
+                showLead();
+
+                break;
+        }
+
+    }
+
+    //展示引导层
+    private void showLead() {
+        try {
+            NewbieGuide.with(getActivity())
+                    .setLabel("grid_view_guide2")
+                    .alwaysShow(true)
+                    .addGuidePage(GuidePage.newInstance()
+                            .addHighLight(lvTodayJobChild, HighLight.Shape.RECTANGLE)
+                            .setEverywhereCancelable(true)
+                            .setLayoutRes(R.layout.view_guide3, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                @Override
+                                public void onLayoutInflated(View view, final Controller controller) {
+                                    TextView textView = view.findViewById(R.id.jump_step);
+                                    textView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            controller.remove();
+                                        }
+                                    });
+                                }
+                            }))
+
+                    .addGuidePage(GuidePage.newInstance().addHighLight(helpCenter, HighLight.Shape.RECTANGLE)
+                            .setEverywhereCancelable(true)
+                            .setLayoutRes(R.layout.view_guide4, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                @Override
+                                public void onLayoutInflated(View view, final Controller controller) {
+                                    TextView textView = view.findViewById(R.id.jump_step);
+                                    textView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            controller.remove();
+                                        }
+                                    });
+                                }
+                            })
+                    )
+
+                    .show();
+
+        }catch (Exception e){
+
         }
 
     }
@@ -2167,6 +2223,7 @@ public class HomeFragment extends BasicFragment {
             // Log.d(TAG,"数据长度"+listuse.size());
             HomeTabFragment homeTabFragment = new HomeTabFragment();
             homeTabFragment.setdata(listuse, position);
+            homeTabFragment.setview(helpCenter,lvTodayJobChild);
             homeTabFragment.setonclickListener(new OnTabItemClickListener() {
                 @Override
                 public void onItemChildClick(AppLicationEntity appLicationEntity) {

@@ -43,6 +43,10 @@ public class UpdateInfoActivity extends BasicActivity {
     @BindView(R.id.next_step)
     TextView nextStep;
     private static final int MAX_COUNT = 300;
+    @BindView(R.id.tv_example)
+    TextView tvExample;
+    @BindView(R.id.tv_lizi)
+    TextView tvLizi;
     private String mAction;
     private DoctorInfoByIdEntity mDoctorInfoByIdEntity;
     private String mData;
@@ -56,21 +60,23 @@ public class UpdateInfoActivity extends BasicActivity {
     protected void initView() {
         mAction = getIntent().getStringExtra("action");
         mData = getIntent().getStringExtra("data");
-        if (!TextUtils.isEmpty(mAction)){
+        if (!TextUtils.isEmpty(mAction)) {
             if (mAction.equals("funGoodAt")) {
                 initBackTitle("我的专长");
                 etContent.setHint("请输入我的专长");
-                etContent.setText(mData+"");
-            }
-            else if (mAction.equals("funTitle")) {
+                etContent.setText(mData + "");
+                tvExample.setText(getString(R.string.shanchang) + "");
+
+            } else if (mAction.equals("funTitle")) {
                 initBackTitle("我的专治");
                 etContent.setHint("请输入我的专治");
-                etContent.setText(mData+"");
-            }
-            else if (mAction.equals("funIntroduction")) {
+                etContent.setText(mData + "");
+                tvLizi.setVisibility(View.GONE);
+            } else if (mAction.equals("funIntroduction")) {
                 initBackTitle("我的简介");
                 etContent.setHint("请输入我的简介");
-                etContent.setText(mData+"");
+                etContent.setText(mData + "");
+                tvExample.setText(getString(R.string.jianjie) + "");
             }
         }
 
@@ -80,7 +86,7 @@ public class UpdateInfoActivity extends BasicActivity {
     protected void initListener() {
         nextStep.setOnClickListener(this);
         InputFilter[] filters = new InputFilter[1];
-        filters[0] = new InputFilter.LengthFilter(MAX_COUNT){
+        filters[0] = new InputFilter.LengthFilter(MAX_COUNT) {
 
             @Override
             public CharSequence filter(CharSequence source, int start, int end,
@@ -89,7 +95,7 @@ public class UpdateInfoActivity extends BasicActivity {
                 //获取字符个数(一个中文算2个字符)
                 int destLen = getCharacterNum(dest.toString());
                 int sourceLen = getCharacterNum(source.toString());
-                if(destLen + sourceLen > MAX_COUNT){
+                if (destLen + sourceLen > MAX_COUNT) {
                     toast("字数超过限制");
                     return "";
                 }
@@ -124,15 +130,15 @@ public class UpdateInfoActivity extends BasicActivity {
 
     @Override
     protected void otherViewClick(View view) {
-     switch (view.getId()) {
-         case R.id.next_step:
-             String message = etContent.getText().toString();
-             Intent intent = new Intent();
-             intent.putExtra("message",message);
-             setResult(RESULT_OK,intent);
-             finish();
-             break;
-     }
+        switch (view.getId()) {
+            case R.id.next_step:
+                String message = etContent.getText().toString();
+                Intent intent = new Intent();
+                intent.putExtra("message", message);
+                setResult(RESULT_OK, intent);
+                finish();
+                break;
+        }
     }
 
     @Override
@@ -146,30 +152,31 @@ public class UpdateInfoActivity extends BasicActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
+
     /**
-     *
      * @param content
      * @return
      */
-    public static int getCharacterNum(String content){
-        if(content.equals("")||null == content){
+    public static int getCharacterNum(String content) {
+        if (content.equals("") || null == content) {
             return 0;
-        }else {
-            return content.length()+getChineseNum(content);
+        } else {
+            return content.length() + getChineseNum(content);
         }
 
     }
 
     /**
      * 计算字符串的中文长度
+     *
      * @param s
      * @return
      */
-    public static int getChineseNum(String s){
+    public static int getChineseNum(String s) {
         int num = 0;
         char[] myChar = s.toCharArray();
-        for(int i=0;i<myChar.length;i++){
-            if((char)(byte)myChar[i] != myChar[i]){
+        for (int i = 0; i < myChar.length; i++) {
+            if ((char) (byte) myChar[i] != myChar[i]) {
                 num++;
             }
         }

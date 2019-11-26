@@ -1,6 +1,7 @@
 package com.newdjk.doctor.ui.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -10,8 +11,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,20 +27,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.lxq.okhttp.response.GsonResponseHandler;
-import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.basic.BasicActivity;
 import com.newdjk.doctor.model.HttpUrl;
 import com.newdjk.doctor.tools.CommonMethod;
-import com.newdjk.doctor.ui.activity.min.PersonalDataActivity;
 import com.newdjk.doctor.ui.entity.DoctorInfoByIdEntity;
 import com.newdjk.doctor.ui.entity.PicturePathEntity;
 import com.newdjk.doctor.ui.entity.ResponseEntity;
-import com.newdjk.doctor.ui.entity.TitleEntity;
 import com.newdjk.doctor.ui.entity.UpLoadImageSuccess;
-import com.newdjk.doctor.ui.entity.UpdateImageView;
 import com.newdjk.doctor.utils.ImageBase64;
 import com.newdjk.doctor.views.AlbumsTypeSelectedpopwin;
 import com.yalantis.ucrop.UCrop;
@@ -45,6 +43,7 @@ import com.yalantis.ucrop.UCrop;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +56,7 @@ import butterknife.ButterKnife;
 public class UploadImageActivity extends BasicActivity {
 
 
+    private static final String TAG = "UploadImageActivity";
     @BindView(R.id.top_left)
     ImageView topLeft;
     @BindView(R.id.tv_left)
@@ -73,10 +73,15 @@ public class UploadImageActivity extends BasicActivity {
     LinearLayout liearTitlebar;
     @BindView(R.id.btn_upload)
     AppCompatButton btnUpload;
+    @BindView(R.id.im_takepic)
+    ImageView imTakepic;
+    @BindView(R.id.im_uploadpic)
+    ImageView imUploadpic;
     private AlbumsTypeSelectedpopwin AlbumsTypeSelectedpopwin;
     private final static int REQ_PERMISSION_CODE = 0x100;
     private String mImgPath;
     private DoctorInfoByIdEntity mDoctorInfoByIdEntity;
+    private String mPicturePath;
 
     @Override
     protected int initViewResId() {
@@ -121,7 +126,44 @@ public class UploadImageActivity extends BasicActivity {
             }
         });
 
+
+        imTakepic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkPermission()) {
+                    Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    String f = System.currentTimeMillis() + ".jpg";
+                    mPicturePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + f;
+                    File file = new File(mPicturePath);
+                    file.getParentFile().mkdirs();
+                    Log.i("zdp", mPicturePath);
+                    Uri uri;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        uri = FileProvider.getUriForFile(mContext, "com.newdjk.doctor.file.provider", file);
+                    } else {
+                        uri = Uri.fromFile(file);
+                    }
+
+                    //添加权限
+                    openCameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                    startActivityForResult(openCameraIntent, 1);
+                }
+
+            }
+        });
+        imUploadpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkPermission()) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 2);
+                }
+
+            }
+        });
     }
+
     private boolean checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             List<String> permissions = new ArrayList<>();
@@ -167,9 +209,16 @@ public class UploadImageActivity extends BasicActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            Log.d(TAG, "XXXXXXXXXXXXXX");
+
+        } else {
+            Log.d(TAG, "yyyyyyyyyyyyy");
+        }
         if (resultCode == RESULT_OK) {
+
             switch (requestCode) {
-                case 1:
+                case 1:  //拍照
                     //  String image64 = ImageBase64.encodeImage(mSelectedPictureDialog.getPicturePath());
                     String f1 = System.currentTimeMillis() + ".jpg";
                     String picturePath1 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + f1;
@@ -177,19 +226,14 @@ public class UploadImageActivity extends BasicActivity {
                     file1.getParentFile().mkdirs();
                     Log.i("zdp", picturePath1);
                     Uri uri1;
-
                     uri1 = Uri.fromFile(file1);
-                    if (AlbumsTypeSelectedpopwin != null) {
-                        Uri selectedImage1 = Uri.fromFile(new File(AlbumsTypeSelectedpopwin.getPicturePath()));
-                        startCropActivity(selectedImage1, uri1);
-                    }
+                    Uri selectedImage1 = Uri.fromFile(new File(mPicturePath));
+                    startCropActivity(selectedImage1, uri1);
 
                     break;
-                case 2:
+                case 2: //相册
                     Log.i("zdp", "fdsf");
-
                     try {
-
                         String f = System.currentTimeMillis() + ".jpg";
                         String picturePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + f;
                         File file = new File(picturePath);
@@ -218,10 +262,8 @@ public class UploadImageActivity extends BasicActivity {
                     final Uri croppedUri = UCrop.getOutput(data);
                     try {
                         if (croppedUri != null) {
-
                             String path = croppedUri.getPath();  //获取照片路径
                             uploadPicture(path);
-
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -254,8 +296,15 @@ public class UploadImageActivity extends BasicActivity {
     }
 
 
+
+    @SuppressLint("StaticFieldLeak")
     private void uploadPicture(String path) {
+
         new AsyncTask<String, Integer, String>() {
+            protected WeakReference<String> mTarget;
+            // 弱引用是允许被gc回收的;
+
+
             @Override
             protected String doInBackground(String... strings) {
                 String image64 = ImageBase64.bitmapToString(strings[0]);
@@ -275,6 +324,7 @@ public class UploadImageActivity extends BasicActivity {
                             EventBus.getDefault().post(new UpLoadImageSuccess(mImgPath));
                             Log.i("PersonalDataActivity", "mImgPath=" + mImgPath);
                             toast("上传图片成功");
+                            finish();
                         } else {
                             toast(entituy.getMessage());
                         }
@@ -293,6 +343,7 @@ public class UploadImageActivity extends BasicActivity {
         }.execute(path);
 
     }
+
     @Override
     protected void initData() {
 
@@ -306,5 +357,6 @@ public class UploadImageActivity extends BasicActivity {
 
         }
     }
+
 
 }

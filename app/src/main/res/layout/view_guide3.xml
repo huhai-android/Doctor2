@@ -2,7 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
+
+    >
+
+    <!--    <ImageView
+            android:src="@drawable/bg_lead"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ImageView>-->
+
 
     <TextView
         android:id="@+id/jump_step"
@@ -17,32 +24,27 @@
         android:text="跳过"
         android:textColor="@color/white"
         android:textSize="17sp"></TextView>
-    <!--    <ImageView
-            android:src="@drawable/bg_lead"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ImageView>-->
 
     <TextView
         android:paddingTop="@dimen/dp_17"
         android:paddingBottom="@dimen/dp_17"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
-        android:background="@drawable/but_biankuangzuo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginTop="320dp"
-        android:text="点此可查看您的二维码名片来邀请患者"></TextView>
-
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginTop="220dp"
+        android:background="@drawable/but_biankuangzuo"
+        android:text="点击此处可查看您的今日任务"></TextView>
 
     <TextView
-        android:background="@drawable/but_biankuang"
         android:id="@+id/next_step"
-        android:layout_marginBottom="58dp"
+        android:background="@drawable/but_biankuang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="58dp"
         android:paddingLeft="@dimen/dp_26"
         android:paddingTop="9dp"
         android:paddingRight="@dimen/dp_26"
