@@ -143,7 +143,7 @@ public class AdBannerInfo implements Serializable{
             this.ContentType = ContentType;
         }
 
-        public Object getContentLink() {
+        public String getContentLink() {
             return ContentLink;
         }
 

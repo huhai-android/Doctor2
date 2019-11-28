@@ -64,6 +64,7 @@ import com.newdjk.doctor.ui.activity.GongGaoActivity;
 import com.newdjk.doctor.ui.activity.HelpCenterActivity;
 import com.newdjk.doctor.ui.activity.Mdt.MDTActivity;
 import com.newdjk.doctor.ui.activity.MianZhenActivity;
+import com.newdjk.doctor.ui.activity.MyCertActivity;
 import com.newdjk.doctor.ui.activity.MyCheckCenterActivity;
 import com.newdjk.doctor.ui.activity.MypharmacyActivity;
 import com.newdjk.doctor.ui.activity.OnlineConsultingActivity;
@@ -966,10 +967,20 @@ public class HomeFragment extends BasicFragment {
             @Override
             public void OnBannerClick(int position) {
                 // toast("点击了图片"+position);
-                Intent intent = new Intent(getContext(), BannerDetailActivity.class);
-                intent.putExtra("banner", bannerdata.get(position).getLinkContent());
-                intent.putExtra("bannerInfo", bannerdata.get(position));
-                startActivity(intent);
+                if (TextUtils.isEmpty(bannerdata.get(position).getContentLink())){
+
+                    Intent intent = new Intent(getContext(), BannerDetailActivity.class);
+                    intent.putExtra("banner", bannerdata.get(position).getLinkContent());
+                    intent.putExtra("bannerInfo", bannerdata.get(position));
+                    startActivity(intent);
+
+                }else {
+                    Intent helpintent = new Intent(getContext(), PrescriptionActivity.class);
+                    helpintent.putExtra("type", 38);
+                    helpintent.putExtra("LinkUrl", bannerdata.get(position).getContentLink());
+                    startActivity(helpintent);
+                }
+
             }
         });
 

@@ -53,6 +53,7 @@ import com.newdjk.doctor.ui.activity.IM.ChatActivity;
 import com.newdjk.doctor.ui.activity.IM.GroupChatActivity;
 import com.newdjk.doctor.ui.activity.Mdt.AddMDTDocumentActivity;
 import com.newdjk.doctor.ui.activity.Mdt.MDTInputReportFromListForNet2Activity;
+import com.newdjk.doctor.ui.activity.login.Authentication1Activity;
 import com.newdjk.doctor.ui.entity.ConsultMessageEntity;
 import com.newdjk.doctor.ui.entity.Entity;
 import com.newdjk.doctor.ui.entity.ImRelationRecode;
@@ -71,6 +72,8 @@ import com.newdjk.doctor.ui.entity.ShareSuccessEntity;
 import com.newdjk.doctor.ui.entity.SignFinshEntity;
 import com.newdjk.doctor.ui.entity.SignIDEntity;
 import com.newdjk.doctor.ui.entity.YWXListenerEntity;
+import com.newdjk.doctor.utils.AppUtils;
+import com.newdjk.doctor.utils.AppUtils2;
 import com.newdjk.doctor.utils.CertUtis;
 import com.newdjk.doctor.utils.ImageBase64;
 import com.newdjk.doctor.utils.LocationUtils;
@@ -830,6 +833,7 @@ public class PrescriptionActivity extends BasicActivity implements IWXAPIEventHa
         });
 
         //显示pdf报告
+
         testBridgeWebView.registerHandler("goDetailGoodsId", new BridgeHandler() {
             @Override
             public void handler(String data, CallBackFunction function) {
@@ -839,6 +843,23 @@ public class PrescriptionActivity extends BasicActivity implements IWXAPIEventHa
                 prescriptionTCMIntent.putExtra("type", 36);
 
                 mContext.startActivity(prescriptionTCMIntent);
+
+            }
+        });
+        //去认证
+        testBridgeWebView.registerHandler("toAuthenticate", new BridgeHandler() {
+            @Override
+            public void handler(String data, CallBackFunction function) {
+                int  mStatus = SpUtils.getInt(Contants.Status, 0);
+              //  医生状态(0-未审核，1-审核通过，2-审核失败，3-审核中)
+                    if (mStatus==0||mStatus==2){
+                        Intent intent = new Intent(PrescriptionActivity.this, Authentication1Activity.class);
+                        startActivity(intent);
+                    }else if (mStatus==3||mStatus==1){
+                        AppUtils2.checkAuthenStatus(mStatus, PrescriptionActivity.this);
+
+                    }
+
 
             }
         });

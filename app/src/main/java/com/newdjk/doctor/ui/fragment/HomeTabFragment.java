@@ -93,7 +93,7 @@ public class HomeTabFragment extends BasicFragment {
                     View childAt3 = functionList.getChildAt(3);
                     NewbieGuide.with(getActivity())
                             .setLabel("grid_view_guide")
-                            .alwaysShow(true)
+                            .alwaysShow(false)
                             .setOnGuideChangedListener(new OnGuideChangedListener() {
                                 @Override
                                 public void onShowed(Controller controller) {
@@ -112,6 +112,23 @@ public class HomeTabFragment extends BasicFragment {
                                     }
                                 }
                             })
+
+                            //引导层3
+                            .addGuidePage(GuidePage.newInstance()
+                                    .addHighLight(lvTodayJobChild, HighLight.Shape.RECTANGLE)
+                                    .setEverywhereCancelable(true)
+                                    .setLayoutRes(R.layout.view_guide3, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                                        @Override
+                                        public void onLayoutInflated(View view, final Controller controller) {
+                                            TextView textView = view.findViewById(R.id.jump_step);
+                                            textView.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    controller.remove();
+                                                }
+                                            });
+                                        }
+                                    }))
                             //引导层1
                             .addGuidePage(GuidePage.newInstance()
                                     .addHighLight(childAt, HighLight.Shape.RECTANGLE)
@@ -146,22 +163,6 @@ public class HomeTabFragment extends BasicFragment {
                                         }
                                     })
                             )
-                            //引导层3
-                            .addGuidePage(GuidePage.newInstance()
-                                    .addHighLight(lvTodayJobChild, HighLight.Shape.RECTANGLE)
-                                    .setEverywhereCancelable(true)
-                                    .setLayoutRes(R.layout.view_guide3, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                        @Override
-                                        public void onLayoutInflated(View view, final Controller controller) {
-                                            TextView textView = view.findViewById(R.id.jump_step);
-                                            textView.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    controller.remove();
-                                                }
-                                            });
-                                        }
-                                    }))
                             //引导层4
                             .addGuidePage(GuidePage.newInstance().addHighLight(helpcenter, HighLight.Shape.RECTANGLE)
                                     .setEverywhereCancelable(true)
@@ -172,6 +173,7 @@ public class HomeTabFragment extends BasicFragment {
                                             textView.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
+                                                    isjump = true;
                                                     controller.remove();
                                                 }
                                             });

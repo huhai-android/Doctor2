@@ -298,7 +298,7 @@
                     android:layout_marginRight="@dimen/dp_20"
                     android:background="@drawable/be_good_at_box"
                     android:gravity="top"
-                    android:hint="请输入您本人擅长治疗的疾病及擅长的专业领域,如：各种恶性肿瘤中西医结合综合治疗及内科疑难杂症的中西医结合诊治。包括肺癌、肝癌、胃癌、肠癌、乳腺癌、鼻咽癌、食道癌、淋巴瘤及妇科等各系统肿瘤。。"
+                    android:hint="请输入您本人擅长治疗的疾病及擅长的专业领域,如：各种恶性肿瘤中西医结合综合治疗及内科疑难杂症的中西医结合诊治。包括肺癌、肝癌、胃癌、肠癌、乳腺癌、鼻咽癌、食道癌、淋巴瘤及妇科等各系统肿瘤。"
                     android:padding="@dimen/dp_5"
                     android:textColor="@color/plugin_camera_black"
                     android:textColorHint="@color/font_gray_3"
