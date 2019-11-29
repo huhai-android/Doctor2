@@ -392,7 +392,7 @@ public class PrescriptionActivity extends BasicActivity implements IWXAPIEventHa
             //外部链接
         } else if (type == 38) {
             liearTitlebar.setVisibility(View.VISIBLE);
-            initBackTitle("公告详情");
+            initBackTitle("详情");
             testBridgeWebView.loadUrl(mLinkUrl);
         } else {
             Log.d(TAG, "是否执行了111---" + mRejectId);

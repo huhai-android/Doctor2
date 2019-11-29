@@ -1,6 +1,9 @@
 package com.newdjk.doctor.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -28,6 +31,7 @@ import com.newdjk.doctor.BuildConfig;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.basic.BasicFragment;
 import com.newdjk.doctor.iInterface.OnTabItemClickListener;
+import com.newdjk.doctor.ui.activity.PrescriptionActivity;
 import com.newdjk.doctor.ui.adapter.FunctionAdapter;
 import com.newdjk.doctor.ui.entity.AppLicationEntity;
 import com.newdjk.doctor.ui.entity.UpdatePushView;
@@ -65,27 +69,17 @@ public class HomeTabFragment extends BasicFragment {
     private boolean isjump = false;
     private ImageView helpcenter;
     private LinearLayout lvTodayJobChild;
-
-    @Override
-    protected int initViewResId() {
-        return R.layout.fragment_app;
-    }
-
-    @Override
-    protected void initView() {
-        mManagerLayout = new GridLayoutManager(mContext, 4);
-        functionList.setLayoutManager(mManagerLayout);
-        mFunctionAdapter = new FunctionAdapter(listall);
-        functionList.setAdapter(mFunctionAdapter);
-
-        functionList.post(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, "显示了");
-                //高亮gridView的第2个子view
-                try {
+    private static final int LOADING_SUCCESS = 2;
 
 
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case LOADING_SUCCESS:
                     if (isshow) {
                         return;
                     }
@@ -107,7 +101,7 @@ public class HomeTabFragment extends BasicFragment {
                                     Log.e(TAG, "引导层消失");
                                     //引导层消失（多页切换不会触发）
                                     if (!isjump) {
-                                      //  EventBus.getDefault().post(new UpdatePushView(12));
+                                        //  EventBus.getDefault().post(new UpdatePushView(12));
 
                                     }
                                 }
@@ -183,6 +177,33 @@ public class HomeTabFragment extends BasicFragment {
                             .show();
 
                     isshow = true;
+
+
+                    break;
+
+            }
+        }
+    };
+
+    @Override
+    protected int initViewResId() {
+        return R.layout.fragment_app;
+    }
+
+    @Override
+    protected void initView() {
+        mManagerLayout = new GridLayoutManager(mContext, 4);
+        functionList.setLayoutManager(mManagerLayout);
+        mFunctionAdapter = new FunctionAdapter(listall);
+        functionList.setAdapter(mFunctionAdapter);
+
+        functionList.post(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "显示了");
+                //高亮gridView的第2个子view
+                try {
+                    mHandler.sendEmptyMessageDelayed(LOADING_SUCCESS, 1000);
                 } catch (Exception e) {
 
                 }

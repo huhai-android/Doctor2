@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
@@ -25,6 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bilibili.boxing.Boxing;
+import com.bilibili.boxing.BoxingMediaLoader;
+import com.bilibili.boxing.loader.IBoxingMediaLoader;
 import com.bilibili.boxing.model.config.BoxingConfig;
 import com.bilibili.boxing.model.entity.BaseMedia;
 import com.bilibili.boxing_impl.ui.BoxingActivity;
@@ -56,6 +60,8 @@ import com.newdjk.doctor.views.DisplayUtil;
 import com.newdjk.doctor.views.LoadDialog;
 import com.newdjk.doctor.views.MultiImageUploadView;
 import com.newdjk.doctor.views.RoundImageUploadView;
+import com.newdjk.doctor.views.SelectedPictureDialog;
+import com.newdjk.doctor.views.SelectedPictureDialog2;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
 
@@ -157,6 +163,7 @@ public class Authentication3ActivityNew extends BasicActivity {
     private String mCategoryItemId;
     private String mJobname;
     private String mWords = "";
+    private SelectedPictureDialog2 mSelectedPictureDialog;
 
     @Override
     protected int initViewResId() {
@@ -302,13 +309,18 @@ public class Authentication3ActivityNew extends BasicActivity {
     }
 
     private void startSelectImage(RoundImageUploadView uploadView) {
-        BoxingConfig mulitImgConfig = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG)
-                .needCamera(R.drawable.ic_camera)
-                .needGif()
-                .withMaxCount(uploadView.getMax() - uploadView.getFiles().size());
-        Boxing.of(mulitImgConfig).
-                withIntent(this, BoxingActivity.class).
-                start(this, IMG_REQUEST_CODE);
+//        BoxingConfig mulitImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG)
+//                .needCamera(R.drawable.ic_camera)
+//                .needGif()
+//                .withMaxCount(uploadView.getMax() - uploadView.getFiles().size());
+//        BoxingConfig singleImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG).withMediaPlaceHolderRes(R.drawable.ic_camera);
+//
+//        Boxing.of(singleImgConfig).
+//                withIntent(this, BoxingActivity.class).
+//                start(this, IMG_REQUEST_CODE);
+
+        mSelectedPictureDialog = new SelectedPictureDialog2(Authentication3ActivityNew.this, "first");
+        mSelectedPictureDialog.show();
     }
 
     @Override
@@ -552,13 +564,13 @@ public class Authentication3ActivityNew extends BasicActivity {
 
 
     // 处理选择的照片的地址
-    private void refreshAdapter(List<BaseMedia> picList, int mFlag) {
+    private void refreshAdapter(List<String> picList, int mFlag) {
         mLocalList1.clear();
         mLocalList2.clear();
         mLocalList3.clear();
-        for (BaseMedia localMedia : picList) {
+        for (String localMedia : picList) {
             //被压缩后的图片路径
-            String compressPath = localMedia.getPath(); //压缩后的图片路径
+            String compressPath = localMedia.toString(); //压缩后的图片路径
             if (mFlag == R.id.upload_view1) {
 
                 mLocalList1.add(compressPath);//把图片添加到将要上传的图片数组中
@@ -609,11 +621,33 @@ public class Authentication3ActivityNew extends BasicActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case IMG_REQUEST_CODE:
-                    ArrayList<BaseMedia> images = Boxing.getResult(data);
-
+                case 1:
+                    List<String> images =new ArrayList();
+                    Log.i("zdp", "path=" + mSelectedPictureDialog.getPicturePath());
+                    images.add(mSelectedPictureDialog.getPicturePath());
                     refreshAdapter(images, mFlag);
 
+                    break;
+                case 2:
+                    Log.i("zdp", "fdsf");
+                    try {
+                        Uri selectedImage = data.getData(); //获取系统返回的照片的Uri
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        Cursor cursor = getContentResolver().query(selectedImage,
+                                filePathColumn, null, null, null);//从系统表中查询指定Uri对应的照片
+                        cursor.moveToFirst();
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        String path = cursor.getString(columnIndex);  //获取照片路径
+
+                        List<String> images2 =new ArrayList();
+                        Log.i("zdp", "path=" + path);
+                        images2.add(path);
+                        refreshAdapter(images2, mFlag);
+                        cursor.close();
+                    } catch (Exception e) {
+                        // TODO Auto-generatedcatch block
+                        e.printStackTrace();
+                    }
                     break;
             }
         }
