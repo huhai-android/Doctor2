@@ -119,6 +119,7 @@ public class Contants {
     public static final String Type= "Type";
     public static final String MDTINFO= "MDTINFO";
     public static final String SubjectBuyRecordId= "SubjectBuyRecordId";
+    public static final String Haslogin= "haslogin";
 
 
 

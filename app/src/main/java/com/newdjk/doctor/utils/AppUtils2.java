@@ -164,7 +164,7 @@ public class AppUtils2 {
         if (s == 1) {//已经认证
             content = "亲，您的资质已认证通过！";
         } else if (s == 3) {
-            content = "对不起，您的资料正在审核中，此功能暂时不能使用，请耐心等待";
+            content = "亲，您的资质正在认证中，请耐心等候！";
         }
 
         mDialog = new RenzhenDialog(ctx);

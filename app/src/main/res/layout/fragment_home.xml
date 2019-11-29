@@ -45,12 +45,22 @@
                         android:layout_marginTop="@dimen/dp_10"
                         android:orientation="vertical">
 
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
                         <com.newdjk.doctor.views.ViewPagerForScrollView
+                            android:visibility="gone"
                             android:id="@+id/tabviewpager"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
 
+                            <include
+                                layout="@layout/layout_home_tab_lead"
+                                android:visibility="gone" />
+                        </FrameLayout>
                         <LinearLayout
                             android:id="@+id/dot_horizontal"
                             android:layout_width="match_parent"

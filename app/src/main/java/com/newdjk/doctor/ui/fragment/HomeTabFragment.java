@@ -4,39 +4,30 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.hubert.guide.NewbieGuide;
 import com.app.hubert.guide.core.Controller;
 import com.app.hubert.guide.listener.OnGuideChangedListener;
 import com.app.hubert.guide.listener.OnLayoutInflatedListener;
-import com.app.hubert.guide.listener.OnPageChangedListener;
 import com.app.hubert.guide.model.GuidePage;
 import com.app.hubert.guide.model.HighLight;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.newdjk.doctor.BuildConfig;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.basic.BasicFragment;
 import com.newdjk.doctor.iInterface.OnTabItemClickListener;
-import com.newdjk.doctor.ui.activity.PrescriptionActivity;
+import com.newdjk.doctor.tools.Contants;
 import com.newdjk.doctor.ui.adapter.FunctionAdapter;
 import com.newdjk.doctor.ui.entity.AppLicationEntity;
-import com.newdjk.doctor.ui.entity.UpdatePushView;
-
-import org.greenrobot.eventbus.EventBus;
+import com.newdjk.doctor.utils.SpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +35,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
-import static com.newdjk.doctor.basic.BasicActivity.activity;
 
 /*
  *  @项目名：  Doctor
@@ -58,6 +47,7 @@ import static com.newdjk.doctor.basic.BasicActivity.activity;
 public class HomeTabFragment extends BasicFragment {
 
     private static final String TAG = "HomeTabFragment";
+
     private List<AppLicationEntity> listall = new ArrayList<>();
     @BindView(R.id.function_list)
     RecyclerView functionList;
@@ -73,118 +63,6 @@ public class HomeTabFragment extends BasicFragment {
 
 
 
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
-        @Override
-        @SuppressWarnings("unused")
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case LOADING_SUCCESS:
-                    if (isshow) {
-                        return;
-                    }
-                    View childAt = functionList.getChildAt(0);
-                    View childAt3 = functionList.getChildAt(3);
-                    NewbieGuide.with(getActivity())
-                            .setLabel("grid_view_guide")
-                            .alwaysShow(false)
-                            .setOnGuideChangedListener(new OnGuideChangedListener() {
-                                @Override
-                                public void onShowed(Controller controller) {
-                                    Log.e(TAG, "NewbieGuide onShowed: ");
-                                    //引导层显示
-
-                                }
-
-                                @Override
-                                public void onRemoved(Controller controller) {
-                                    Log.e(TAG, "引导层消失");
-                                    //引导层消失（多页切换不会触发）
-                                    if (!isjump) {
-                                        //  EventBus.getDefault().post(new UpdatePushView(12));
-
-                                    }
-                                }
-                            })
-
-                            //引导层3
-                            .addGuidePage(GuidePage.newInstance()
-                                    .addHighLight(lvTodayJobChild, HighLight.Shape.RECTANGLE)
-                                    .setEverywhereCancelable(true)
-                                    .setLayoutRes(R.layout.view_guide3, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                        @Override
-                                        public void onLayoutInflated(View view, final Controller controller) {
-                                            TextView textView = view.findViewById(R.id.jump_step);
-                                            textView.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    controller.remove();
-                                                }
-                                            });
-                                        }
-                                    }))
-                            //引导层1
-                            .addGuidePage(GuidePage.newInstance()
-                                    .addHighLight(childAt, HighLight.Shape.RECTANGLE)
-                                    .setEverywhereCancelable(true)
-                                    .setLayoutRes(R.layout.view_guide, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                        @Override
-                                        public void onLayoutInflated(View view, final Controller controller) {
-                                            TextView textView = view.findViewById(R.id.jump_step);
-                                            textView.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    isjump = true;
-                                                    controller.remove();
-                                                }
-                                            });
-                                        }
-                                    }))
-                            //引导层2
-                            .addGuidePage(GuidePage.newInstance().addHighLight(childAt3, HighLight.Shape.RECTANGLE)
-                                    .setEverywhereCancelable(true)
-                                    .setLayoutRes(R.layout.view_guide2, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                        @Override
-                                        public void onLayoutInflated(View view, final Controller controller) {
-                                            TextView textView = view.findViewById(R.id.jump_step);
-                                            textView.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    isjump = true;
-                                                    controller.remove();
-                                                }
-                                            });
-                                        }
-                                    })
-                            )
-                            //引导层4
-                            .addGuidePage(GuidePage.newInstance().addHighLight(helpcenter, HighLight.Shape.RECTANGLE)
-                                    .setEverywhereCancelable(true)
-                                    .setLayoutRes(R.layout.view_guide4, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                        @Override
-                                        public void onLayoutInflated(View view, final Controller controller) {
-                                            TextView textView = view.findViewById(R.id.jump_step);
-                                            textView.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    isjump = true;
-                                                    controller.remove();
-                                                }
-                                            });
-                                        }
-                                    })
-                            )
-                            .show();
-
-                    isshow = true;
-
-
-                    break;
-
-            }
-        }
-    };
-
     @Override
     protected int initViewResId() {
         return R.layout.fragment_app;
@@ -197,19 +75,7 @@ public class HomeTabFragment extends BasicFragment {
         mFunctionAdapter = new FunctionAdapter(listall);
         functionList.setAdapter(mFunctionAdapter);
 
-        functionList.post(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, "显示了");
-                //高亮gridView的第2个子view
-                try {
-                    mHandler.sendEmptyMessageDelayed(LOADING_SUCCESS, 1000);
-                } catch (Exception e) {
 
-                }
-            }
-
-        });
     }
 
 
@@ -311,8 +177,8 @@ public class HomeTabFragment extends BasicFragment {
 
 
     public void setview(ImageView helpCenter, LinearLayout lvTodayJobChild) {
-            this.helpcenter=helpCenter;
-            this.lvTodayJobChild=lvTodayJobChild;
+        this.helpcenter = helpCenter;
+        this.lvTodayJobChild = lvTodayJobChild;
 
     }
 }

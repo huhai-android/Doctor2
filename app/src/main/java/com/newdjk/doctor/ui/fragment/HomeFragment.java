@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.ajguan.library.EasyRefreshLayout;
 import com.app.hubert.guide.NewbieGuide;
 import com.app.hubert.guide.core.Controller;
+import com.app.hubert.guide.listener.OnGuideChangedListener;
 import com.app.hubert.guide.listener.OnLayoutInflatedListener;
 import com.app.hubert.guide.model.GuidePage;
 import com.app.hubert.guide.model.HighLight;
@@ -64,7 +65,6 @@ import com.newdjk.doctor.ui.activity.GongGaoActivity;
 import com.newdjk.doctor.ui.activity.HelpCenterActivity;
 import com.newdjk.doctor.ui.activity.Mdt.MDTActivity;
 import com.newdjk.doctor.ui.activity.MianZhenActivity;
-import com.newdjk.doctor.ui.activity.MyCertActivity;
 import com.newdjk.doctor.ui.activity.MyCheckCenterActivity;
 import com.newdjk.doctor.ui.activity.MypharmacyActivity;
 import com.newdjk.doctor.ui.activity.OnlineConsultingActivity;
@@ -396,6 +396,22 @@ public class HomeFragment extends BasicFragment {
     ImageView imBg;
     @BindView(R.id.lv_today_job_child)
     LinearLayout lvTodayJobChild;
+    @BindView(R.id.lv_tab1)
+    LinearLayout lvTab1;
+    @BindView(R.id.lv_tab2)
+    LinearLayout lvTab2;
+    @BindView(R.id.lv_tab3)
+    LinearLayout lvTab3;
+    @BindView(R.id.lv_tab4)
+    LinearLayout lvTab4;
+    @BindView(R.id.lv_tab5)
+    LinearLayout lvTab5;
+    @BindView(R.id.lv_tab6)
+    LinearLayout lvTab6;
+    @BindView(R.id.lv_tab7)
+    LinearLayout lvTab7;
+    @BindView(R.id.lv_tab_lead)
+    LinearLayout lvTabLead;
 
 
     // private MessageAdapter mAdapter;
@@ -967,14 +983,14 @@ public class HomeFragment extends BasicFragment {
             @Override
             public void OnBannerClick(int position) {
                 // toast("点击了图片"+position);
-                if (TextUtils.isEmpty(bannerdata.get(position).getContentLink())){
+                if (TextUtils.isEmpty(bannerdata.get(position).getContentLink())) {
 
                     Intent intent = new Intent(getContext(), BannerDetailActivity.class);
                     intent.putExtra("banner", bannerdata.get(position).getLinkContent());
                     intent.putExtra("bannerInfo", bannerdata.get(position));
                     startActivity(intent);
 
-                }else {
+                } else {
                     Intent helpintent = new Intent(getContext(), PrescriptionActivity.class);
                     helpintent.putExtra("type", 38);
                     helpintent.putExtra("LinkUrl", bannerdata.get(position).getContentLink());
@@ -1271,6 +1287,7 @@ public class HomeFragment extends BasicFragment {
         }
         initviewpager();
 
+
     }
 
     /**
@@ -1459,6 +1476,20 @@ public class HomeFragment extends BasicFragment {
 //                        .setLayoutRes(R.layout.view_guide))
 //                .show();
 
+        boolean isfiestlogin = SpUtils.getBoolean(Contants.Haslogin, false);
+
+        if (mDoctype == 1) {
+            if (isfiestlogin) {//已经显示过了引导界面
+                tabviewpager.setVisibility(View.VISIBLE);
+                lvTabLead.setVisibility(View.GONE);
+            } else { //未显示引导界面
+                tabviewpager.setVisibility(View.GONE);
+                lvTabLead.setVisibility(View.VISIBLE);
+            }
+            showLead();
+        } else if (mDoctype == 2) {
+            tabviewpager.setVisibility(View.VISIBLE);
+        }
 
         return rootView;
     }
@@ -1580,7 +1611,7 @@ public class HomeFragment extends BasicFragment {
                 break;
 
             case 12:
-                showLead();
+                // showLead();
 
                 break;
         }
@@ -1589,48 +1620,96 @@ public class HomeFragment extends BasicFragment {
 
     //展示引导层
     private void showLead() {
-        try {
-            NewbieGuide.with(getActivity())
-                    .setLabel("grid_view_guide2")
-                    .alwaysShow(true)
-                    .addGuidePage(GuidePage.newInstance()
-                            .addHighLight(lvTodayJobChild, HighLight.Shape.RECTANGLE)
-                            .setEverywhereCancelable(true)
-                            .setLayoutRes(R.layout.view_guide3, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                @Override
-                                public void onLayoutInflated(View view, final Controller controller) {
-                                    TextView textView = view.findViewById(R.id.jump_step);
-                                    textView.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            controller.remove();
-                                        }
-                                    });
-                                }
-                            }))
+        NewbieGuide.with(getActivity())
+                .setLabel("grid_view_guide")
+                .alwaysShow(false)
+                .setOnGuideChangedListener(new OnGuideChangedListener() {
+                    @Override
+                    public void onShowed(Controller controller) {
+                        Log.e(TAG, "引导层显示");
+                        //引导层显示
+                        //  SpUtils.put(Contants.Haslogin, true);
+                    }
 
-                    .addGuidePage(GuidePage.newInstance().addHighLight(helpCenter, HighLight.Shape.RECTANGLE)
-                            .setEverywhereCancelable(true)
-                            .setLayoutRes(R.layout.view_guide4, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
-                                @Override
-                                public void onLayoutInflated(View view, final Controller controller) {
-                                    TextView textView = view.findViewById(R.id.jump_step);
-                                    textView.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            controller.remove();
-                                        }
-                                    });
-                                }
-                            })
-                    )
+                    @Override
+                    public void onRemoved(Controller controller) {
+                        Log.e(TAG, "引导层消失");
+                        //引导层消失（多页切换不会触发）
+                        SpUtils.put(Contants.Haslogin, true);
+                        //  EventBus.getDefault().post(new UpdatePushView(12));
+                        tabviewpager.setVisibility(View.VISIBLE);
+                        lvTabLead.setVisibility(View.GONE);
 
-                    .show();
+                    }
+                })
 
-        }catch (Exception e){
+                //引导层1
+                .addGuidePage(GuidePage.newInstance()
+                        .addHighLight(lvTodayJobChild, HighLight.Shape.RECTANGLE)
+                        .setEverywhereCancelable(true)
+                        .setLayoutRes(R.layout.view_guide3, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                            @Override
+                            public void onLayoutInflated(View view, final Controller controller) {
+                                TextView textView = view.findViewById(R.id.jump_step);
+                                textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        controller.remove();
+                                    }
+                                });
+                            }
+                        }))
+                //引导层2
+                .addGuidePage(GuidePage.newInstance()
+                        .addHighLight(lvTab1, HighLight.Shape.RECTANGLE)
+                        .setEverywhereCancelable(true)
+                        .setLayoutRes(R.layout.view_guide, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                            @Override
+                            public void onLayoutInflated(View view, final Controller controller) {
+                                TextView textView = view.findViewById(R.id.jump_step);
+                                textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
 
-        }
+                                        controller.remove();
+                                    }
+                                });
+                            }
+                        }))
+                //引导层3
+                .addGuidePage(GuidePage.newInstance().addHighLight(lvTab4, HighLight.Shape.RECTANGLE)
+                        .setEverywhereCancelable(true)
+                        .setLayoutRes(R.layout.view_guide2, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                            @Override
+                            public void onLayoutInflated(View view, final Controller controller) {
+                                TextView textView = view.findViewById(R.id.jump_step);
+                                textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        controller.remove();
+                                    }
+                                });
+                            }
+                        })
+                )
+                //引导层4
+                .addGuidePage(GuidePage.newInstance().addHighLight(helpCenter, HighLight.Shape.RECTANGLE)
+                        .setEverywhereCancelable(true)
+                        .setLayoutRes(R.layout.view_guide4, R.id.next_step).setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                            @Override
+                            public void onLayoutInflated(View view, final Controller controller) {
+                                TextView textView = view.findViewById(R.id.jump_step);
+                                textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
 
+                                        controller.remove();
+                                    }
+                                });
+                            }
+                        })
+                )
+                .show();
     }
 
     /**
@@ -2234,7 +2313,7 @@ public class HomeFragment extends BasicFragment {
             // Log.d(TAG,"数据长度"+listuse.size());
             HomeTabFragment homeTabFragment = new HomeTabFragment();
             homeTabFragment.setdata(listuse, position);
-            homeTabFragment.setview(helpCenter,lvTodayJobChild);
+            homeTabFragment.setview(helpCenter, lvTodayJobChild);
             homeTabFragment.setonclickListener(new OnTabItemClickListener() {
                 @Override
                 public void onItemChildClick(AppLicationEntity appLicationEntity) {
