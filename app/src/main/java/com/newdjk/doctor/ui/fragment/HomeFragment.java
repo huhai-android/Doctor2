@@ -1485,8 +1485,9 @@ public class HomeFragment extends BasicFragment {
             } else { //未显示引导界面
                 tabviewpager.setVisibility(View.GONE);
                 lvTabLead.setVisibility(View.VISIBLE);
+                showLead();
             }
-            showLead();
+
         } else if (mDoctype == 2) {
             tabviewpager.setVisibility(View.VISIBLE);
         }
@@ -1622,7 +1623,7 @@ public class HomeFragment extends BasicFragment {
     private void showLead() {
         NewbieGuide.with(getActivity())
                 .setLabel("grid_view_guide")
-                .alwaysShow(false)
+                .alwaysShow(true)
                 .setOnGuideChangedListener(new OnGuideChangedListener() {
                     @Override
                     public void onShowed(Controller controller) {

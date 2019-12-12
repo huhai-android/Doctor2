@@ -90,6 +90,7 @@ public class LogOutUtil implements TIMCallBack {
                 SpUtils.put(Contants.userName, userName+"");
                 SpUtils.put(Contants.Password, password+"");
                 SpUtils.put(Contants.isShowIncome, 0);
+                SpUtils.put(Contants.Haslogin, true);
                 mActivity.startActivity(loginOutIntent);
             }
 

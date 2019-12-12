@@ -405,6 +405,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 final RelativeLayout relativeLayout = view.findViewById(R.id.lv_rv_root);
 
                 final TIMVideoElem videoelem = (TIMVideoElem) element;
+
+
                 int height = (int) videoelem.getSnapshotInfo().getHeight();
                 int width = (int) videoelem.getSnapshotInfo().getWidth();
                 if (height > width) {
@@ -444,26 +446,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         }
                     });
                 }
-
-                //获取视频
-                //先判断视频是否存在，然后再下载视频
-//                if (FileUtil.fileIsExists(videopath)) {
-//                    Log.d("zdp", "视频文件存在");
-//
-//                } else {
-//                    videoelem.getVideoInfo().getVideo(videopath, new TIMCallBack() {
-//                        @Override
-//                        public void onError(int i, String s) { }
-//
-//                        @Override
-//                        public void onSuccess() {
-//                            videoelem.setVideoPath(videopath);
-//                            Log.d("zdp", "下载视频完成" + pposition+"  "+videoelem.getVideoPath());
-//                        }
-//                    });
-//                }
-
-
                 relativeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -1307,7 +1289,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
                 holder.leftMessage.addView(textView, layoutParams);
 
-                //语音信息处理
+                //视频消息处理
             } else if (element.getType() == TIMElemType.Video) {
                 holder.leftMessage.setBackgroundResource(0);
                 View view = View.inflate(mContext, R.layout.item_video, null);
@@ -1354,24 +1336,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         }
                     });
                 }
-
-                //获取视频
-                //先判断视频是否存在，然后再下载视频
-//                if (FileUtil.fileIsExists(videopath)) {
-//                    Log.d("zdp", "视频文件存在");
-//
-//                } else {
-//                    videoelem.getVideoInfo().getVideo(videopath, new TIMCallBack() {
-//                        @Override
-//                        public void onError(int i, String s) { }
-//
-//                        @Override
-//                        public void onSuccess() {
-//                            videoelem.setVideoPath(videopath);
-//                            Log.d("zdp", "下载视频完成" + pposition+"  "+videoelem.getVideoPath());
-//                        }
-//                    });
-//                }
 
 
                 relativeLayout.setOnClickListener(new View.OnClickListener() {

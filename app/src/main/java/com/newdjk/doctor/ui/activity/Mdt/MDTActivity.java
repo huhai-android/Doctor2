@@ -551,7 +551,9 @@ public class MDTActivity extends BasicActivity {
                             conversationEntity.setLastMsg("[语音消息]");
                         } else if (element.getType() == TIMElemType.Image) {
                             conversationEntity.setLastMsg("[图片消息]");
-                        } else if (element.getType() == TIMElemType.Custom) {
+                        } else if (element.getType() == TIMElemType.Video){
+                            conversationEntity.setLastMsg("[视频消息]");
+                        }else if (element.getType() == TIMElemType.Custom) {
                             TIMCustomElem customElem = (TIMCustomElem) msg.getElement(0);
                             String s = new String(customElem.getData());
                             CustomMessageEntity customMessageEntity = mGson.fromJson(s, CustomMessageEntity.class);

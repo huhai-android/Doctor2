@@ -481,7 +481,7 @@ public class AppLicationUtils {
     public static List<AppLicationEntity> getListChat() {
         recordListuse.clear();
         if (recordListuse.size() == 0) {
-            for (int i = 1; i <= 5; i++) {
+            for (int i = 1; i <= 6; i++) {
                 AppLicationEntity appLicationEntity = new AppLicationEntity();
                 appLicationEntity.setAppID(i);
                 switch (i) {
@@ -527,8 +527,11 @@ public class AppLicationUtils {
 //                        appLicationEntity.setAppDesc("宣教");
 //                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon8);
 //                        break;
-
                     case 5:
+                        appLicationEntity.setAppDesc("拍摄视频");
+                        appLicationEntity.setImageID(R.drawable.videowenzhen);
+                        break;
+                    case 6:
 
                         appLicationEntity.setAppDesc("结束问诊");
                         appLicationEntity.setImageID(R.drawable.stop);
@@ -550,7 +553,7 @@ public class AppLicationUtils {
     public static List<AppLicationEntity> getListChatwithoutMDT() {
         recordListuse.clear();
         if (recordListuse.size() == 0) {
-            for (int i = 1; i <= 4; i++) {
+            for (int i = 1; i <= 5; i++) {
                 AppLicationEntity appLicationEntity = new AppLicationEntity();
                 appLicationEntity.setAppID(i);
                 switch (i) {
@@ -569,6 +572,10 @@ public class AppLicationUtils {
                     case 4:
                         appLicationEntity.setAppDesc("补充病历");
                         appLicationEntity.setImageID(R.mipmap.doctor_chat_icon4);
+                        break;
+                    case 5:
+                        appLicationEntity.setAppDesc("拍摄视频");
+                        appLicationEntity.setImageID(R.drawable.videowenzhen);
                         break;
 //                    case 5:
 //                        appLicationEntity.setAppDesc("优选推荐");
@@ -618,7 +625,7 @@ public class AppLicationUtils {
     public static List<AppLicationEntity> getListChatHuizhen() {
         recordListuse.clear();
         if (recordListuse.size() == 0) {
-            for (int i = 1; i <= 4; i++) {
+            for (int i = 1; i <= 5; i++) {
                 AppLicationEntity appLicationEntity = new AppLicationEntity();
                 appLicationEntity.setAppID(i);
                 switch (i) {
@@ -637,6 +644,10 @@ public class AppLicationUtils {
                     case 4:
                         appLicationEntity.setAppDesc("补充病历");
                         appLicationEntity.setImageID(R.mipmap.doctor_chat_icon4);
+                        break;
+                    case 5:
+                        appLicationEntity.setAppDesc("拍摄视频");
+                        appLicationEntity.setImageID(R.drawable.videowenzhen);
                         break;
 //                    case 4:
 //                        appLicationEntity.setAppDesc("补充病历");

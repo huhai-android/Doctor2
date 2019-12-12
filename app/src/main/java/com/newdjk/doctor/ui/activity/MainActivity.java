@@ -696,6 +696,7 @@ public class MainActivity extends BasicActivity {
         SpUtils.put(Contants.IS_FIRST_USE, false);
         SpUtils.put(Contants.userName, userName);
         SpUtils.put(Contants.Password, password);
+        SpUtils.put(Contants.Haslogin, true);
         startActivity(loginOutIntent);
     }
 

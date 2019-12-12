@@ -8,7 +8,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.Dimension;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -50,6 +53,7 @@ import com.newdjk.doctor.ui.activity.Mdt.MYmdtInputReportActivity;
 import com.newdjk.doctor.ui.activity.MedicalServiceActivity;
 import com.newdjk.doctor.ui.activity.PrescriptionActivity;
 import com.newdjk.doctor.ui.activity.ShowOriginPictureActivity;
+import com.newdjk.doctor.ui.camera.FileUtil;
 import com.newdjk.doctor.ui.entity.AddDocumentEneity;
 import com.newdjk.doctor.ui.entity.AdviceGoodDetailEntity;
 import com.newdjk.doctor.ui.entity.CustomMessageEntity;
@@ -88,6 +92,7 @@ import com.tencent.TIMSoundElem;
 import com.tencent.TIMTextElem;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
+import com.tencent.TIMVideoElem;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -391,7 +396,112 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
                     }
                 });
                 //图片信息处理
-            } else if (element.getType() == TIMElemType.Image) {
+            }else if (element.getType() == TIMElemType.Video){
+
+                holder.rightMessage.setBackgroundResource(0);
+
+                View view = View.inflate(mContext, R.layout.item_video, null);
+                final ImageView imageView = view.findViewById(R.id.video_image);
+                final ImageView playvideo = view.findViewById(R.id.paly_image);
+                final RelativeLayout relativeLayout = view.findViewById(R.id.lv_rv_root);
+
+                final TIMVideoElem videoelem = (TIMVideoElem) element;
+
+
+                int height = (int) videoelem.getSnapshotInfo().getHeight();
+                int width = (int) videoelem.getSnapshotInfo().getWidth();
+                if (height > width) {
+                    height = 320;
+                    width = 240;
+                } else {
+                    width = 320;
+                    height = 240;
+                }
+                RelativeLayout.LayoutParams pictureLayoutParams = new RelativeLayout
+                        .LayoutParams(width
+                        , height);
+                imageView.setLayoutParams(pictureLayoutParams);
+                Log.d("zdp", "image type: " + videoelem.getSnapshotInfo().getType() +
+                        " image size " + videoelem.getSnapshotInfo().getSize() +
+                        " image height " + videoelem.getSnapshotInfo().getHeight() +
+                        " image width " + videoelem.getSnapshotInfo().getWidth());
+                layoutParams.setMargins(0, 0, 0, 0);
+                final String imagepath = FileUtil.sdkpath + videoelem.getSnapshotInfo().getUuid() + ".jpg";
+                final String videopath = FileUtil.sdkpath + videoelem.getVideoInfo().getUuid() + ".mp4";
+//                FileUtil.createFile(FileUtil.sdkpath, videoelem.getSnapshotInfo().getUuid()+".jpg");
+//                FileUtil.createFile(FileUtil.sdkpath, videoelem.getVideoInfo().getUuid()+".mp4");
+                //获取截图
+                if (FileUtil.fileIsExists(imagepath)) {
+                    Log.d(TAG, "图片文件存在");
+                    GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
+                } else {
+                    videoelem.getSnapshotInfo().getImage(imagepath, new TIMCallBack() {
+                        @Override
+                        public void onError(int i, String s) {
+                            Log.d("zdp", "下载视频截图出错" + i + "  " + s);
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                            GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
+                        }
+                    });
+                }
+                relativeLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (FileUtil.fileIsExists(videopath)) {
+                            Log.d("zdp", "视频文件存在,直接播放"+pposition+" "+videopath);
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            File file = new File(videopath);
+                            Uri uri;
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                uri = FileProvider.getUriForFile(mContext, "com.newdjk.doctor.fileprovider", file);
+                            } else {
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                uri = Uri.fromFile(file);
+                            }
+                            intent.setDataAndType(uri, "video/*");
+                            mContext.startActivity(intent);
+
+                        } else {
+                            LoadDialog.show(mContext);
+                            videoelem.getVideoInfo().getVideo(videopath, new TIMCallBack() {
+                                @Override
+                                public void onError(int i, String s) {
+                                    LoadDialog.clear();
+                                }
+
+                                @Override
+                                public void onSuccess() {
+                                    LoadDialog.clear();
+                                    Log.d("zdp", "下载完成后,再进行播放"+pposition);
+                                    videoelem.setVideoPath(videopath);
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    String path = videoelem.getVideoPath();//该路径可以自定义
+                                    File file = new File(path);
+                                    Uri uri;
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        uri = FileProvider.getUriForFile(mContext, "com.newdjk.doctor.fileprovider", file);
+                                    } else {
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        uri = Uri.fromFile(file);
+                                    }
+                                    intent.setDataAndType(uri, "video/*");
+                                    mContext.startActivity(intent);
+                                }
+                            });
+                        }
+
+                    }
+                });
+
+                holder.rightMessage.addView(view, pictureLayoutParams);
+            }
+            else if (element.getType() == TIMElemType.Image) {
                 holder.rightMessage.setBackgroundResource(0);
                 TIMImageElem imageElem = (TIMImageElem) element;
                 for (TIMImage timImage : imageElem.getImageList()) {
@@ -1147,7 +1257,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
             Log.d("头像111", "个人头像" + mleftImagePath + "  发送者id" + timMessage.getSender());
             if (TextUtils.isEmpty(mleftImagePath)) {
                 ArrayList<String> memberIds = new ArrayList<>();
-                memberIds.add(timMessage.getSender());
+                memberIds.add(sender);
                 TIMFriendshipManager.getInstance().getUsersProfile(memberIds, new TIMValueCallBack<List<TIMUserProfile>>() {
                     @Override
                     public void onError(int i, String s) {
@@ -1160,10 +1270,10 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
                             Glide.with(MyApplication.getContext())
                                     .load(timUserProfiles.get(0).getFaceUrl())
                                     .dontAnimate()
-                                    .placeholder(R.drawable.patient_default_img)
+                                    .placeholder(R.drawable.doctor_default_img)
                                     //.diskCacheStrategy(DiskCacheStrategy.ALL)
                                     .into(holder.leftAvatar);
-                            Log.d(TAG, timMessage.getSender() + "获取昵称" + timUserProfiles.get(0).getNickName());
+                            Log.d("获取昵称", timMessage.getSender() + "   " + timUserProfiles.get(0).getNickName()+"  头像"+timUserProfiles.get(0).getFaceUrl());
                             holder.sender.setText(timUserProfiles.get(0).getNickName());
                         }
 
@@ -1173,7 +1283,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
                 Glide.with(MyApplication.getContext())
                         .load(mleftImagePath)
                         .dontAnimate()
-                        .placeholder(R.drawable.patient_default_img)
+                        .placeholder(R.drawable.doctor_default_img)
                         //.diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(holder.leftAvatar);
             }
@@ -1262,8 +1372,111 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
                     }
                 });
 
-                //图片信息处理
-            } else if (element.getType() == TIMElemType.GroupTips) {//群组消息
+                //视频
+            } else if (element.getType() == TIMElemType.Video) {
+                holder.leftMessage.setBackgroundResource(0);
+                View view = View.inflate(mContext, R.layout.item_video, null);
+                final ImageView imageView = view.findViewById(R.id.video_image);
+                final ImageView playvideo = view.findViewById(R.id.paly_image);
+                final RelativeLayout relativeLayout = view.findViewById(R.id.lv_rv_root);
+                final TIMVideoElem videoelem = (TIMVideoElem) element;
+                int height = (int) videoelem.getSnapshotInfo().getHeight();
+                int width = (int) videoelem.getSnapshotInfo().getWidth();
+                if (height > width) {
+                    height = 320;
+                    width = 240;
+                } else {
+                    width = 320;
+                    height = 240;
+                }
+                RelativeLayout.LayoutParams pictureLayoutParams = new RelativeLayout
+                        .LayoutParams(width
+                        , height);
+                imageView.setLayoutParams(pictureLayoutParams);
+                Log.d("zdp", "image type: " + videoelem.getSnapshotInfo().getType() +
+                        " image size " + videoelem.getSnapshotInfo().getSize() +
+                        " image height " + videoelem.getSnapshotInfo().getHeight() +
+                        " image width " + videoelem.getSnapshotInfo().getWidth());
+                layoutParams.setMargins(0, 0, 0, 0);
+                final String imagepath = FileUtil.sdkpath + videoelem.getSnapshotInfo().getUuid() + ".jpg";
+                final String videopath = FileUtil.sdkpath + videoelem.getVideoInfo().getUuid() + ".mp4";
+//                FileUtil.createFile(FileUtil.sdkpath, videoelem.getSnapshotInfo().getUuid()+".jpg");
+//                FileUtil.createFile(FileUtil.sdkpath, videoelem.getVideoInfo().getUuid()+".mp4");
+                //获取截图
+                if (FileUtil.fileIsExists(imagepath)) {
+                    Log.d(TAG, "图片文件存在");
+                    GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
+                } else {
+                    videoelem.getSnapshotInfo().getImage(imagepath, new TIMCallBack() {
+                        @Override
+                        public void onError(int i, String s) {
+                            Log.d("zdp", "下载视频截图出错" + i + "  " + s);
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                            GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
+                        }
+                    });
+                }
+
+
+                relativeLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (FileUtil.fileIsExists(videopath)) {
+                            Log.d("zdp", "视频文件存在,直接播放"+pposition+" "+videopath);
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            File file = new File(videopath);
+                            Uri uri;
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                uri = FileProvider.getUriForFile(mContext, "com.newdjk.doctor.fileprovider", file);
+                            } else {
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                uri = Uri.fromFile(file);
+                            }
+                            intent.setDataAndType(uri, "video/*");
+                            mContext.startActivity(intent);
+
+                        } else {
+                            LoadDialog.show(mContext,"下载中");
+                            videoelem.getVideoInfo().getVideo(videopath, new TIMCallBack() {
+                                @Override
+                                public void onError(int i, String s) {
+                                    LoadDialog.clear();
+                                }
+
+                                @Override
+                                public void onSuccess() {
+                                    LoadDialog.clear();
+                                    Log.d("zdp", "下载完成后,再进行播放"+pposition);
+                                    videoelem.setVideoPath(videopath);
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    String path = videoelem.getVideoPath();//该路径可以自定义
+                                    File file = new File(path);
+                                    Uri uri;
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        uri = FileProvider.getUriForFile(mContext, "com.newdjk.doctor.fileprovider", file);
+                                    } else {
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        uri = Uri.fromFile(file);
+                                    }
+                                    intent.setDataAndType(uri, "video/*");
+                                    mContext.startActivity(intent);
+                                }
+                            });
+                        }
+
+                    }
+                });
+                holder.leftMessage.addView(view, layoutParams);
+
+            }
+
+            else if (element.getType() == TIMElemType.GroupTips) {//群组消息
                 TIMGroupTipsElem tipsElem = (TIMGroupTipsElem) element;
                 String grouptitle = "";
                 String opname = tipsElem.getOpUserInfo().getNickName();

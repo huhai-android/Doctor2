@@ -65,7 +65,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentLeft="true"
-                android:src="@drawable/head_deafult" />
+                android:src="@drawable/doctor_default_img" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/head_deafult" />
+                android:src="@drawable/doctor_default_img" />
 
             <LinearLayout
                 android:orientation="vertical"

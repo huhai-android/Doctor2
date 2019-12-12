@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -76,6 +77,12 @@ import com.newdjk.doctor.ui.activity.PrescriptionActivity;
 import com.newdjk.doctor.ui.activity.ReplyQuickActivity;
 import com.newdjk.doctor.ui.activity.min.GroupMemberActivity;
 import com.newdjk.doctor.ui.adapter.GroupChatAdapter;
+import com.newdjk.doctor.ui.camera.CameraActivity;
+import com.newdjk.doctor.ui.camera.IUIKitCallBack;
+import com.newdjk.doctor.ui.camera.JCameraView;
+import com.newdjk.doctor.ui.camera.MessageInfo;
+import com.newdjk.doctor.ui.camera.MessageInfoUtil;
+import com.newdjk.doctor.ui.camera.TUIKitConstants;
 import com.newdjk.doctor.ui.entity.AboutUsEntity;
 import com.newdjk.doctor.ui.entity.AllRecordForDoctorEntity;
 import com.newdjk.doctor.ui.entity.AppLicationEntity;
@@ -1595,31 +1602,6 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
                 validTime = mMDTDetailEntity.getPayTime();
 
                 mAcceptTime = date2TimeStamp(validTime, "yyyy-MM-dd HH:mm:ss");
-//                mTimer = new CountDownTimer(VALID_TIME_HALF - mNowTime + mAcceptTime, 1000) {
-//                    @Override
-//                    public void onTick(long millisUntilFinished) {
-//                        String time = TimeUtil.formatTime(millisUntilFinished);
-//                        acceptValidTime.setText("接诊剩余时间：" + time);
-//
-//                    }
-//
-//                    @Override
-//                    public void onFinish() {
-//                        status.setText("已结束");
-//
-//                        inputBorder.setVisibility(View.VISIBLE);
-//
-//                        acceptTip.setBackgroundColor(getResources().getColor(R.color.gray));
-//                        acceptTime.setVisibility(View.GONE);
-//                        if (mTimer != null) {
-//                            mTimer.cancel();
-//                        }
-//                        acceptLayout.setVisibility(View.GONE);
-//                        acceptBorder.setVisibility(View.GONE);
-//                        stopWenzhen();
-//                    }
-//                }.start();
-
 
             } else if (type == 1) {
                 inputBorder.setVisibility(View.VISIBLE);
@@ -5094,12 +5076,136 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
                 mdtIntent.putExtra("SubjectBuyRecordId", mMDTDetailEntity.getSubjectBuyRecordId() + "");
                 startActivity(mdtIntent);
                 break;
+            case "拍摄视频":
 
+                startVideoRecord();
+                break;
 
         }
     }
+    protected static final int CAPTURE = 1;
+    protected static final int AUDIO_RECORD = 2;
+    protected static final int VIDEO_RECORD = 3;
+    protected static final int SEND_PHOTO = 4;
+    protected static final int SEND_FILE = 5;
+    private AlertDialog mPermissionDialog;
+    protected void startVideoRecord() {
+        if (!checkPermission(VIDEO_RECORD)) {
+            return;
+        }
+        Intent captureIntent = new Intent(getContext(), CameraActivity.class);
+        captureIntent.putExtra(TUIKitConstants.CAMERA_TYPE, JCameraView.BUTTON_STATE_ONLY_RECORDER);
+        CameraActivity.mCallBack = new IUIKitCallBack() {
+            @Override
+            public void onSuccess(Object data) {
+                Intent videoData = (Intent) data;
+                String imgPath = videoData.getStringExtra(TUIKitConstants.CAMERA_IMAGE_PATH);
+                String videoPath = videoData.getStringExtra(TUIKitConstants.CAMERA_VIDEO_PATH);
+                int imgWidth = videoData.getIntExtra(TUIKitConstants.IMAGE_WIDTH, 0);
+                int imgHeight = videoData.getIntExtra(TUIKitConstants.IMAGE_HEIGHT, 0);
+                long duration = videoData.getLongExtra(TUIKitConstants.VIDEO_TIME, 0);
+                MessageInfo msg = MessageInfoUtil.buildVideoMessage(imgPath, videoPath, imgWidth, imgHeight, duration);
+
+                sendShopVideoMessage(msg);
+
+                hideInput();
+            }
+
+            @Override
+            public void onError(String module, int errCode, String errMsg) {
+
+            }
+        };
+        getContext().startActivity(captureIntent);
+    }
+
+    private void sendShopVideoMessage(final MessageInfo msg) {
+        //发送消息
+        MyTIMMessage myTIMMessage = new MyTIMMessage();
+        myTIMMessage.setTimMessage(msg.getTIMMessage());
+        getAdapterData().add(0, myTIMMessage);
+        updateRecyclerView();
+
+        mConversation.sendMessage(msg.getTIMMessage(), new TIMValueCallBack<TIMMessage>() {//发送消息回调
+            @Override
+            public void onError(int code, String desc) {//发送消息失败
+                //错误码 code 和错误描述 desc，可用于定位请求失败原因
+                //错误码 code 含义请参见错误码表
+                Log.d("视频", "send message failed. code: " + code + " errmsg: " + desc);
+            }
+
+            @Override
+            public void onSuccess(TIMMessage msg) {//发送消息成功
+                Log.i("视频", "success");
+
+                MessageEventRecent messageEvent = new MessageEventRecent();
+                messageEvent.setmType(MainConstant.UpdateRecentList);
+                EventBus.getDefault().post(messageEvent);
+                updateRecyclerView();
+            }
+        });
+    }
 
 
+    protected boolean checkPermission(int type) {
+        if (!checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            return false;
+        }
+        if (!checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            return false;
+        }
+        if (type == SEND_FILE || type == SEND_PHOTO) {
+            return true;
+        } else if (type == CAPTURE) {
+            return checkPermission(this, Manifest.permission.CAMERA);
+        } else if (type == AUDIO_RECORD) {
+            return checkPermission(this, Manifest.permission.RECORD_AUDIO);
+        } else if (type == VIDEO_RECORD) {
+            return checkPermission(this, Manifest.permission.CAMERA)
+                    && checkPermission(this, Manifest.permission.RECORD_AUDIO);
+        }
+        return true;
+    }
+    protected boolean checkPermission(Context context, String permission) {
+        boolean flag = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int result = ActivityCompat.checkSelfPermission(context, permission);
+            if (PackageManager.PERMISSION_GRANTED != result) {
+                //2.没有权限
+                showPermissionDialog();
+                flag = false;
+            }
+        }
+        return flag;
+    }
+    private void showPermissionDialog() {
+        if (mPermissionDialog == null) {
+            mPermissionDialog = new AlertDialog.Builder(mActivity)
+                    .setMessage("使用该功能，需要开启权限，鉴于您禁用相关权限，请手动设置开启权限")
+                    .setPositiveButton("设置", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            cancelPermissionDialog();
+                            Uri packageURI = Uri.parse("package:" + mActivity.getPackageName());
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+                            mActivity.startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //关闭页面或者做其他操作
+                            cancelPermissionDialog();
+                        }
+                    })
+                    .create();
+        }
+        mPermissionDialog.show();
+    }
+
+    private void cancelPermissionDialog() {
+        mPermissionDialog.cancel();
+    }
     private void IsHasOpenPres() {
 
         Map<String, String> headMap = new HashMap<>();
