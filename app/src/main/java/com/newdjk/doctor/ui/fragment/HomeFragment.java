@@ -2276,9 +2276,12 @@ public class HomeFragment extends BasicFragment {
                             ImDataEntity dataBean = new ImDataEntity(null, lastMsg, timestamp, id, faceUrl, nickName, unReadNum);
                             mConversationListData.add(dataBean);
                         }
-                        Collections.sort(mConversationListData, new SortByTime());
-                        mAdapter.setNewData(mConversationListData);
-                        mAdapter.notifyDataSetChanged();
+                        if (mConversationListData.size()>0){
+                            Collections.sort(mConversationListData, new SortByTime());
+                            mAdapter.setNewData(mConversationListData);
+                            mAdapter.notifyDataSetChanged();
+                        }
+
                     }
                 });
             } else {

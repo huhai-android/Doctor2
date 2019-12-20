@@ -1688,7 +1688,7 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
             @Override
             public void onRefreshing() {
                 if (mTimMessages.size() > 0) {
-                    mTIMMessage = mTimMessages.get(0).getTimMessage();
+                    mTIMMessage = mTimMessages.get(mTimMessages.size() - 1).getTimMessage();
                 }
                 getMessage(mTIMMessage);
             }

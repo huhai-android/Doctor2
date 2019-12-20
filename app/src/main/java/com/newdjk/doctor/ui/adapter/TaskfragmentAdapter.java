@@ -33,6 +33,9 @@ public class TaskfragmentAdapter extends BaseQuickAdapter<TaskAllEntity.ReturnDa
 
     @Override
     protected void convert(final BaseViewHolder helper, final TaskAllEntity.ReturnDataBean item) {
+        try {
+
+
         if (TextUtils.isEmpty(item.getPatientName())) {
             helper.setText(R.id.tv_name, "- -");
         } else {
@@ -90,9 +93,6 @@ public class TaskfragmentAdapter extends BaseQuickAdapter<TaskAllEntity.ReturnDa
         }else {
             helper.setVisible(R.id.lv_yuyue, false);
         }
-
-
-        try {
             if (item.getServiceType() == 2||item.getServiceType() == 19){
                 if (!TextUtils.isEmpty(item.getServiceStartTime())&&!TextUtils.isEmpty(item.getServiceEndTime())){
                     helper.setText(R.id.tv_time_yuyue, item.getServiceStartTime().substring(0, 10)+item.getServiceStartTime().substring(10, 19) + " - " + item.getServiceEndTime().substring(10, 19));
@@ -104,7 +104,6 @@ public class TaskfragmentAdapter extends BaseQuickAdapter<TaskAllEntity.ReturnDa
         }catch (Exception e){
 
         }
-
     }
 
 

@@ -149,7 +149,7 @@ public class TaskFragment2 extends BasicFragment {
         mTaskfragmentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (dataList.size() - 1 >= position) {
+                if (dataList.size() > position) {
                     gotoIM(position, dataList.get(position));
 
                 }
@@ -171,7 +171,7 @@ public class TaskFragment2 extends BasicFragment {
 
         int type = item.getServiceType();
         //1 图文 2 视频 3 续方  5 护理咨询  6远程护理
-        if (type == 1 || type == 5||type == 15) {
+        if (type == 1 || type == 5 || type == 15) {
             QueryConsultDoctorAppMessageByPage(item.getRelationId() + "", item.getAccountId(), item.getPatientName());
         } else if (type == 2 || type == 6) {
             QueryvideoDoctorAppMessageByPage(item.getRelationId() + "", item.getAccountId(), item.getPatientName());
@@ -183,7 +183,7 @@ public class TaskFragment2 extends BasicFragment {
             //跳转咨询im
             getIMRelationRecord(item.getIMGroupId());
 
-        } else if (type == 51 || type == 52|| type == 16) {
+        } else if (type == 51 || type == 52 || type == 16) {
             //跳转咨询im
             getIMRelationRecord(item.getIMGroupId());
 
