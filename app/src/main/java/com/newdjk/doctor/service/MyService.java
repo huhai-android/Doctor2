@@ -46,6 +46,7 @@ import com.newdjk.doctor.ui.entity.UpdateEntity;
 import com.newdjk.doctor.ui.entity.UpdateImMessageEntity;
 import com.newdjk.doctor.ui.entity.UpdateMessageListEntity;
 import com.newdjk.doctor.utils.AppUtils;
+import com.newdjk.doctor.utils.BadgeUtil;
 import com.newdjk.doctor.utils.InstallApkUtil;
 import com.newdjk.doctor.utils.NetworkUtil;
 import com.newdjk.doctor.utils.SQLiteUtils;
@@ -391,6 +392,8 @@ public class MyService extends Service implements TIMMessageListener {
                 mNotificationManager.createNotificationChannel(channel);
             }
         }
+        MyApplication.badgeNumber++;
+        BadgeUtil.setBadgeCount(this,MyApplication.badgeNumber);
         Log.i("Myservice", "99999");
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "default");
         Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);

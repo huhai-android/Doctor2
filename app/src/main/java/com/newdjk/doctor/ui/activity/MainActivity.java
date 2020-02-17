@@ -44,6 +44,7 @@ import com.newdjk.doctor.ui.entity.UpdateViewEntity;
 import com.newdjk.doctor.ui.fragment.HomeFragment;
 import com.newdjk.doctor.ui.fragment.MessageFragment;
 import com.newdjk.doctor.ui.fragment.MinFragment;
+import com.newdjk.doctor.utils.BadgeUtil;
 import com.newdjk.doctor.utils.CertUtis;
 import com.newdjk.doctor.utils.FragmentController;
 import com.newdjk.doctor.utils.LogOutUtil;
@@ -214,6 +215,7 @@ public class MainActivity extends BasicActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initData() {
 
@@ -620,7 +622,8 @@ public class MainActivity extends BasicActivity {
             MyApplication.FrontTime = System.currentTimeMillis();
             Log.d(TAG, "切换到了前台时间" + ((MyApplication.FrontTime - MyApplication.backTime) / 1000) + "s");
             long time = (MyApplication.FrontTime - MyApplication.backTime) / 1000;
-
+            MyApplication.badgeNumber=0;
+            BadgeUtil.setBadgeCount(this,MyApplication.badgeNumber);
             String vendor = Build.MANUFACTURER;
             if (vendor.toLowerCase(Locale.ENGLISH).contains("huawei")) {
 

@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.tools.Contants;
 import com.newdjk.doctor.tools.MainConstant;
 import com.newdjk.doctor.ui.activity.SplashActivity;
@@ -17,6 +18,7 @@ import com.newdjk.doctor.ui.entity.PushDataDaoEntity;
 import com.newdjk.doctor.ui.entity.UpdatePatientViewEntity;
 import com.newdjk.doctor.ui.entity.UpdatePushView;
 import com.newdjk.doctor.utils.AuthenticationCommentUtil;
+import com.newdjk.doctor.utils.BadgeUtil;
 import com.newdjk.doctor.utils.SQLiteUtils;
 import com.newdjk.doctor.utils.SpUtils;
 
@@ -135,6 +137,8 @@ public class MyReceiver extends BroadcastReceiver {
             } else {
                 Log.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
             }
+            MyApplication.badgeNumber++;
+            BadgeUtil.setBadgeCount(MyApplication.getContext(),MyApplication.badgeNumber);
         } catch (Exception e) {
             Log.i("MyReceiver", "ERRROR=" + e.toString());
         }

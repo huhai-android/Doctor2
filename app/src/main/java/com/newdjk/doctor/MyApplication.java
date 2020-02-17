@@ -96,6 +96,7 @@ public class MyApplication extends Application {
     public static long backTime = 0;//记录入后台时间
     public static long FrontTime = 0;//记录入前台时间
     public static boolean ismainDoctor = false;//自己是否只主诊医生
+    public static int badgeNumber = 0;//红点显示
 
     @Override
     public void onCreate() {
