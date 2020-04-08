@@ -1,5 +1,6 @@
 package com.newdjk.doctor.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,8 +32,8 @@ import com.newdjk.doctor.tools.Contants;
 import com.newdjk.doctor.ui.adapter.DiseaseLabelAdapter;
 import com.newdjk.doctor.ui.entity.DiseaseLabelEntity;
 import com.newdjk.doctor.ui.entity.Entity;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.utils.SpUtils;
-import com.newdjk.doctor.views.GlideRoundImage;
 import com.newdjk.doctor.views.ItemView;
 
 import java.util.ArrayList;
@@ -101,6 +102,7 @@ public class FenjiCooperationActivity extends BasicActivity {
         return R.layout.activity_fenji_cooperation;
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void initView() {
         initBackTitle("分级转诊");
@@ -116,14 +118,15 @@ public class FenjiCooperationActivity extends BasicActivity {
         tvName.setText(MyApplication.mDoctorInfoByIdEntity.getDrName());
         mFunDepartment.setText(MyApplication.mDoctorInfoByIdEntity.getDepartmentName());
         title.setText(MyApplication.mDoctorInfoByIdEntity.getPositionName());
-        Glide.with(FenjiCooperationActivity.this)
-                .load(MyApplication.mDoctorInfoByIdEntity.getPicturePath())
-                .placeholder(R.drawable.doctor_default_img).error(R.drawable.doctor_default_img)
-                .transform(new CenterCrop(FenjiCooperationActivity.this), new GlideRoundImage(FenjiCooperationActivity.this))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .crossFade()
-                .into(civImg);
+//        Glide.with(FenjiCooperationActivity.this)
+//                .load(MyApplication.mDoctorInfoByIdEntity.getPicturePath())
+//                .placeholder(R.drawable.doctor_default_img).error(R.drawable.doctor_default_img)
+//                .transform(new CenterCrop(FenjiCooperationActivity.this), new GlideRoundImage(FenjiCooperationActivity.this))
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .crossFade()
+//                .into(civImg);
 
+        GlideUtils.loadDoctorImage(MyApplication.mDoctorInfoByIdEntity.getPicturePath(),civImg);
 
     }
 

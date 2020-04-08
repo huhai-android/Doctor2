@@ -21,6 +21,7 @@ import com.newdjk.doctor.tools.CommonMethod;
 import com.newdjk.doctor.tools.Contants;
 import com.newdjk.doctor.tools.MainConstant;
 import com.newdjk.doctor.ui.activity.IM.ChatActivity;
+import com.newdjk.doctor.ui.chat.NewChatActivity;
 import com.newdjk.doctor.ui.entity.ConsultMessageEntity;
 import com.newdjk.doctor.ui.entity.ImDataEntity;
 import com.newdjk.doctor.ui.entity.ImRelationRecode;
@@ -30,6 +31,8 @@ import com.newdjk.doctor.ui.entity.OnlineRenewalDataEntity;
 import com.newdjk.doctor.ui.entity.PatientInfoEntity;
 import com.newdjk.doctor.ui.entity.PrescriptionMessageEntity;
 import com.newdjk.doctor.ui.entity.ResponseEntity;
+import com.newdjk.doctor.utils.ChatActivityUtils;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.utils.NetworkUtil;
 import com.newdjk.doctor.utils.SpUtils;
 import com.newdjk.doctor.utils.TimeUtil;
@@ -78,11 +81,13 @@ public class LastMessageAdapter extends BaseQuickAdapter<ImDataEntity, BaseViewH
         name = item.getNickName();
         String path = item.getFaceUrl();
         Log.d(TAG, "图片地址" + path);
-        Glide.with(MyApplication.getContext())
-                .load(path)
-                .dontAnimate()
-                .placeholder(R.drawable.patient_default_img)
-                .into(((CircleImageView) helper.getView(R.id.avatar)));
+//        Glide.with(MyApplication.getContext())
+//                .load(path)
+//                .dontAnimate()
+//                .placeholder(R.drawable.patient_default_img)
+//                .into(((CircleImageView) helper.getView(R.id.avatar)));
+
+        GlideUtils.loadPatientImage(path,((CircleImageView) helper.getView(R.id.avatar)));
         if (!TextUtils.isEmpty(name)) {
             helper.setText(R.id.name, name);
         } else {
@@ -121,7 +126,8 @@ public class LastMessageAdapter extends BaseQuickAdapter<ImDataEntity, BaseViewH
                         helper.setVisible(R.id.unread_num, false);
                         String identifier = item.getIdentifier();
                         String imId = SpUtils.getString(Contants.identifier);
-                        getIMRelationRecord(identifier, imId, faceUrl);
+                      //  getIMRelationRecord(identifier, imId, faceUrl);
+                        ChatActivityUtils.getinStanse().toChat(identifier, imId, faceUrl,mContext);
 
                     } else {
                         ToastUtil.setToast("网络连接异常，请检查网络");
@@ -182,7 +188,7 @@ public class LastMessageAdapter extends BaseQuickAdapter<ImDataEntity, BaseViewH
                             PrescriptionMessageEntity<InquiryRecordListDataEntity> prescriptionMessageEntity = mGson.fromJson(SpUtils.getString(Contants.LoginJson), jsonType);
                             prescriptionMessageEntity.setPatient(InquiryRecordListDataEntity);
                             String json = mGson.toJson(prescriptionMessageEntity);
-                            Intent intent = new Intent(mContext, ChatActivity.class);
+                            Intent intent = new Intent(mContext, NewChatActivity.class);
                             intent.putExtra("status", 0);
                             intent.putExtra(Contants.FRIEND_NAME, imRelationRecode.getPatientName());
                             intent.putExtra(Contants.FRIEND_IDENTIFIER, imRelationRecode.getPatientIMId());
@@ -232,7 +238,7 @@ public class LastMessageAdapter extends BaseQuickAdapter<ImDataEntity, BaseViewH
                     String json = mGson.toJson(prescriptionMessageEntity);
                     String doctorImId = consultMessageEntity.getDoctorIMId();
                     String doctorName = consultMessageEntity.getDoctorName();
-                    Intent consultIntentTalk = new Intent(mContext, ChatActivity.class);
+                    Intent consultIntentTalk = new Intent(mContext, NewChatActivity.class);
                     Log.i("zdp", "json=" + json);
                     consultIntentTalk.putExtra(Contants.FRIEND_NAME, doctorName);
                     consultIntentTalk.putExtra(Contants.FRIEND_IDENTIFIER, consultMessageEntity.getApplicantIMId());
@@ -283,7 +289,7 @@ public class LastMessageAdapter extends BaseQuickAdapter<ImDataEntity, BaseViewH
                     String renewalJson = mGson.toJson(renewalMessageEntity);
                     String doctorImId = onlineRenewalDataEntity.getDoctorIMId();
                     String doctorName = onlineRenewalDataEntity.getDoctorName();
-                    Intent renewalIntentTalk = new Intent(mContext, ChatActivity.class);
+                    Intent renewalIntentTalk = new Intent(mContext, NewChatActivity.class);
                     renewalIntentTalk.putExtra(Contants.FRIEND_NAME, onlineRenewalDataEntity.getApplicantName());
                     renewalIntentTalk.putExtra("onlineRenewalDataEntity", onlineRenewalDataEntity);
                     renewalIntentTalk.putExtra("action", "onlineRenewalfromHome");
@@ -334,7 +340,7 @@ public class LastMessageAdapter extends BaseQuickAdapter<ImDataEntity, BaseViewH
                     String videoJson = mGson.toJson(videoMessageEntity);
                     String doctorImId = inquiryRecordListDataEntity.getDoctorIMId();
                     String doctorName = inquiryRecordListDataEntity.getDoctorName();
-                    Intent videoIntentTalk = new Intent(mContext, ChatActivity.class);
+                    Intent videoIntentTalk = new Intent(mContext, NewChatActivity.class);
                     videoIntentTalk.putExtra(Contants.FRIEND_NAME, doctorName);
                     videoIntentTalk.putExtra(Contants.FRIEND_IDENTIFIER, inquiryRecordListDataEntity.getApplicantIMId());
                     videoIntentTalk.putExtra("inquiryRecordListDataEntity", inquiryRecordListDataEntity);

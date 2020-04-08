@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/weixinfunctionbg"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/accept_layout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:background="@color/black"
         android:gravity="center_vertical"
         android:orientation="vertical"
@@ -52,11 +52,12 @@
             android:id="@+id/accept_border"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/weixinfunctionbg"
             android:orientation="vertical"
             android:visibility="visible">
 
             <TextView
+                android:layout_marginBottom="@dimen/dp_5"
                 android:id="@+id/accept_valid_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,7 +75,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
+                android:background="@color/weixinfunctionbg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -136,7 +137,7 @@
             android:id="@+id/reception_functions"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/white"
+            android:background="@color/weixinfunctionbg"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -379,10 +380,12 @@
                 android:focusableInTouchMode="true" />
 
             <LinearLayout
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
                 android:id="@+id/input_1"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:background="@color/weixinfunctionbg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -423,16 +426,21 @@
                 <LinearLayout
                     android:id="@+id/text_panel"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/bg_inputbox"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <EditText
+                        tools:text="输入内容"
+                        android:paddingTop="@dimen/dp_7"
+                        android:paddingBottom="@dimen/dp_7"
+                        android:minHeight="@dimen/dp_30"
+                        android:maxLines="4"
                         android:id="@+id/input"
                         android:layout_width="0dp"
-                        android:layout_height="30dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@null"
                         android:paddingLeft="10dp"
@@ -461,14 +469,19 @@
                     android:background="@drawable/ic_add_input"
                     android:contentDescription="TODO" />
 
-                <ImageButton
+                <TextView
                     android:id="@+id/btn_send"
-                    android:layout_width="44dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/btn_send"
+                    android:background="@drawable/shape_send"
                     android:contentDescription="TODO"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="发送"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -477,7 +490,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/input_1"
-                android:background="@color/white"
+                android:background="@color/weixinfunctionbg"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -485,7 +498,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
+                    android:layout_height="230dp"
                     android:orientation="vertical">
 
                     <android.support.v4.view.ViewPager
@@ -495,6 +508,8 @@
                         android:layout_weight="1" />
 
                     <LinearLayout
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5"
                         android:visibility="visible"
                         android:id="@+id/dot_horizontal"
                         android:layout_width="match_parent"
@@ -502,6 +517,7 @@
                         android:layout_gravity="bottom"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
+                        android:background="@color/weixinfunctionbg"
                         android:orientation="horizontal" />
                 </LinearLayout>
 

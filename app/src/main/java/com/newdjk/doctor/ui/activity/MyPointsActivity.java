@@ -32,6 +32,7 @@ import com.newdjk.doctor.ui.entity.Entity;
 import com.newdjk.doctor.ui.entity.ResponseEntity;
 import com.newdjk.doctor.ui.entity.SignRuleEntity;
 import com.newdjk.doctor.utils.AppUtils;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.utils.SpUtils;
 import com.newdjk.doctor.views.CircleImageView;
 import com.newdjk.doctor.views.GroupButtonDialog;
@@ -255,12 +256,13 @@ public class MyPointsActivity extends BasicActivity {
                         }
                         tvPoint.setText(response.getData().getCurrentIntegral() == 0 ? "0" : (response.getData().getCurrentIntegral() + ""));
                         tvDoctorZhicheng.setText(TextUtils.isEmpty(response.getData().getPosition()) ? "--" : response.getData().getPosition());
-                        Glide.with(MyApplication.getContext())
-                                .load(response.getData().getPicturePath())
-                                .dontAnimate()
-                                .error(R.drawable.doctor_default_img)
-                                //.diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .into(imAppicon);
+//                        Glide.with(MyApplication.getContext())
+//                                .load(response.getData().getPicturePath())
+//                                .dontAnimate()
+//                                .error(R.drawable.doctor_default_img)
+//                                //.diskCacheStrategy(DiskCacheStrategy.ALL)
+//                                .into(imAppicon);
+                        GlideUtils.loadDoctorImage(response.getData().getPicturePath(),imAppicon);
                     } catch (Exception e) {
                     }
                 }

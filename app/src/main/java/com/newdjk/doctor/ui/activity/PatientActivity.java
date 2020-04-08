@@ -31,6 +31,7 @@ import com.newdjk.doctor.ui.entity.PrescriptionMessageEntity;
 import com.newdjk.doctor.ui.entity.UpdatePatientCountEntity;
 import com.newdjk.doctor.ui.entity.UpdatePatientViewEntity;
 import com.newdjk.doctor.ui.entity.UpdatePushView;
+import com.newdjk.doctor.utils.ChatActivityUtils;
 import com.newdjk.doctor.utils.LogOutUtil;
 import com.newdjk.doctor.utils.SpUtils;
 
@@ -111,7 +112,12 @@ public class PatientActivity extends BasicActivity {
                 LogOutUtil.getInstance().loginOut(PatientActivity.this, true);
             }
         });
-
+        testBridgeWebView.registerHandler("printdata", new BridgeHandler() {
+            @Override
+            public void handler(String data, CallBackFunction function) {
+                Log.d("print", "H5打印数据" + data);
+            }
+        });
         testBridgeWebView.registerHandler("SendMessage", new BridgeHandler() {
             @Override
             public void handler(String data, CallBackFunction function) {
@@ -129,31 +135,48 @@ public class PatientActivity extends BasicActivity {
                 ConsultMessageEntity.setDoctorPatientRelation(patientStatusEntity.getDoctorPatientRelation());
                 prescriptionMessageEntity.setPatient(ConsultMessageEntity);
                 String json = mGson.toJson(prescriptionMessageEntity);
-                String name;
-                PatientInfoEntity patientInfoEntity = patientStatusEntity.getPatientInfo();
-                if (patientInfoEntity != null) {
-                    name = patientInfoEntity.getPatientName();
-                } else {
-                    name = patientStatusEntity.getApplicantName();
-                }
-                SpUtils.put(Contants.patientName,patientInfoEntity.getPatientName());
-                SpUtils.put(Contants.patientID,patientInfoEntity.getPatientId());
-                Intent intentTalk = new Intent(mActivity, ChatActivity.class);
-                intentTalk.putExtra(Contants.FRIEND_NAME, name);
-                intentTalk.putExtra("status", 0);
-                intentTalk.putExtra("prescriptionMessage", json);
-                intentTalk.putExtra("accountId", patientStatusEntity.getApplicantId());
-                intentTalk.putExtra(Contants.FRIEND_IDENTIFIER, patientStatusEntity.getApplicantIMId());
-                intentTalk.putExtra("imgPath", patientStatusEntity.getApplicantHeadImgUrl());
-                mActivity.startActivity(intentTalk);
+//                String name;
+//                PatientInfoEntity patientInfoEntity = patientStatusEntity.getPatientInfo();
+//                if (patientInfoEntity != null) {
+//                    name = patientInfoEntity.getPatientName();
+//                } else {
+//                    name = patientStatusEntity.getApplicantName();
+//                }
+//                SpUtils.put(Contants.patientName,patientInfoEntity.getPatientName());
+//                SpUtils.put(Contants.patientID,patientInfoEntity.getPatientId());
+//                Intent intentTalk = new Intent(mActivity, ChatActivity.class);
+//                intentTalk.putExtra(Contants.FRIEND_NAME, name);
+//                intentTalk.putExtra("status", 0);
+//                intentTalk.putExtra("prescriptionMessage", json);
+//                intentTalk.putExtra("accountId", patientStatusEntity.getApplicantId());
+//                intentTalk.putExtra(Contants.FRIEND_IDENTIFIER, patientStatusEntity.getApplicantIMId());
+//                intentTalk.putExtra("imgPath", patientStatusEntity.getApplicantHeadImgUrl());
+//                mActivity.startActivity(intentTalk);
                 //    finish();
-
-
+                ChatActivityUtils.getinStanse().toChat(patientStatusEntity.getApplicantIMId(), SpUtils.getString(Contants.identifier), patientStatusEntity.getApplicantHeadImgUrl(),mContext);
             }
 
 
         });
+        testBridgeWebView.registerHandler("toSingleChat", new BridgeHandler() {
+            @Override
+            public void handler(String data, CallBackFunction function) {
 
+                try {
+                    PatientStatusEntity patientStatusEntity = mGson.fromJson(data, PatientStatusEntity.class);
+
+
+                    String identifier = patientStatusEntity.getApplicantIMId();
+                    String imId = SpUtils.getString(Contants.identifier);
+
+                    // getIMRelationRecord(identifier, imId, patientStatusEntity.getApplicantHeadImgUrl());
+                    ChatActivityUtils.getinStanse().toChat(identifier, imId, patientStatusEntity.getApplicantHeadImgUrl(),mContext);
+
+                } catch (Exception e) {
+
+                }
+            }
+        });
         testBridgeWebView.setWebViewClient(new BridgeWebViewClient(testBridgeWebView) {
 
             public void onPageStarted(WebView view, String url, Bitmap favicon) {

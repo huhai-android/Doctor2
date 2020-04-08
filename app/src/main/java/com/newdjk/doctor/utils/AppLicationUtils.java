@@ -487,15 +487,15 @@ public class AppLicationUtils {
                 switch (i) {
                     case 1:
                         appLicationEntity.setAppDesc("图片");
-                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon1);
+                        appLicationEntity.setImageID(R.drawable.im_photo);
                         break;
                     case 2:
                         appLicationEntity.setAppDesc("拍摄");
-                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon2);
+                        appLicationEntity.setImageID(R.drawable.im_camera);
                         break;
                     case 3:
                         appLicationEntity.setAppDesc("快速回复");
-                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon3);
+                        appLicationEntity.setImageID(R.drawable.im_reply);
                         break;
 //                    case 4:
 //                        appLicationEntity.setAppDesc("补充病历");
@@ -515,7 +515,7 @@ public class AppLicationUtils {
 //                        break;
                     case 4:
                         appLicationEntity.setAppDesc("MDT分诊");
-                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon8);
+                        appLicationEntity.setImageID(R.drawable.im_mdt);
                         break;
 
 //                    case 7:
@@ -529,12 +529,12 @@ public class AppLicationUtils {
 //                        break;
                     case 5:
                         appLicationEntity.setAppDesc("拍摄视频");
-                        appLicationEntity.setImageID(R.drawable.videowenzhen);
+                        appLicationEntity.setImageID(R.drawable.im_video);
                         break;
                     case 6:
 
                         appLicationEntity.setAppDesc("结束问诊");
-                        appLicationEntity.setImageID(R.drawable.stop);
+                        appLicationEntity.setImageID(R.drawable.im_turnoff);
                         break;
 
                 }
@@ -559,23 +559,23 @@ public class AppLicationUtils {
                 switch (i) {
                     case 1:
                         appLicationEntity.setAppDesc("图片");
-                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon1);
+                        appLicationEntity.setImageID(R.drawable.im_photo);
                         break;
                     case 2:
                         appLicationEntity.setAppDesc("拍摄");
-                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon2);
+                        appLicationEntity.setImageID(R.drawable.im_camera);
                         break;
                     case 3:
                         appLicationEntity.setAppDesc("快速回复");
-                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon3);
+                        appLicationEntity.setImageID(R.drawable.im_reply);
                         break;
                     case 4:
                         appLicationEntity.setAppDesc("补充病历");
-                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon4);
+                        appLicationEntity.setImageID(R.drawable.im_physician);
                         break;
                     case 5:
                         appLicationEntity.setAppDesc("拍摄视频");
-                        appLicationEntity.setImageID(R.drawable.videowenzhen);
+                        appLicationEntity.setImageID(R.drawable.im_video);
                         break;
 //                    case 5:
 //                        appLicationEntity.setAppDesc("优选推荐");
@@ -631,23 +631,23 @@ public class AppLicationUtils {
                 switch (i) {
                     case 1:
                         appLicationEntity.setAppDesc("图片");
-                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon1);
+                        appLicationEntity.setImageID(R.drawable.im_photo);
                         break;
                     case 2:
                         appLicationEntity.setAppDesc("拍摄");
-                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon2);
+                        appLicationEntity.setImageID(R.drawable.im_camera);
                         break;
                     case 3:
                         appLicationEntity.setAppDesc("快速回复");
-                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon3);
+                        appLicationEntity.setImageID(R.drawable.im_reply);
                         break;
                     case 4:
                         appLicationEntity.setAppDesc("补充病历");
-                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon4);
+                        appLicationEntity.setImageID(R.drawable.im_physician);
                         break;
                     case 5:
                         appLicationEntity.setAppDesc("拍摄视频");
-                        appLicationEntity.setImageID(R.drawable.videowenzhen);
+                        appLicationEntity.setImageID(R.drawable.im_video);
                         break;
 //                    case 4:
 //                        appLicationEntity.setAppDesc("补充病历");
@@ -657,6 +657,110 @@ public class AppLicationUtils {
 //                        appLicationEntity.setAppDesc("优选推荐");
 //                        appLicationEntity.setImageID(R.drawable.advice);
 //                        break;
+////                    case 6:
+////                        appLicationEntity.setAppDesc("加号");
+////                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon6);
+////                        break;
+////                    case 6:
+////                        appLicationEntity.setAppDesc("视频通话");
+////                        appLicationEntity.setImageID(R.drawable.videowenzhen);
+////                        break;
+//                    case 6:
+//                        appLicationEntity.setAppDesc("问诊表");
+//                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon5);
+//                        break;
+//
+////                    case 7:
+////                        appLicationEntity.setAppDesc("宣教");
+////                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon8);
+////                        break;
+//
+//                    case 7:
+//                        appLicationEntity.setAppDesc("结束问诊");
+//                        appLicationEntity.setImageID(R.drawable.stop);
+//                        break;
+
+//                    case 11:
+//                        appLicationEntity.setAppDesc("MDT分诊");
+//                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon8);
+//                        break;
+
+                }
+                appLicationEntity.setIsselect(true);
+
+                recordListuse.add(appLicationEntity);
+            }
+        } else {
+            return recordListuse;
+        }
+        return recordListuse;
+
+    }
+
+    //单聊
+    public static List<AppLicationEntity> getListSinglChat() {
+        recordListuse.clear();
+        if (recordListuse.size() == 0) {
+            for (int i = 1; i <= 11; i++) {
+                AppLicationEntity appLicationEntity = new AppLicationEntity();
+                appLicationEntity.setAppID(i);
+                switch (i) {
+                    case 1:
+                        appLicationEntity.setAppDesc("图片");
+                        appLicationEntity.setImageID(R.drawable.im_photo);
+                        break;
+                    case 2:
+                        appLicationEntity.setAppDesc("拍摄");
+                        appLicationEntity.setImageID(R.drawable.im_camera);
+                        break;
+                    case 3:
+                        appLicationEntity.setAppDesc("视频通话");
+                        appLicationEntity.setImageID(R.drawable.im_video);
+                        break;
+
+
+
+
+                    case 4:
+
+                        appLicationEntity.setAppDesc("补充病例");
+                        appLicationEntity.setImageID(R.drawable.im_addcase);
+                        break;
+                    case 5:
+                        appLicationEntity.setAppDesc("快速回复");
+                        appLicationEntity.setImageID(R.drawable.im_reply);
+                        break;
+                    case 6:
+
+
+                        appLicationEntity.setAppDesc("MDT会诊");
+                        appLicationEntity.setImageID(R.drawable.im_mdt);
+                        break;
+                    case 7:
+
+                        appLicationEntity.setAppDesc("问诊表");
+                        appLicationEntity.setImageID(R.drawable.im_physician);
+                        break;
+                    case 8:
+                        appLicationEntity.setAppDesc("结束问诊");
+                        appLicationEntity.setImageID(R.drawable.im_turnoff);
+                        break;
+                    case 9:
+
+                        appLicationEntity.setAppDesc("宣教");
+                        appLicationEntity.setImageID(R.drawable.im_mission);
+
+                        break;
+                    case 10:
+
+                        appLicationEntity.setAppDesc("加号");
+                        appLicationEntity.setImageID(R.drawable.im_add);
+                        break;
+
+                    case 11:
+                        appLicationEntity.setAppDesc("拍摄视频");
+                        appLicationEntity.setImageID(R.drawable.im_video);
+                        break;
 ////                    case 6:
 ////                        appLicationEntity.setAppDesc("加号");
 ////                        appLicationEntity.setImageID(R.mipmap.doctor_chat_icon6);

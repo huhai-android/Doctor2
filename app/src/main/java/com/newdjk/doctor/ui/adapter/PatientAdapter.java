@@ -3,7 +3,10 @@ package com.newdjk.doctor.ui.adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.newdjk.doctor.MyApplication;
@@ -24,8 +29,18 @@ import com.newdjk.doctor.ui.entity.InquiryRecordListDataEntity;
 import com.newdjk.doctor.ui.entity.PatientInfoEntity;
 import com.newdjk.doctor.ui.entity.PatientListDataEntity;
 import com.newdjk.doctor.ui.entity.PrescriptionMessageEntity;
+import com.newdjk.doctor.utils.ChatActivityUtils;
+import com.newdjk.doctor.utils.GlideUtils;
+import com.newdjk.doctor.utils.NetworkUtil;
 import com.newdjk.doctor.utils.SpUtils;
+import com.newdjk.doctor.utils.ToastUtil;
 import com.newdjk.doctor.views.CircleImageView;
+import com.newdjk.doctor.views.LoadDialog;
+import com.tencent.TIMCallBack;
+import com.tencent.TIMConversation;
+import com.tencent.TIMConversationType;
+import com.tencent.TIMManager;
+import com.tencent.TIMMessage;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
@@ -57,24 +72,47 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         if (mDataList != null && mDataList.size() > 0) {
 
             String path = mDataList.get(position).getPaPicturePath();
-            if (path != null && !path.equals("")) {
-//                Glide.with(MyApplication.getContext())
-//                        .load(path)
-//                        .placeholder(R.drawable.patient_default_img)
-//                        //.diskCacheStrategy(DiskCacheStrategy.ALL)
-//                        .into(holder.avatar);
+//            if (path != null && !path.equals("")) {
+////                Glide.with(MyApplication.getContext())
+////                        .load(path)
+////                        .placeholder(R.drawable.patient_default_img)
+////                        //.diskCacheStrategy(DiskCacheStrategy.ALL)
+////                        .into(holder.avatar);
+//                Log.d("PatientAdapter","位置"+position+" 图片地址"+path);
+//                holder.avatar.setImageDrawable(mActivity.getDrawable(R.drawable.patient_default_img));
+//                GlideUtils.loadPatientImage(path,holder.avatar);
+//
+//            }
+            String avatarTag = (String) holder.root.getTag();//如果tag为null则说明是全新的视图，否则是复用来的视图
 
-                Glide.with(MyApplication.getContext())
-                        .load(path)
-                        .dontAnimate()//防止设置placeholder导致第一次不显示网络图片,只显示默认图片的问题
-                        .error(R.drawable.patient_default_img)
-                        .placeholder(R.drawable.patient_default_img)
-                        .into(holder.avatar);
+            if (null == avatarTag || avatarTag.equals(path)) {
+                Glide.with(holder.avatar).load(path)
+                        .into(new SimpleTarget<Drawable>() {
+                            @Override
+                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                holder.avatar.setImageDrawable(resource);
+
+                            }
+                        });
+
+
+            } else {
+                holder.avatar.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.patient_default_img));
+                Glide.with(holder.avatar).load(path)
+                        .into(new SimpleTarget<Drawable>() {
+                            @Override
+                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                holder.avatar.setImageDrawable(resource);
+
+                            }
+                        });
+
             }
+            holder.root.setTag(path);
             Log.e("zdp", mDataList.get(position).getPatientName());
             String name = mDataList.get(position).getPatientName();
 
@@ -99,50 +137,104 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHo
             }
             int section = getSectionForPosition(position);
             if (position == getPositionForSection(section)) {
-                holder.alpha.setVisibility(View.VISIBLE);
+                holder.alpha.setVisibility(View.VISIBLE); //显示字母
                 holder.alpha.setText(mDataList.get(position).getPatientName().substring(0, 1));
-            } else {
+            } else {  //不显示字母
                 holder.alpha.setVisibility(View.GONE);
             }
+            //获取首字母
+            if (mDataList.size() > position + 1) {
+                char first = mDataList.get(position).getPatientName().charAt(0);
+                char next = mDataList.get(position + 1).getPatientName().charAt(0);
+                if (first == next) {
+                    holder.line.setVisibility(View.VISIBLE);
+                } else {
+                    holder.line.setVisibility(View.GONE);
+                }
+
+            } else {
+                holder.line.setVisibility(View.GONE);
+            }
+
             holder.patientItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Type jsonType = new TypeToken<PrescriptionMessageEntity<InquiryRecordListDataEntity>>() {
-                    }.getType();
-                    PatientInfoEntity PatientInfo = new PatientInfoEntity();
+//                    Type jsonType = new TypeToken<PrescriptionMessageEntity<InquiryRecordListDataEntity>>() {
+//                    }.getType();
+//                    PatientInfoEntity PatientInfo = new PatientInfoEntity();
+//
+//                    //   PatientInfo.setBirthday(mDataList.get(position).getBirthday());
+//                    String paName = mDataList.get(position).getPatientName();
+//                    PatientInfo.setPatientName(paName.substring(2, paName.length()));
+//                    PatientInfo.setPatientId(mDataList.get(position).getPatientId());
+//                    PatientInfo.setPatientSex(mDataList.get(position).getPatientSex());
+//                    PatientInfo.setAge(String.valueOf(mDataList.get(position).getAge()));
+//                    DoctorPatientRelationEntity DoctorPatientRelation = new DoctorPatientRelationEntity();
+//                    DoctorPatientRelation.setDrPatientId(mDataList.get(position).getDrPatientId());
+//                    InquiryRecordListDataEntity InquiryRecordListDataEntity = new InquiryRecordListDataEntity();
+//                    InquiryRecordListDataEntity.setDoctorPatientRelation(DoctorPatientRelation);
+//                    InquiryRecordListDataEntity.setPatientInfo(PatientInfo);
+//                    //  LoginEntity LoginEntity = mGson.fromJson(SpUtils.getString(Contants.LoginJson), com.newdjk.doctor.ui.entity.LoginEntity.class);
+//                    PrescriptionMessageEntity<InquiryRecordListDataEntity> prescriptionMessageEntity = mGson.fromJson(SpUtils.getString(Contants.LoginJson), jsonType);
+//                    if (prescriptionMessageEntity != null) {
+//                        prescriptionMessageEntity.setPatient(InquiryRecordListDataEntity);
+//                        String json = mGson.toJson(prescriptionMessageEntity);
+//                        Intent ArchivesIntent = new Intent(mActivity, ArchivesActivity.class);
+//                        ArchivesIntent.putExtra("action", "patientList");
+//                        ArchivesIntent.putExtra("prescriptionMessage", json);
+//                        mActivity.startActivity(ArchivesIntent);
+//                    }
 
-                    //   PatientInfo.setBirthday(mDataList.get(position).getBirthday());
-                    String paName = mDataList.get(position).getPatientName();
-                    PatientInfo.setPatientName(paName.substring(2, paName.length()));
-                    PatientInfo.setPatientId(mDataList.get(position).getPatientId());
-                    PatientInfo.setPatientSex(mDataList.get(position).getPatientSex());
-                    PatientInfo.setAge(String.valueOf(mDataList.get(position).getAge()));
-                    DoctorPatientRelationEntity DoctorPatientRelation = new DoctorPatientRelationEntity();
-                    DoctorPatientRelation.setDrPatientId(mDataList.get(position).getDrPatientId());
-                    InquiryRecordListDataEntity InquiryRecordListDataEntity = new InquiryRecordListDataEntity();
-                    InquiryRecordListDataEntity.setDoctorPatientRelation(DoctorPatientRelation);
-                    InquiryRecordListDataEntity.setPatientInfo(PatientInfo);
-                    //  LoginEntity LoginEntity = mGson.fromJson(SpUtils.getString(Contants.LoginJson), com.newdjk.doctor.ui.entity.LoginEntity.class);
-                    PrescriptionMessageEntity<InquiryRecordListDataEntity> prescriptionMessageEntity = mGson.fromJson(SpUtils.getString(Contants.LoginJson), jsonType);
-                   if (prescriptionMessageEntity!=null){
-                       prescriptionMessageEntity.setPatient(InquiryRecordListDataEntity);
-                       String json = mGson.toJson(prescriptionMessageEntity);
-                       Intent ArchivesIntent = new Intent(mActivity, ArchivesActivity.class);
-                       ArchivesIntent.putExtra("action", "patientList");
-                       ArchivesIntent.putExtra("prescriptionMessage", json);
-                       mActivity.startActivity(ArchivesIntent);
-                   }
+                    try {
+                        if (NetworkUtil.isNetworkAvailable(mActivity)) {
+                            LoadDialog.show(mActivity);
+                            final String faceUrl = mDataList.get(position).getPaPicturePath();
+                            TIMConversation conversation = TIMManager.getInstance().getConversation(
+                                    TIMConversationType.C2C,    //会话类型：单聊
+                                    mDataList.get(position).getPatientIMId() + "");      //会话对方用户帐号
+                            //将此会话的所有消息标记为已读
+                            List<TIMMessage> lastMsgs = conversation.getLastMsgs(1);
+                            if (lastMsgs.size() > 0) {
+                                TIMMessage msg = lastMsgs.get(0);
+                                conversation.setReadMessage(msg, new TIMCallBack() {
+                                    @Override
+                                    public void onError(int code, String desc) {
+                                        Log.e("setReadMessage", "setReadMessage failed, code: " + code + "|desc: " + desc);
+                                        ToastUtil.setToast("网络连接异常，请检查网络");
+                                        LoadDialog.clear();
+                                    }
 
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.d("setReadMessage", "setReadMessage succ");
+                                        // helper.setVisible(R.id.unread_num, false);
+
+                                    }
+                                });
+                            }
+
+                            // helper.setVisible(R.id.unread_num, false);
+                            String identifier = mDataList.get(position).getPatientIMId() + "";
+                            String imId = SpUtils.getString(Contants.identifier);
+                            // getIMRelationRecord(identifier, imId, faceUrl);
+                            ChatActivityUtils.getinStanse().toChat(identifier, imId, faceUrl, mActivity);
+
+                        } else {
+                            ToastUtil.setToast("网络连接异常，请检查网络");
+
+                        }
+                    } catch (Exception e) {
+                        ToastUtil.setToast("数据异常，请重新登录");
+                        LoadDialog.clear();
+                    }
                 }
             });
         }
     }
 
+
     @Override
     public void onViewRecycled(@NonNull MyViewHolder holder) {
-        if (holder != null) {
-            Glide.clear(holder.avatar);
-        }
         super.onViewRecycled(holder);
     }
 
@@ -167,6 +259,10 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHo
         LinearLayout patientItem;
         @BindView(R.id.alpha)
         TextView alpha;
+        @BindView(R.id.root)
+        LinearLayout root;
+        @BindView(R.id.line)
+        View line;
 
         MyViewHolder(View itemView) {
             super(itemView);

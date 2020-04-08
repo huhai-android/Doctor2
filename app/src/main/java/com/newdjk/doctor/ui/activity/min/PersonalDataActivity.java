@@ -99,7 +99,7 @@ public class PersonalDataActivity extends BasicActivity {
     @BindView(R.id.fun_yu_e)
     ItemView funYuE;
     @BindView(R.id.mFunBirth)
-    ItemView mFunBirth;
+    LinearLayout mFunBirth;
     @BindView(R.id.mFunHospitol)
     ItemView mFunHospitol;
     @BindView(R.id.mFunDepartment)
@@ -135,7 +135,7 @@ public class PersonalDataActivity extends BasicActivity {
         GlideCacheUtil.getInstance().clearImageDiskCache(this);
         GlideCacheUtil.getInstance().clearImageMemoryCache(this);
         mGson = new Gson();
-        initBackTitle("个人中心").setRightText("保存");
+        initBackTitle("个人中心");
     }
 
     @Override
@@ -232,25 +232,25 @@ public class PersonalDataActivity extends BasicActivity {
 //                Intent updataAuthenticationIntent = new Intent(PersonalDataActivity.this, Authentication3ActivityNew.class);
 //                startActivityForResult(updataAuthenticationIntent, 7);
                 break;
-            case R.id.mFunGoodAt:
+            case R.id.mFunGoodAt://擅长
                 Intent funGoodAtIntent = new Intent(PersonalDataActivity.this, UpdateInfoActivity.class);
                 funGoodAtIntent.putExtra("action", "funGoodAt");
                 funGoodAtIntent.putExtra("data", mFunGoodAt.getTvItemRightText().getText());
                 startActivityForResult(funGoodAtIntent, 3);
                 break;
-            case R.id.mFunTitle:
+            case R.id.mFunTitle: //专制
                 Intent funTitleIntent = new Intent(PersonalDataActivity.this, UpdateInfoActivity.class);
                 funTitleIntent.putExtra("action", "funTitle");
                 funTitleIntent.putExtra("data", mFunTitle.getTvItemRightText().getText());
                 startActivityForResult(funTitleIntent, 4);
                 break;
-            case R.id.mFunIntroduction:
+            case R.id.mFunIntroduction://简介
                 Intent funIntroductionIntent = new Intent(PersonalDataActivity.this, UpdateInfoActivity.class);
                 funIntroductionIntent.putExtra("data", mFunIntroduction.getTvItemRightText().getText());
                 funIntroductionIntent.putExtra("action", "funIntroduction");
                 startActivityForResult(funIntroductionIntent, 5);
                 break;
-            case R.id.mFunBirth:
+            case R.id.mFunBirth://二维码名片
                 Intent intent = new Intent(this, DoctorHomeCardActivity.class);
                 intent.putExtra("title", "我的名片");
                 intent.putExtra("doctorInfoByIdEntity", mDoctorInfoByIdEntity);
@@ -290,7 +290,7 @@ public class PersonalDataActivity extends BasicActivity {
                 startActivityForResult(intent, 6);*/
                 break;
             case R.id.tv_right:
-                updateDoctorInfo();
+                //updateDoctorInfo();
                 break;
 
             case R.id.mFunPhone:
@@ -310,54 +310,9 @@ public class PersonalDataActivity extends BasicActivity {
             public void onSuccess(int statusCode, final ResponseEntity<DoctorInfoByIdEntity> entity) {
                 if (entity.getCode() == 0) {
                     mDoctorInfoByIdEntity = entity.getData();
-                    int sexType = SpUtils.getInt(Contants.Sex, 0);
-                    mStatus = SpUtils.getInt(Contants.Status, 0);
-                    switch (mStatus) {
-                        case 0:
-                            mFunPhone.setRightText("去认证");
-                            mFlag = "0";
-                            break;
-                        case 1:
-                            mFunPhone.setRightText("已认证");
-                            break;
-                        case 2:
-                            mFunPhone.setRightText("认证失败");
-                            mFlag = "2";
-                            break;
-                        case 3:
-                            mFunPhone.setRightText("认证中");
-                            mFlag = "3";
-                            break;
-                    }
-                    String sex = "";
-                    switch (sexType) {
-                        case 1:
-                            sex = "男";
-                            break;
-                        case 2:
-                            sex = "女";
-                            break;
-                        case 3:
-                            sex = "未知";
-                            break;
-                    }
-                    mFunName.setRightText(mDoctorInfoByIdEntity.getDrName());
-                    mFunGender.setRightText(sex);
-                    //    mFunPhone.setRightText(mDoctorInfoByIdEntity.getMobile());
-                    //   funYuE.setRightText();
-                    mFunBirth.setRightImage(getResources().getDrawable(R.mipmap.doctor_home_card));
-                    mFunHospitol.setRightText(mDoctorInfoByIdEntity.getHospitalName());
-                    mFunDepartment.setRightText(mDoctorInfoByIdEntity.getDepartmentName());
-                    mFunTitle.setRightText(mDoctorInfoByIdEntity.getTreatMent());
-                    title.setRightText(mDoctorInfoByIdEntity.getPositionName());
-                    mFunGoodAt.setRightText(mDoctorInfoByIdEntity.getDoctorSkill());
-                    mFunIntroduction.setRightText(mDoctorInfoByIdEntity.getDescription());
-                    Log.i("PersonalDataActivity", "path=" + mDoctorInfoByIdEntity.getPicturePath());
-                    Glide.with(MyApplication.getContext())
-                            .load(mDoctorInfoByIdEntity.getPicturePath())
+                    MyApplication.mDoctorInfoByIdEntity=entity.getData();
 
-                            //.diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(mCircleImageView);
+                    refreshPersondata();
 
                 } else {
                     toast(entity.getMessage());
@@ -369,6 +324,59 @@ public class PersonalDataActivity extends BasicActivity {
                 CommonMethod.requestError(statusCode, errorMsg);
             }
         });
+    }
+
+    private void refreshPersondata() {
+
+        int sexType = SpUtils.getInt(Contants.Sex, 0);
+        mStatus = SpUtils.getInt(Contants.Status, 0);
+        switch (mStatus) {
+            case 0:
+                mFunPhone.setRightText("去认证");
+                mFlag = "0";
+                break;
+            case 1:
+                mFunPhone.setRightText("已认证");
+                mFunPhone.setRightImageVisibility(false);
+                break;
+            case 2:
+                mFunPhone.setRightText("认证失败");
+                mFlag = "2";
+                break;
+            case 3:
+                mFunPhone.setRightText("认证中");
+                mFlag = "3";
+                break;
+        }
+        String sex = "";
+        switch (sexType) {
+            case 1:
+                sex = "男";
+                break;
+            case 2:
+                sex = "女";
+                break;
+            case 3:
+                sex = "未知";
+                break;
+        }
+        mFunName.setRightText(mDoctorInfoByIdEntity.getDrName());
+        mFunGender.setRightText(sex);
+        //    mFunPhone.setRightText(mDoctorInfoByIdEntity.getMobile());
+        //   funYuE.setRightText();
+
+        mFunHospitol.setRightText(mDoctorInfoByIdEntity.getHospitalName());
+        mFunDepartment.setRightText(mDoctorInfoByIdEntity.getDepartmentName());
+        mFunTitle.setRightText(mDoctorInfoByIdEntity.getTreatMent());
+        title.setRightText(mDoctorInfoByIdEntity.getPositionName());
+        mFunGoodAt.setRightText(mDoctorInfoByIdEntity.getDoctorSkill());
+        mFunIntroduction.setRightText(mDoctorInfoByIdEntity.getDescription());
+        Log.i("PersonalDataActivity", "path=" + mDoctorInfoByIdEntity.getPicturePath());
+        Glide.with(MyApplication.getContext())
+                .load(mDoctorInfoByIdEntity.getPicturePath())
+
+                //.diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(mCircleImageView);
     }
 
     @Override
@@ -389,7 +397,7 @@ public class PersonalDataActivity extends BasicActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void userEventBus(UpLoadImageSuccess upLoadImageSuccess) {
         Log.d(TAG,"上传图片成功");
-        mDoctorInfoByIdEntity.setPicturePath(upLoadImageSuccess.getImagePath());
+        mDoctorInfoByIdEntity.setPicturePath(upLoadImageSuccess.getFileimagePath());
         Glide.with(MyApplication.getContext())
                 .load(mDoctorInfoByIdEntity.getPicturePath())
 
@@ -425,7 +433,13 @@ public class PersonalDataActivity extends BasicActivity {
             }
         });
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void userEventBus(UpdateImageView userEvent) {
 
+        mDoctorInfoByIdEntity=MyApplication.mDoctorInfoByIdEntity;
+        refreshPersondata();
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

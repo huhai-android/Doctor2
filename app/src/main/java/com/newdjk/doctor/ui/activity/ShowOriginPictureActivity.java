@@ -5,15 +5,16 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
+
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.basic.BasicActivity;
@@ -76,25 +77,36 @@ public class ShowOriginPictureActivity extends BasicActivity {
 //                    //.diskCacheStrategy(DiskCacheStrategy.ALL)
 //                    .into(originPicture);
             loading(true);
+//            Glide.with(ShowOriginPictureActivity.this)
+//                    .load(mPath)
+//                    .into(new SimpleTarget<GlideDrawable>() { // 加上这段代码 可以解决
+//                        @Override
+//                        public void onResourceReady(GlideDrawable resource,
+//                                                    GlideAnimation<? super GlideDrawable> glideAnimation) {
+//                            loading(false);
+//                            originPicture.setImageDrawable(resource); //显示图片
+//                        }
+//
+//                        @Override
+//                        public void onLoadFailed(Exception e, Drawable errorDrawable) {
+//                            super.onLoadFailed(e, errorDrawable);
+//                            loading(false);
+//                        }
+//                    });
             Glide.with(ShowOriginPictureActivity.this)
-                    .load(mPath)
-                    .dontAnimate()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(new SimpleTarget<GlideDrawable>() { // 加上这段代码 可以解决
-                        @Override
-                        public void onResourceReady(GlideDrawable resource,
-                                                    GlideAnimation<? super GlideDrawable> glideAnimation) {
-                            loading(false);
-                            originPicture.setImageDrawable(resource); //显示图片
-                        }
+                    .load(mPath).into(new SimpleTarget<Drawable>() {
+                @Override
+                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                    loading(false);
+                    originPicture.setImageDrawable(resource); //显示图片
+                }
 
-                        @Override
-                        public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                            super.onLoadFailed(e, errorDrawable);
-                            loading(false);
-                        }
-                    });
-
+                @Override
+                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                    super.onLoadFailed(errorDrawable);
+                    loading(false);
+                }
+            });
 
         } else if (mBase64 != null) {
             photoLayout.setBackgroundColor(Color.parseColor("#ffffff"));

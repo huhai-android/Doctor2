@@ -2,7 +2,10 @@ package com.newdjk.doctor.ui.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.Gson;
 import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.ui.entity.PatientListDataEntity;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.views.CircleImageView;
 import com.newdjk.doctor.views.ShareDialog;
 
@@ -54,20 +60,41 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
         if (mDataList != null && mDataList.size() > 0) {
 
             String path = mDataList.get(position).getPaPicturePath();
-            if (path != null && !path.equals("")) {
-//                Glide.with(MyApplication.getContext())
-//                        .load(path)
-//                        .placeholder(R.drawable.patient_default_img)
-//                        //.diskCacheStrategy(DiskCacheStrategy.ALL)
-//                        .into(holder.avatar);
+//            if (path != null && !path.equals("")) {
+////                Glide.with(MyApplication.getContext())
+////                        .load(path)
+////                        .placeholder(R.drawable.patient_default_img)
+////                        //.diskCacheStrategy(DiskCacheStrategy.ALL)
+////                        .into(holder.avatar);
+//                GlideUtils.loadPatientImage(path,holder.avatar);
+//
+//            }
+            String avatarTag = (String) holder.root.getTag();//如果tag为null则说明是全新的视图，否则是复用来的视图
 
-                Glide.with(MyApplication.getContext())
-                        .load(path)
-                        .dontAnimate()//防止设置placeholder导致第一次不显示网络图片,只显示默认图片的问题
-                        .error(R.drawable.patient_default_img)
-                        .placeholder(R.drawable.patient_default_img)
-                        .into(holder.avatar);
+            if (null == avatarTag || avatarTag.equals(path)) {
+                Glide.with(holder.avatar).load(path)
+                        .into(new SimpleTarget<Drawable>() {
+                            @Override
+                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                holder.avatar.setImageDrawable(resource);
+
+                            }
+                        });
+
+
+            } else {
+                holder.avatar.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.patient_default_img));
+                Glide.with(holder.avatar).load(path)
+                        .into(new SimpleTarget<Drawable>() {
+                            @Override
+                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                holder.avatar.setImageDrawable(resource);
+
+                            }
+                        });
+
             }
+            holder.root.setTag(path);
             Log.e("zdp", mDataList.get(position).getPatientName());
             String name = mDataList.get(position).getPatientName();
 
@@ -124,7 +151,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
     @Override
     public void onViewRecycled(@NonNull MyViewHolder holder) {
         if (holder != null) {
-            Glide.clear(holder.avatar);
+          //  Glide.clear(holder.avatar);
         }
         super.onViewRecycled(holder);
     }
@@ -152,6 +179,8 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
         TextView alpha;
         @BindView(R.id.image_select)
         ImageView imageSelect;
+        @BindView(R.id.root)
+        LinearLayout root;
 
 
         MyViewHolder(View itemView) {

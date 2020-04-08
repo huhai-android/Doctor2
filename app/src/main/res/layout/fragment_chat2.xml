@@ -37,10 +37,10 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
+                        android:layout_width="@dimen/dp_48"
+                        android:layout_height="@dimen/dp_48"
                         android:contentDescription="TODO"
-                        android:src="@mipmap/doctor_chat_icon5" />
+                        android:src="@drawable/im_physician" />
                 </RelativeLayout>
 
                 <TextView
@@ -65,10 +65,10 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
+                        android:layout_width="@dimen/dp_48"
+                        android:layout_height="@dimen/dp_48"
                         android:contentDescription="TODO"
-                        android:src="@mipmap/doctor_chat_icon8" />
+                        android:src="@drawable/im_mission" />
                 </RelativeLayout>
 
                 <TextView

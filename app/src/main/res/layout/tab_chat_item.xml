@@ -12,6 +12,7 @@
 
 
     <LinearLayout
+
         android:id="@+id/btn_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,6 +20,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:layout_marginTop="17dp"
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"
             android:background="@drawable/bg_more"
@@ -26,8 +28,8 @@
 
             <ImageView
                 android:id="@+id/item_chat_img"
-                android:layout_width="@dimen/dp_20"
-                android:layout_height="@dimen/dp_20"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
                 android:contentDescription="TODO"
                 android:src="@mipmap/doctor_chat_icon2" />
         </RelativeLayout>

@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.ui.entity.PatientListDataEntity;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.views.CircleImageView;
 
 import java.util.List;
@@ -36,12 +37,13 @@ public class PatientSelectAdapter extends BaseQuickAdapter<PatientListDataEntity
         }
 
         CircleImageView circleImageView = helper.itemView.findViewById(R.id.head_icon);
-        Glide.with(MyApplication.getContext())
-                .load(item.getPaPicturePath())
-                .dontAnimate()
-                .placeholder(R.drawable.doctor_default_img)
-                //.diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(circleImageView);
+//        Glide.with(MyApplication.getContext())
+//                .load(item.getPaPicturePath())
+//                .dontAnimate()
+//                .placeholder(R.drawable.doctor_default_img)
+//                //.diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .into(circleImageView);
+        GlideUtils.loadDoctorImage(item.getPaPicturePath(),circleImageView);
         }
 
 }

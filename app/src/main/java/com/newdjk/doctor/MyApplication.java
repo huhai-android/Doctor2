@@ -32,6 +32,7 @@ import com.newdjk.doctor.iInterface.MyLifecycleHandler;
 import com.newdjk.doctor.ui.entity.DoctorInfoByIdEntity;
 import com.newdjk.doctor.ui.entity.GotoMainactivity;
 import com.newdjk.doctor.ui.entity.MDTDetailEntity;
+import com.newdjk.doctor.utils.BadgeUtil;
 import com.newdjk.doctor.utils.BoxingGlideLoader;
 import com.newdjk.doctor.utils.BoxingUcrop;
 import com.newdjk.doctor.utils.DefaultMediaLoader;
@@ -114,6 +115,12 @@ public class MyApplication extends Application {
         if (BuildConfig.DEBUG) {
             openStetho();
         }
+        //红点清零
+        badgeNumber=0;
+        Log.d("BadgeUtil","myapplication红点显示个数"+MyApplication.badgeNumber);
+
+        BadgeUtil.setBadgeCount(this,MyApplication.badgeNumber);
+
         IBoxingMediaLoader loader = new BoxingGlideLoader();
         BoxingMediaLoader.getInstance().init(loader);
         BoxingCrop.getInstance().init(new BoxingUcrop());
@@ -350,9 +357,9 @@ public class MyApplication extends Application {
             // 注意：该数据库连接属于 DaoMaster，所以多个 Session 指的是相同的数据库连接。     
             mDaoMaster = new DaoMaster(db);
             mDaoSession = mDaoMaster.newSession();
-        } catch (Exception e) {
+       } catch (Exception e) {
 
-        }
+       }
 
     }
 

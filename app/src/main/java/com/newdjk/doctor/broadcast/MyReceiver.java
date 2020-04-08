@@ -115,6 +115,10 @@ public class MyReceiver extends BroadcastReceiver {
                 } else {
                     EventBus.getDefault().post(new UpdatePushView(1));
                 }
+                MyApplication.badgeNumber++;
+                Log.d("BadgeUtil","MyReceiver红点显示个数"+MyApplication.badgeNumber);
+
+                BadgeUtil.setBadgeCount(MyApplication.getContext(),MyApplication.badgeNumber);
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
                 Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
@@ -137,8 +141,7 @@ public class MyReceiver extends BroadcastReceiver {
             } else {
                 Log.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
             }
-            MyApplication.badgeNumber++;
-            BadgeUtil.setBadgeCount(MyApplication.getContext(),MyApplication.badgeNumber);
+
         } catch (Exception e) {
             Log.i("MyReceiver", "ERRROR=" + e.toString());
         }

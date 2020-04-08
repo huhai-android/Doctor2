@@ -12,6 +12,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.ui.entity.GongGaoListEntity;
+import com.newdjk.doctor.utils.GlideUtils;
 
 import java.util.List;
 
@@ -36,10 +37,8 @@ public class GonggaoAdapter extends BaseQuickAdapter<GongGaoListEntity.ReturnDat
 
         RoundedImageView imageView = helper.itemView.findViewById(R.id.image);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        Glide.with(mContext)
-                .load(item.getMasterMap())
-                .error(R.drawable.default_gonggao)
-                .into(imageView);
+
+        GlideUtils.loadCommonmage(item.getMasterMap(),imageView,R.drawable.default_gonggao);
 
 
         helper.setText(R.id.tv_time, item.getPublishTime().substring(0, 10) + "");

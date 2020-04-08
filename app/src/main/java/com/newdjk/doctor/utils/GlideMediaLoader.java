@@ -3,11 +3,13 @@ package com.newdjk.doctor.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
 import com.newdjk.doctor.R;
 import com.youth.banner.loader.ImageLoaderInterface;
 
@@ -22,12 +24,31 @@ public class GlideMediaLoader implements ImageLoaderInterface {
         if (!String.valueOf(path).startsWith("http")) {
 //             path = "file://" + path;
         }
-        with(context)
-                .load(path).centerCrop().dontAnimate().error(placeholder)
-                .placeholder(placeholder).into((ImageView) imgview);
+        RequestOptions options = new RequestOptions()
+                .placeholder(placeholder)  //加载成功之前占位图
+                .error(placeholder) ;   //加载错误之后的错误图
+
+
+        Glide.with((Context) context)
+                .load(path)
+                .apply(options)
+                .into((ImageView) imgview);
 
 
 
+    }
+    public static void loadRezise(Context context, ImageView imgview, String path, int placeholder) {
+        Log.d("图片缩放", " " + path);
+        RequestOptions options = new RequestOptions()
+                .placeholder(placeholder)  //加载成功之前占位图
+                .error(placeholder)    //加载错误之后的错误图
+                //指定图片的缩放类型为fitCenter （等比例缩放图片，宽或者是高等于ImageView的宽或者是高。）
+                .fitCenter();
+
+        Glide.with((Context) context)
+                .load(path)
+                .apply(options)
+                .into((ImageView) imgview);
     }
 
     public static void load(Object context, View imgview, String path) {

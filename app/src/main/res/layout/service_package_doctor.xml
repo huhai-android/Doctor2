@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    android:background="@drawable/boder_white_oval_doctor"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:clickable="false"
+        android:focusable="false"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_3"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10">
+
+        <RelativeLayout
+            android:id="@+id/title_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+
+                android:id="@+id/service_paceage_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:lineSpacingMultiplier="1.2"
+                tools:text="12121"
+                android:textColor="@color/plugin_camera_black" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/service_detail_list"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false" />
+
+
+        <!--  <com.newdjk.doctor.views.ItemView
+              android:id="@+id/check_detail"
+              android:layout_width="wrap_content"
+              android:layout_height="@dimen/dp_35"
+              app:SetRightImg="@drawable/ic_right"
+              app:leftTVText="@string/check_detail" />-->
+    </LinearLayout>
+
+    <View
+
+        android:id="@+id/line"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginTop="7dp"
+        android:background="#CCCCCC" />
+
+    <RelativeLayout
+        android:id="@+id/check_detail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_35"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/check_detail_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/check_detail"
+                android:textColor="#ff000000" />
+
+            <View
+                android:id="@+id/cutline"
+                android:visibility="gone"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#CCCCCC"></View>
+
+            <TextView
+                android:id="@+id/tv_xufang"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_toLeftOf="@id/im_right"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:text="续方"
+                android:textColor="#ff000000"
+                android:visibility="gone" />
+
+
+            <ImageView
+                android:id="@+id/im_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_right"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</LinearLayout>

@@ -172,7 +172,10 @@
         <item name="android:fitsSystemWindows">false</item>
         <item name="android:background">@color/activity_bg</item>
     </style>
-
+    <style name="ll_activity_message" parent="ll_vertical_match_match">
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:background">@color/white</item>
+    </style>
     <style name="ll_activity_chat" parent="ll_vertical_match_match">
 
         <item name="android:background">@color/activity_bg</item>

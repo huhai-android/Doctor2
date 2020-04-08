@@ -82,6 +82,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- Android O版本调用安装需要使用该权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <!-- 接收PUSH TOKEN的广播以及PUSH消息需要定义该权限 com.newdjk.doctor 要替换上您应用的包名 -->
     <permission
@@ -851,6 +852,13 @@ l
         <activity android:name=".ui.activity.TaskActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.ServiceDetailLinkActivity" />
         <activity android:name=".ui.activity.UploadImageActivity" />
+        <activity android:name=".ui.chat.NewChatActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Immense"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden"
+            />
+        <activity android:name=".ui.activity.SetTuwenValueActivity" />
         <!-- 接入HMSSDK PUSH模块需要注册，第三方相关 :接收Push消息（注册、透传消息、通知栏点击事件）广播，
                 此receiver类需要开发者自己创建并继承com.huawei.hms.support.api.push.PushReceiver类，
                 参考示例代码中的类：com.huawei.hmsagent.HuaweiPushRevicer

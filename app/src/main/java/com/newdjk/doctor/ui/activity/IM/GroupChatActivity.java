@@ -75,6 +75,7 @@ import com.newdjk.doctor.ui.activity.MedicalServiceActivity;
 import com.newdjk.doctor.ui.activity.MissionActivity;
 import com.newdjk.doctor.ui.activity.PrescriptionActivity;
 import com.newdjk.doctor.ui.activity.ReplyQuickActivity;
+import com.newdjk.doctor.ui.activity.WebViewActivity;
 import com.newdjk.doctor.ui.activity.min.GroupMemberActivity;
 import com.newdjk.doctor.ui.adapter.GroupChatAdapter;
 import com.newdjk.doctor.ui.camera.CameraActivity;
@@ -113,6 +114,7 @@ import com.newdjk.doctor.ui.entity.UpdateMessageListEntity;
 import com.newdjk.doctor.ui.entity.UpdateViewEntity;
 import com.newdjk.doctor.ui.entity.YWXListenerEntity;
 import com.newdjk.doctor.ui.fragment.TabChatFragment;
+import com.newdjk.doctor.ui.fragment.TabWeixinChatFragment;
 import com.newdjk.doctor.utils.AppLicationUtils;
 import com.newdjk.doctor.utils.AppUtils;
 import com.newdjk.doctor.utils.FragmentFactory;
@@ -267,7 +269,7 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
     @BindView(R.id.btn_add)
     ImageButton btnAdd;
     @BindView(R.id.btn_send)
-    ImageButton btnSend;
+    TextView btnSend;
     @BindView(R.id.input_1)
     LinearLayout input1;
     @BindView(R.id.viewpager)
@@ -723,7 +725,8 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
             @Override
             public void onPageSelected(int position) {
                 viewpager.setCurrentItem(position, false);
-                TabChatFragment homeTabFragment = (TabChatFragment) mbuttonAdapter.getItem(position);
+
+                TabWeixinChatFragment homeTabFragment = (TabWeixinChatFragment) mbuttonAdapter.getItem(position);
                 homeTabFragment.setdata(listuse, position);
             }
         });
@@ -4312,25 +4315,34 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
     }
 
     private void obtainAboutInfo() {
-        loading(true);
-        Map<String, String> headMap = new HashMap<>();
-        headMap.put("Authorization", SpUtils.getString(Contants.Token));
-        mMyOkhttp.post().url(HttpUrl.GetAboutInfo).headers(headMap).tag(this).enqueue(new GsonResponseHandler<AboutUsEntity>() {
-            @Override
-            public void onSuccess(int statusCode, AboutUsEntity response) {
-                LoadDialog.clear();
-                if (response.getCode() == 0) {
-                    call("tel:" + response.getData().getMobile());
-                } else {
-                    toast(response.getMessage());
-                }
-            }
+//        loading(true);
+//        Map<String, String> headMap = new HashMap<>();
+//        headMap.put("Authorization", SpUtils.getString(Contants.Token));
+//        mMyOkhttp.post().url(HttpUrl.GetAboutInfo).headers(headMap).tag(this).enqueue(new GsonResponseHandler<AboutUsEntity>() {
+//            @Override
+//            public void onSuccess(int statusCode, AboutUsEntity response) {
+//                LoadDialog.clear();
+//                if (response.getCode() == 0) {
+//                    call("tel:" + response.getData().getMobile());
+//                } else {
+//                    toast(response.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailures(int statusCode, String errorMsg) {
+//                LoadDialog.clear();
+//            }
+//        });
 
-            @Override
-            public void onFailures(int statusCode, String errorMsg) {
-                LoadDialog.clear();
-            }
-        });
+
+        Intent intent = new Intent(getContext(), WebViewActivity.class);
+        intent.putExtra("type", 1);
+        intent.putExtra("Name", MyApplication.mDoctorInfoByIdEntity.getDrName() + "");
+        intent.putExtra("AccountId", MyApplication.mDoctorInfoByIdEntity.getDrId() + "");
+        intent.putExtra("Sex", MyApplication.mDoctorInfoByIdEntity.getDrSex() + "");
+        intent.putExtra("Mobile", MyApplication.mDoctorInfoByIdEntity.getMobile() + "");
+        startActivity(intent);
     }
 
     private void getCurrentTimeToUpdateCountTime() {
@@ -4726,7 +4738,7 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
         @Override
         public Fragment getItem(int position) {
             // Log.d(TAG,"数据长度"+listuse.size());
-            TabChatFragment homeTabFragment = new TabChatFragment();
+            TabWeixinChatFragment homeTabFragment = new TabWeixinChatFragment();
             homeTabFragment.setdata(listuse, position);
             homeTabFragment.setonclickListener(new OnTabItemClickListener() {
                 @Override
@@ -4739,7 +4751,7 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            TabChatFragment fragment = (TabChatFragment) super.instantiateItem(container, position);
+            TabWeixinChatFragment fragment = (TabWeixinChatFragment) super.instantiateItem(container, position);
             fragment.setdata(listuse, position);
             return fragment;
         }

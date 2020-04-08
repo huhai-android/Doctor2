@@ -31,6 +31,7 @@ import com.newdjk.doctor.ui.entity.OnlineRenewalDataEntity;
 import com.newdjk.doctor.ui.entity.PatientInfoEntity;
 import com.newdjk.doctor.ui.entity.PrescriptionMessageEntity;
 import com.newdjk.doctor.ui.entity.ResponseEntity;
+import com.newdjk.doctor.utils.ChatActivityUtils;
 import com.newdjk.doctor.utils.GlideMediaLoader;
 import com.newdjk.doctor.utils.HeadUitl;
 import com.newdjk.doctor.utils.NetworkUtil;
@@ -171,7 +172,9 @@ public class MianzhenDetailActivity extends BasicActivity {
                                 final String faceUrl = mMianzhenDetailEntity.getPatientPic();
                                 String identifier = mMianzhenDetailEntity.getApplicantIMId();
                                 String imId = SpUtils.getString(Contants.identifier);
-                                getIMRelationRecord(identifier, imId, faceUrl);
+                              //  getIMRelationRecord(identifier, imId, faceUrl);
+                                ChatActivityUtils.getinStanse().toChat(identifier, imId, faceUrl,mContext);
+
                             }
                         });
                     } else {

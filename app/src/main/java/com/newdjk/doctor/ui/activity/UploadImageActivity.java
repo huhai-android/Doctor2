@@ -27,17 +27,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lxq.okhttp.response.GsonResponseHandler;
+import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.basic.BasicActivity;
 import com.newdjk.doctor.model.HttpUrl;
 import com.newdjk.doctor.tools.CommonMethod;
+import com.newdjk.doctor.tools.Contants;
 import com.newdjk.doctor.ui.entity.DoctorInfoByIdEntity;
+import com.newdjk.doctor.ui.entity.Entity;
 import com.newdjk.doctor.ui.entity.PicturePathEntity;
 import com.newdjk.doctor.ui.entity.ResponseEntity;
 import com.newdjk.doctor.ui.entity.UpLoadImageSuccess;
+import com.newdjk.doctor.ui.entity.UpdateImageView;
 import com.newdjk.doctor.utils.ImageBase64;
+import com.newdjk.doctor.utils.SpUtils;
 import com.newdjk.doctor.views.AlbumsTypeSelectedpopwin;
+import com.newdjk.doctor.views.LoadDialog;
 import com.yalantis.ucrop.UCrop;
 
 import org.greenrobot.eventbus.EventBus;
@@ -82,6 +89,7 @@ public class UploadImageActivity extends BasicActivity {
     private String mImgPath;
     private DoctorInfoByIdEntity mDoctorInfoByIdEntity;
     private String mPicturePath;
+    private Gson mGson;
 
     @Override
     protected int initViewResId() {
@@ -90,13 +98,14 @@ public class UploadImageActivity extends BasicActivity {
 
     @Override
     protected void initView() {
+        mGson = new Gson();
         initTitle("上传头像").setLeftImage(R.drawable.head_back_n).setLeftOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
+        mDoctorInfoByIdEntity=MyApplication.mDoctorInfoByIdEntity;
     }
 
 
@@ -298,7 +307,7 @@ public class UploadImageActivity extends BasicActivity {
 
 
     @SuppressLint("StaticFieldLeak")
-    private void uploadPicture(String path) {
+    private void uploadPicture(final String path) {
 
         new AsyncTask<String, Integer, String>() {
             protected WeakReference<String> mTarget;
@@ -316,27 +325,32 @@ public class UploadImageActivity extends BasicActivity {
             protected void onPostExecute(String s) {
                 Map<String, String> map = new HashMap<>();
                 map.put("Base64Str", s);
+                loading(true);
                 mMyOkhttp.post().url(HttpUrl.DoctorImagUpload).params(map).tag(this).enqueue(new GsonResponseHandler<ResponseEntity<PicturePathEntity>>() {
                     @Override
                     public void onSuccess(int statusCode, ResponseEntity<PicturePathEntity> entituy) {
                         if (entituy.getCode() == 0) {
                             mImgPath = entituy.getData().getDisplayPath();
-                            EventBus.getDefault().post(new UpLoadImageSuccess(mImgPath));
                             Log.i("PersonalDataActivity", "mImgPath=" + mImgPath);
-                            toast("上传图片成功");
-                            finish();
+                            //toast("上传图片成功");
+                            updateDoctorInfo(path);
+
                         } else {
                             toast(entituy.getMessage());
                         }
 
                         Log.i("zdp", "statusCode=" + statusCode);
                         Log.i("zdp", "data=" + entituy.getData());
+                        loading(false);
                     }
 
                     @Override
                     public void onFailures(int statusCode, String errorMsg) {
+                        loading(false);
                         Log.i("zdp", "error=" + statusCode + ",errormsg=" + errorMsg);
                         CommonMethod.requestError(statusCode, errorMsg);
+
+
                     }
                 });
             }
@@ -350,7 +364,33 @@ public class UploadImageActivity extends BasicActivity {
 
     }
 
+    private void updateDoctorInfo(final String path) {
+        loading(true);
+        mDoctorInfoByIdEntity.setPicturePath(mImgPath+"");//线上地址
+        String json = mGson.toJson(mDoctorInfoByIdEntity);
+        Log.i("PersonalDataActivity", "json=" + json);
+        Map<String, String> headMap = new HashMap<>();
+        headMap.put("Authorization", SpUtils.getString(Contants.Token));
+        mMyOkhttp.post().url(HttpUrl.UpdateDoctorInfo).headers(headMap).jsonParams(json).tag(this).enqueue(new GsonResponseHandler<Entity>() {
+            @Override
+            public void onSuccess(int statusCode, Entity entity) {
+                LoadDialog.clear();
+                if (entity.getCode() == 0) {
+                    toast("上传图片成功");
+                    EventBus.getDefault().post(new UpdateImageView(true));
+                    EventBus.getDefault().post(new UpLoadImageSuccess(mImgPath,path));//实际地址
+                    finish();
+                } else {
+                    toast(entity.getMessage());
+                }
+            }
 
+            @Override
+            public void onFailures(int statusCode, String errorMsg) {
+                CommonMethod.requestError(statusCode, errorMsg);
+            }
+        });
+    }
     @Override
     protected void otherViewClick(View view) {
         switch (view.getId()) {

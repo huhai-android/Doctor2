@@ -393,6 +393,8 @@ public class MyService extends Service implements TIMMessageListener {
             }
         }
         MyApplication.badgeNumber++;
+        Log.d("BadgeUtil","Myservice红点显示个数"+MyApplication.badgeNumber);
+
         BadgeUtil.setBadgeCount(this,MyApplication.badgeNumber);
         Log.i("Myservice", "99999");
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "default");

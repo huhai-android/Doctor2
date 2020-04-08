@@ -68,6 +68,7 @@ import com.newdjk.doctor.ui.entity.SendExpertAdviceEntity;
 import com.newdjk.doctor.ui.fragment.MinFragment;
 import com.newdjk.doctor.utils.DownloadCertUtils;
 import com.newdjk.doctor.utils.GlideMediaLoader;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.utils.MyTIMMessage;
 import com.newdjk.doctor.utils.PDFviewUtils;
 import com.newdjk.doctor.utils.SpUtils;
@@ -276,12 +277,13 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
 
             });
             Log.d("头像", "个人头像" + MinFragment.doctorPath);
-            Glide.with(MyApplication.getContext())
-                    .load(MinFragment.doctorPath)
-                    .dontAnimate()
-                    .placeholder(R.drawable.doctor_default_img)
-                    //.diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(holder.rightAvatar);
+//            Glide.with(MyApplication.getContext())
+//                    .load(MinFragment.doctorPath)
+//                    .dontAnimate()
+//                    .placeholder(R.drawable.doctor_default_img)
+//                    //.diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .into(holder.rightAvatar);
+            GlideUtils.loadDoctorImage(MinFragment.doctorPath,holder.rightAvatar);
             holder.leftPanel.setVisibility(View.GONE);
             holder.rightPanel.setVisibility(View.VISIBLE);
             holder.rightMessage.removeAllViews();
@@ -499,7 +501,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
                     }
                 });
 
-                holder.rightMessage.addView(view, pictureLayoutParams);
+                holder.rightMessage.addView(view);
             }
             else if (element.getType() == TIMElemType.Image) {
                 holder.rightMessage.setBackgroundResource(0);
@@ -549,18 +551,28 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
                     if (timImage.getType().toString().equals("Thumb")) {
                         int height = (int) timImage.getHeight();
                         int width = (int) timImage.getWidth();
+                        if (height > width) {
+                            height = 320;
+                            width = 240;
+                        } else {
+                            width = 320;
+                            height = 240;
+                        }
                         RelativeLayout.LayoutParams pictureLayoutParams = new RelativeLayout
                                 .LayoutParams(width
                                 , height);
                         ImageView imageView = new ImageView(MyApplication.getContext());
+                        imageView.setLayoutParams(pictureLayoutParams);
                         Log.d("zdp", "image type: " + timImage.getType() +
                                 " image size " + timImage.getSize() +
                                 " image height " + timImage.getHeight() +
                                 " image width " + timImage.getWidth());
 
-                        GlideMediaLoader.load(MyApplication.getContext(), imageView, timImage.getUrl());
+
+                        GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, timImage.getUrl(), R.drawable.new_nopic);
+
                         layoutParams.setMargins(0, 0, 0, 0);
-                        holder.rightMessage.addView(imageView, pictureLayoutParams);
+                        holder.rightMessage.addView(imageView);
 
                     }
                 }
@@ -762,7 +774,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
                             LinearLayout.LayoutParams layoutParam = new LinearLayout
                                     .LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT
                                     , LinearLayout.LayoutParams.WRAP_CONTENT);
-                            layoutParam.setMargins(10, 5, 10, 5);
+                           // layoutParam.setMargins(10, 5, 10, 5);
                             serviceView.setLayoutParams(layoutParam);
                             final TextView servicePackageName = serviceView.findViewById(R.id.service_paceage_name);
                             RelativeLayout checkDetail = serviceView.findViewById(R.id.check_detail);
@@ -1267,12 +1279,13 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
                     @Override
                     public void onSuccess(List<TIMUserProfile> timUserProfiles) {
                         if (timUserProfiles.size() > 0) {
-                            Glide.with(MyApplication.getContext())
-                                    .load(timUserProfiles.get(0).getFaceUrl())
-                                    .dontAnimate()
-                                    .placeholder(R.drawable.doctor_default_img)
-                                    //.diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .into(holder.leftAvatar);
+//                            Glide.with(MyApplication.getContext())
+//                                    .load(timUserProfiles.get(0).getFaceUrl())
+//                                    .dontAnimate()
+//                                    .placeholder(R.drawable.doctor_default_img)
+//                                    //.diskCacheStrategy(DiskCacheStrategy.ALL)
+//                                    .into(holder.leftAvatar);
+                            GlideUtils.loadDoctorImage(timUserProfiles.get(0).getFaceUrl(),holder.leftAvatar);
                             Log.d("获取昵称", timMessage.getSender() + "   " + timUserProfiles.get(0).getNickName()+"  头像"+timUserProfiles.get(0).getFaceUrl());
                             holder.sender.setText(timUserProfiles.get(0).getNickName());
                         }
@@ -1280,12 +1293,13 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
                     }
                 });
             } else {
-                Glide.with(MyApplication.getContext())
-                        .load(mleftImagePath)
-                        .dontAnimate()
-                        .placeholder(R.drawable.doctor_default_img)
-                        //.diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(holder.leftAvatar);
+//                Glide.with(MyApplication.getContext())
+//                        .load(mleftImagePath)
+//                        .dontAnimate()
+//                        .placeholder(R.drawable.doctor_default_img)
+//                        //.diskCacheStrategy(DiskCacheStrategy.ALL)
+//                        .into(holder.leftAvatar);
+                GlideUtils.loadDoctorImage(mleftImagePath,holder.leftAvatar);
             }
 
 
@@ -1472,7 +1486,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
 
                     }
                 });
-                holder.leftMessage.addView(view, layoutParams);
+                holder.leftMessage.addView(view);
 
             }
 
@@ -1550,21 +1564,31 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
                     if (timImage.getType().toString().equals("Thumb")) {
                         int height = (int) timImage.getHeight();
                         int width = (int) timImage.getWidth();
+                        if (height > width) {
+                            height = 320;
+                            width = 240;
+                        } else {
+                            width = 320;
+                            height = 240;
+                        }
                         RelativeLayout.LayoutParams pictureLayoutParams = new RelativeLayout
                                 .LayoutParams(width
                                 , height);
                         ImageView imageView = new ImageView(MyApplication.getContext());
+                        imageView.setLayoutParams(pictureLayoutParams);
                         Log.d("zdp", "image type: " + timImage.getType() +
                                 " image size " + timImage.getSize() +
                                 " image height " + timImage.getHeight() +
                                 " image width " + timImage.getWidth());
-                        Glide.with(MyApplication.getContext())
-                                .load(timImage.getUrl())
-                                //.diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .into(imageView);
+//                        Glide.with(MyApplication.getContext())
+//                                .load(timImage.getUrl())
+//                                //.diskCacheStrategy(DiskCacheStrategy.ALL)
+//                                .into(imageView);
+                        GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, timImage.getUrl(), R.drawable.new_nopic);
+
                         layoutParams.setMargins(0, 0, 0, 0);
 
-                        holder.leftMessage.addView(imageView, pictureLayoutParams);
+                        holder.leftMessage.addView(imageView);
 
                     }
                    /* ImageView imageView = new ImageView(MyApplication.getContext());

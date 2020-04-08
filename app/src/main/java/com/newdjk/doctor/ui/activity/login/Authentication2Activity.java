@@ -271,7 +271,7 @@ public class Authentication2Activity extends BasicActivity {
             Log.i("zdp", "requestCode=" + requestCode);
             switch (requestCode) {
                 case 1:
-                    Log.i("zdp", "path=" + mSelectedPictureDialog.getPicturePath());
+                //    Log.i("zdp", "path=" + mSelectedPictureDialog.getPicturePath());
                     //  String image64 = ImageBase64.encodeImage(mSelectedPictureDialog.getPicturePath());
                     if (mSelectedPictureDialog != null) {
                         uploadPicture(mSelectedPictureDialog.getPicturePath(), 1);

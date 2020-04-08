@@ -220,3 +220,9 @@
          版本号：versionCode 47
          版本名称： versionName v2.7.3
          1、H5更新
+
+         新版本
+ 019年12月8号上线日志：
+                  版本号：versionCode 47
+                  版本名称： versionName v2.7.3
+                  1、H5更新

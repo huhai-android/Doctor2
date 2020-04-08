@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.ui.entity.MDTDetailEntity;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.views.CircleImageView;
 
 import java.text.SimpleDateFormat;
@@ -81,11 +82,11 @@ public class ExpertAdviceListAdapter extends BaseQuickAdapter<MDTDetailEntity.MD
         }
 
         CircleImageView circleImageView=helper.getView(R.id.civImg);
-        Glide.with(MyApplication.getContext())
-                .load(item.getPicturePath())
-                .placeholder(R.drawable.doctor_default_img)
-                .into(circleImageView);
-
+//        Glide.with(MyApplication.getContext())
+//                .load(item.getPicturePath())
+//                .placeholder(R.drawable.doctor_default_img)
+//                .into(circleImageView);
+        GlideUtils.loadDoctorImage(item.getPicturePath(),circleImageView);
 
         helper.addOnClickListener(R.id.accept_text);
 

@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.lxq.okhttp.MyOkHttp;
 import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.R;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.views.CircleImageView;
 import com.tencent.TIMUserProfile;
 
@@ -40,12 +41,12 @@ public class GroupMemberAdapter extends BaseQuickAdapter<TIMUserProfile, BaseVie
         String  name = item.getNickName();
         String path = item.getFaceUrl();
         Log.d(TAG, "图片地址" + path);
-        Glide.with(MyApplication.getContext())
-                .load(path)
-                .dontAnimate()
-                .placeholder(R.drawable.patient_default_img)
-                .into(((CircleImageView) helper.getView(R.id.avatar)));
-
+//        Glide.with(MyApplication.getContext())
+//                .load(path)
+//                .dontAnimate()
+//                .placeholder(R.drawable.patient_default_img)
+//                .into(((CircleImageView) helper.getView(R.id.avatar)));
+        GlideUtils.loadPatientImage(path,((CircleImageView) helper.getView(R.id.avatar)));
         if (!TextUtils.isEmpty(name)) {
             helper.setText(R.id.name, name);
         } else {

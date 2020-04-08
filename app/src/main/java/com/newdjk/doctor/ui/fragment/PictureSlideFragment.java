@@ -1,6 +1,8 @@
 package com.newdjk.doctor.ui.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,11 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.R;
+import com.newdjk.doctor.ui.activity.ShowOriginPictureActivity;
 import com.newdjk.doctor.views.LoadDialog;
 import com.youth.banner.loader.ImageLoader;
 
@@ -44,26 +51,37 @@ public class PictureSlideFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_picture_slide, container, false);
         imageView = v.findViewById(R.id.photo_view_pic);         /*加载图片*/
         LoadDialog.show(getContext());
+//        Glide.with(MyApplication.getContext())
+//                .load(url).listener(new RequestListener<String, GlideDrawable>() {
+//            @Override
+//            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+//                LoadDialog.clear();
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+//                LoadDialog.clear();
+//                return false;
+//            }
+//        })
+//
+//                //.diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .into(imageView);
         Glide.with(MyApplication.getContext())
-                .load(url).listener(new RequestListener<String, GlideDrawable>() {
+                .load(url).listener(new RequestListener<Drawable>() {
             @Override
-            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 LoadDialog.clear();
                 return false;
             }
 
             @Override
-            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                 LoadDialog.clear();
                 return false;
             }
-        })
-
-                //.diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageView);
-        /*loader = ImageLoader.getInstance();
-        loader.displayImage(url, imageView);*/
-
+        }).into(imageView);
         imageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
                                             @Override
                                             public void onPhotoTap(View view, float x, float y) {

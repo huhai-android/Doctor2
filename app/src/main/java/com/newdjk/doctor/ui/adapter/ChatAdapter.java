@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -68,6 +69,7 @@ import com.newdjk.doctor.ui.entity.WenZhenDiseaseEntity;
 import com.newdjk.doctor.ui.fragment.MinFragment;
 import com.newdjk.doctor.utils.DownloadCertUtils;
 import com.newdjk.doctor.utils.GlideMediaLoader;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.utils.MyTIMMessage;
 import com.newdjk.doctor.utils.PDFviewUtils;
 import com.newdjk.doctor.utils.SpUtils;
@@ -276,16 +278,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
             });
             Log.d("头像", "个人头像" + MinFragment.doctorPath);
-            Glide.with(MyApplication.getContext())
-                    .load(MinFragment.doctorPath)
-                    .dontAnimate()
-                    .placeholder(R.drawable.doctor_default_img)
-                    //.diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(holder.rightAvatar);
+//            Glide.with(MyApplication.getContext())
+//                    .load(MinFragment.doctorPath)
+//                    .dontAnimate()
+//                    .placeholder(R.drawable.doctor_default_img)
+//                    //.diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .into(holder.rightAvatar);
+
+            GlideUtils.loadDoctorImage(MinFragment.doctorPath,holder.rightAvatar);
+
             holder.leftPanel.setVisibility(View.GONE);
             holder.rightPanel.setVisibility(View.VISIBLE);
             holder.rightMessage.removeAllViews();
-            holder.rightMessage.setBackgroundResource(R.drawable.chat_blue_bg);
+            holder.rightMessage.setBackgroundResource(R.drawable.boder_white_oval_doctor);
             //显示自己向好友发送的消息的发送状态
             if (isLocalMessage) {
                 holder.sendError.setVisibility(View.GONE);
@@ -325,7 +330,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 TextView textView = new TextView(MyApplication.getContext());
                 textView.setText(textElem.getText());
                 textView.setTextSize(Dimension.SP, 14);
-                textView.setTextColor(mContext.getResources().getColor(R.color.white));
+                textView.setTextColor(mContext.getResources().getColor(R.color.black));
                 holder.rightMessage.addView(textView, layoutParams);
                 //语音信息处理
             } else if (element.getType() == TIMElemType.Sound) {
@@ -341,7 +346,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         , RelativeLayout.LayoutParams.WRAP_CONTENT);
                 TextView textView = new TextView(MyApplication.getContext());
                 textView.setText(((TIMSoundElem) element).getDuration() + "\"");
-                textView.setTextColor(mContext.getResources().getColor(R.color.white));
+                textView.setTextColor(mContext.getResources().getColor(R.color.black));
                 textView.setTextSize(Dimension.SP, 14);
                 textLayoutParams.rightMargin = 50;
                 textLayoutParams.leftMargin = 30;
@@ -394,7 +399,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 });
 
 
-                //视频消息处理
+                //视频消息处理 右边
             } else if (element.getType() == TIMElemType.Video) {
 
                 holder.rightMessage.setBackgroundResource(0);
@@ -432,7 +437,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 //获取截图
                 if (FileUtil.fileIsExists(imagepath)) {
                     Log.d(TAG, "图片文件存在");
-                    GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
+
+                    GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, imagepath,R.drawable.new_nopic);
+
                 } else {
                     videoelem.getSnapshotInfo().getImage(imagepath, new TIMCallBack() {
                         @Override
@@ -442,7 +449,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
                         @Override
                         public void onSuccess() {
-                            GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
+                           // GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
+                            GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, imagepath, R.drawable.new_nopic);
+
                         }
                     });
                 }
@@ -451,7 +460,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     public void onClick(View v) {
 
                         if (FileUtil.fileIsExists(videopath)) {
-                            Log.d("zdp", "视频文件存在,直接播放"+pposition+" "+videopath);
+                            Log.d("zdp", "视频文件存在,直接播放" + pposition + " " + videopath);
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             File file = new File(videopath);
                             Uri uri;
@@ -466,7 +475,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                             mContext.startActivity(intent);
 
                         } else {
-                            LoadDialog.show(mContext,"下载中");
+                            LoadDialog.show(mContext, "下载中");
                             videoelem.getVideoInfo().getVideo(videopath, new TIMCallBack() {
                                 @Override
                                 public void onError(int i, String s) {
@@ -476,7 +485,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 @Override
                                 public void onSuccess() {
                                     LoadDialog.clear();
-                                    Log.d("zdp", "下载完成后,再进行播放"+pposition);
+                                    Log.d("zdp", "下载完成后,再进行播放" + pposition);
                                     videoelem.setVideoPath(videopath);
                                     Intent intent = new Intent(Intent.ACTION_VIEW);
                                     String path = videoelem.getVideoPath();//该路径可以自定义
@@ -498,7 +507,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     }
                 });
 
-                holder.rightMessage.addView(view, pictureLayoutParams);
+                holder.rightMessage.addView(view);
 
             } else if (element.getType() == TIMElemType.Image) {
                 holder.rightMessage.setBackgroundResource(0);
@@ -524,18 +533,26 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     if (timImage.getType().toString().equals("Thumb")) {
                         int height = (int) timImage.getHeight();
                         int width = (int) timImage.getWidth();
+                        if (height > width) {
+                            height = 320;
+                            width = 240;
+                        } else {
+                            width = 320;
+                            height = 240;
+                        }
                         RelativeLayout.LayoutParams pictureLayoutParams = new RelativeLayout
                                 .LayoutParams(width
                                 , height);
                         ImageView imageView = new ImageView(MyApplication.getContext());
-                        Log.d("zdp", "image type: " + timImage.getType() +
+                        imageView.setLayoutParams(pictureLayoutParams);
+                        Log.d("zdp", "image type右边: " + timImage.getType() +
                                 " image size " + timImage.getSize() +
                                 " image height " + timImage.getHeight() +
-                                " image width " + timImage.getWidth());
+                                " image width " + timImage.getWidth()+timImage.getUrl());
 
-                        GlideMediaLoader.load(MyApplication.getContext(), imageView, timImage.getUrl());
+                        GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, timImage.getUrl(), R.drawable.new_nopic);
                         layoutParams.setMargins(0, 0, 0, 0);
-                        holder.rightMessage.addView(imageView, pictureLayoutParams);
+                        holder.rightMessage.addView(imageView);
 
                     }
                 }
@@ -733,11 +750,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         } else {
 
                             View serviceView = LayoutInflater.
-                                    from(MyApplication.getContext()).inflate(R.layout.service_package, null);
+                                    from(MyApplication.getContext()).inflate(R.layout.service_package_doctor, null);
                             LinearLayout.LayoutParams layoutParam = new LinearLayout
                                     .LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT
                                     , LinearLayout.LayoutParams.WRAP_CONTENT);
-                            layoutParam.setMargins(10, 5, 10, 5);
+                            //layoutParam.setMargins(10, 5, 0, 5);
                             serviceView.setLayoutParams(layoutParam);
                             final TextView servicePackageName = serviceView.findViewById(R.id.service_paceage_name);
                             RelativeLayout checkDetail = serviceView.findViewById(R.id.check_detail);
@@ -748,7 +765,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                             TextView detailText = serviceView.findViewById(R.id.check_detail_text);
                             RecyclerView list = serviceView.findViewById(R.id.service_detail_list);
                             list.setLayoutManager(new LinearLayoutManager(mContext, OrientationHelper.VERTICAL, false));
-                            CustomMessageAdapter adapter = new CustomMessageAdapter(CustomMessageEntity.getContent());
+                            CustomMessageDoctorAdapter adapter = new CustomMessageDoctorAdapter(CustomMessageEntity.getContent());
 //                            list.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
                             list.setAdapter(adapter);
                             adapter.setOnItemChildLongClickListener(new BaseQuickAdapter.OnItemChildLongClickListener() {
@@ -1169,6 +1186,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 servicePackageName.setVisibility(View.VISIBLE);
                                 servicePackageName.setText("" + title);
 
+                            } else if (type1 == 31||type1 == 303) {
+                                titleLayout.setVisibility(View.VISIBLE);
+                                servicePackageName.setText("" + title);
                             } else {
                                 list.setVisibility(View.VISIBLE);
                             }
@@ -1228,13 +1248,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     holder.rightMessage.addView(textView, layoutParams);
                 }*/
             }
-        } else {   //好友向自己发送的消息
+        } else {   //好友向自己发送的消息 接收消息
             holder.leftPanel.setVisibility(View.VISIBLE);
             holder.rightPanel.setVisibility(View.GONE);
             holder.leftMessage.removeAllViews();
             holder.sender.setVisibility(View.GONE);
             holder.sender.setText(timMessage.getSender());
-            holder.leftMessage.setBackgroundResource(R.drawable.chat_white_bg);
+            holder.leftMessage.setBackgroundResource(R.drawable.boder_white_oval_patient);
             // GlideMediaLoader.load(MyApplication.getContext(), holder.leftAvatar, mleftImagePath);
 
             Log.d("头像111", "个人头像" + mleftImagePath + "  发送者id" + timMessage.getSender());
@@ -1252,21 +1272,26 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         if (timUserProfiles.size() > 0) {
                             Glide.with(MyApplication.getContext())
                                     .load(timUserProfiles.get(0).getFaceUrl())
-                                    .dontAnimate()
-                                    .placeholder(R.drawable.patient_default_img)
                                     //.diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .apply(new RequestOptions()
+                                            .placeholder(R.drawable.patient_default_img).
+                                                    error(R.drawable.patient_default_img)
+                                    )
                                     .into(holder.leftAvatar);
+
+
                         }
 
                     }
                 });
             } else {
-                Glide.with(MyApplication.getContext())
-                        .load(mleftImagePath)
-                        .dontAnimate()
-                        .placeholder(R.drawable.patient_default_img)
-                        //.diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(holder.leftAvatar);
+//                Glide.with(MyApplication.getContext())
+//                        .load(mleftImagePath)
+//                        .dontAnimate()
+//                        .placeholder(R.drawable.patient_default_img)
+//                        //.diskCacheStrategy(DiskCacheStrategy.ALL)
+//                        .into(holder.leftAvatar);
+                GlideUtils.loadPatientImage(mleftImagePath,holder.leftAvatar);
             }
 
 
@@ -1287,9 +1312,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 textView.setTextColor(Color.DKGRAY);
                 textView.setTextSize(Dimension.SP, 14);
 
-                holder.leftMessage.addView(textView, layoutParams);
+                holder.leftMessage.addView(textView);
 
-                //视频消息处理
+                //视频消息处理 左边
             } else if (element.getType() == TIMElemType.Video) {
                 holder.leftMessage.setBackgroundResource(0);
                 View view = View.inflate(mContext, R.layout.item_video, null);
@@ -1314,7 +1339,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         " image size " + videoelem.getSnapshotInfo().getSize() +
                         " image height " + videoelem.getSnapshotInfo().getHeight() +
                         " image width " + videoelem.getSnapshotInfo().getWidth());
-                layoutParams.setMargins(0, 0, 0, 0);
+                //layoutParams.setMargins(0, 0, 0, 0);
                 final String imagepath = FileUtil.sdkpath + videoelem.getSnapshotInfo().getUuid() + ".jpg";
                 final String videopath = FileUtil.sdkpath + videoelem.getVideoInfo().getUuid() + ".mp4";
 //                FileUtil.createFile(FileUtil.sdkpath, videoelem.getSnapshotInfo().getUuid()+".jpg");
@@ -1322,7 +1347,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 //获取截图
                 if (FileUtil.fileIsExists(imagepath)) {
                     Log.d(TAG, "图片文件存在");
-                    GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
+                    GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, imagepath, R.drawable.new_nopic);
                 } else {
                     videoelem.getSnapshotInfo().getImage(imagepath, new TIMCallBack() {
                         @Override
@@ -1332,7 +1357,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
                         @Override
                         public void onSuccess() {
-                            GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
+                           // GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
+                            GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, imagepath, R.drawable.new_nopic);
+
                         }
                     });
                 }
@@ -1343,7 +1370,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     public void onClick(View v) {
 
                         if (FileUtil.fileIsExists(videopath)) {
-                            Log.d("zdp", "视频文件存在,直接播放"+pposition+" "+videopath);
+                            Log.d("zdp", "视频文件存在,直接播放" + pposition + " " + videopath);
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             File file = new File(videopath);
                             Uri uri;
@@ -1358,7 +1385,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                             mContext.startActivity(intent);
 
                         } else {
-                            LoadDialog.show(mContext,"下载中");
+                            LoadDialog.show(mContext, "下载中");
                             videoelem.getVideoInfo().getVideo(videopath, new TIMCallBack() {
                                 @Override
                                 public void onError(int i, String s) {
@@ -1368,7 +1395,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 @Override
                                 public void onSuccess() {
                                     LoadDialog.clear();
-                                    Log.d("zdp", "下载完成后,再进行播放"+pposition);
+                                    Log.d("zdp", "下载完成后,再进行播放" + pposition);
                                     videoelem.setVideoPath(videopath);
                                     Intent intent = new Intent(Intent.ACTION_VIEW);
                                     String path = videoelem.getVideoPath();//该路径可以自定义
@@ -1389,13 +1416,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
                     }
                 });
-                holder.leftMessage.addView(view, layoutParams);
+                holder.leftMessage.addView(view);
 
             } else if (element.getType() == TIMElemType.Sound) {
                 final ImageView imageView = new ImageView(MyApplication.getContext());
                 imageView.setId(R.id.img_id);
                 imageView.setImageResource(R.drawable.left_voice3);
-                holder.leftMessage.addView(imageView, layoutParams);
+                holder.leftMessage.addView(imageView);
                 RelativeLayout.LayoutParams textLayoutParams = new RelativeLayout
                         .LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT
                         , RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -1518,21 +1545,28 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     if (timImage.getType().toString().equals("Thumb")) {
                         int height = (int) timImage.getHeight();
                         int width = (int) timImage.getWidth();
+                        if (height > width) {
+                            height = 320;
+                            width = 240;
+                        } else {
+                            width = 320;
+                            height = 240;
+                        }
                         RelativeLayout.LayoutParams pictureLayoutParams = new RelativeLayout
                                 .LayoutParams(width
                                 , height);
+
                         ImageView imageView = new ImageView(MyApplication.getContext());
-                        Log.d("zdp", "image type: " + timImage.getType() +
+                        imageView.setLayoutParams(pictureLayoutParams);
+                        Log.d("zdp", "image type左边: " + timImage.getType() +
                                 " image size " + timImage.getSize() +
                                 " image height " + timImage.getHeight() +
                                 " image width " + timImage.getWidth());
-                        Glide.with(MyApplication.getContext())
-                                .load(timImage.getUrl())
-                                //.diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .into(imageView);
-                        layoutParams.setMargins(0, 0, 0, 0);
 
-                        holder.leftMessage.addView(imageView, pictureLayoutParams);
+                        GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, timImage.getUrl(),R.drawable.new_nopic);
+                        // layoutParams.setMargins(0, 0, 0, 0);
+
+                        holder.leftMessage.addView(imageView);
 
                     }
                    /* ImageView imageView = new ImageView(MyApplication.getContext());
@@ -1560,7 +1594,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         final ImageView imageView = new ImageView(MyApplication.getContext());
                         imageView.setId(R.id.img_id);
                         imageView.setImageResource(R.drawable.left_voice3);
-                        holder.leftMessage.addView(imageView, layoutParams);
+                        holder.leftMessage.addView(imageView);
                         RelativeLayout.LayoutParams textLayoutParams = new RelativeLayout
                                 .LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT
                                 , RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -1638,9 +1672,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         imageView.setScaleType(ImageView.ScaleType.CENTER);
                         final String path = extraData.getData().getImagePath();
                         Log.i("TIMImageElem", "URL=" + path);
-                        GlideMediaLoader.load(MyApplication.getContext(), imageView, path);
-                        layoutParams.setMargins(0, 0, 0, 0);
-                        holder.leftMessage.addView(imageView, pictureLayoutParams);
+                        GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, path,R.drawable.new_nopic);
+                        //layoutParams.setMargins(0, 0, 0, 0);
+                        holder.leftMessage.addView(imageView);
                         holder.leftMessage.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -1683,8 +1717,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                     String path = url.replace("\\", "/");
                                     Log.i("TIMImageElem", "URL=" + path);
                                     GlideMediaLoader.load(MyApplication.getContext(), imageView, path);
-                                    layoutParams.setMargins(0, 0, 0, 0);
-                                    holder.leftMessage.addView(imageView, pictureLayoutParams);
+                                    //layoutParams.setMargins(0, 0, 0, 0);
+                                    holder.leftMessage.addView(imageView);
 
                                 }
 
@@ -1692,7 +1726,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                             }
                         }
                     } else if (s != null && !s.equals("")) {
-                        holder.leftMessage.setBackgroundResource(0);
+                        // holder.leftMessage.setBackgroundResource(0);
                         RelativeLayout.LayoutParams customLayoutParams = new RelativeLayout
                                 .LayoutParams(600
                                 , RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -1726,9 +1760,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 holder.systemMessageLayout.setVisibility(View.GONE);
                             }
                         } else {
-
+                            //接收消息，显示在左边
                             View serviceView = LayoutInflater.
-                                    from(MyApplication.getContext()).inflate(R.layout.service_package, null, false);
+                                    from(MyApplication.getContext()).inflate(R.layout.service_package_patient, null, false);
                             TextView servicePackageName = serviceView.findViewById(R.id.service_paceage_name);
                             RelativeLayout checkDetail = serviceView.findViewById(R.id.check_detail);
                             TextView checkDetailtext = serviceView.findViewById(R.id.check_detail_text);
@@ -1753,7 +1787,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 line.setVisibility(View.GONE);
                             } else {
                                 type1 = extraData.getType();  //左边
-                                if (type1 == 0||type1 == 34 || type1 > 100  || type1 == 313 || type1 == 312 || type1 == 311 || type1 == 317 || type1 == 310) {
+                                if (type1 == 0 || type1 == 34 || type1 > 100 || type1 == 313 || type1 == 312 || type1 == 311 || type1 == 317 || type1 == 310) {
                                     checkDetail.setVisibility(View.GONE);
                                     line.setVisibility(View.GONE);
                                 } else {
@@ -2060,7 +2094,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 holder.rightMessage.removeAllViews();
                                 holder.systemMessageLayout.setVisibility(View.GONE);
                             } else {
-                                holder.leftMessage.addView(serviceView, layoutParams);
+                                holder.leftMessage.addView(serviceView);
                             }
                         }
                     }

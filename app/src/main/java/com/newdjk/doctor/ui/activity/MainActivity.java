@@ -340,19 +340,23 @@ public class MainActivity extends BasicActivity {
                 if (entituy.getCode() == 0) {
                     boolean result = (boolean) entituy.getData();
                     if (result) {
-                        CommonMethod.mIsCanStartService = false;
-                        Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
-                        stopService(new Intent(MainActivity.this, MyService.class));
-                        LogOutUtil.getInstance().loginOut(MainActivity.this, true);
+
                         //   EventBus.getDefault().post(new LoginOutEntity(true));
                     }
                 } else {
                     toast(entituy.getMessage());
                 }
+                CommonMethod.mIsCanStartService = false;
+                stopService(new Intent(MainActivity.this, MyService.class));
+                LogOutUtil.getInstance().loginOut(MainActivity.this, true);
             }
 
             @Override
             public void onFailures(int statusCode, String errorMsg) {
+                CommonMethod.mIsCanStartService = false;
+                stopService(new Intent(MainActivity.this, MyService.class));
+                LogOutUtil.getInstance().loginOut(MainActivity.this, true);
+
             }
         });
     }
@@ -537,6 +541,7 @@ public class MainActivity extends BasicActivity {
                         Log.i("LogOutUtil", ILiveLoginManager.getInstance().getMyUserId() + "    " + TIMManager.getInstance().getLoginUser());
                         //  EventBus.getDefault().post(new NoticeLoginEntity(true));
                         Logout("当前账号在其它设备登录，请重新登录");
+                        Toast.makeText(MainActivity.this, "当前账号在其它设备登录，请重新登录", Toast.LENGTH_SHORT).show();
                         SpUtils.put(Contants.canLogin, 1);
                     }
 
@@ -623,6 +628,8 @@ public class MainActivity extends BasicActivity {
             Log.d(TAG, "切换到了前台时间" + ((MyApplication.FrontTime - MyApplication.backTime) / 1000) + "s");
             long time = (MyApplication.FrontTime - MyApplication.backTime) / 1000;
             MyApplication.badgeNumber=0;
+            Log.d("BadgeUtil","mainActivity红点显示个数"+MyApplication.badgeNumber);
+
             BadgeUtil.setBadgeCount(this,MyApplication.badgeNumber);
             String vendor = Build.MANUFACTURER;
             if (vendor.toLowerCase(Locale.ENGLISH).contains("huawei")) {

@@ -50,6 +50,7 @@ import com.newdjk.doctor.ui.entity.TaskAllEntity;
 import com.newdjk.doctor.ui.entity.UpdateImMessageEntity;
 import com.newdjk.doctor.ui.entity.UpdatePushView;
 import com.newdjk.doctor.utils.AppUtils;
+import com.newdjk.doctor.utils.ChatActivityUtils;
 import com.newdjk.doctor.utils.SpUtils;
 import com.newdjk.doctor.views.LoadDialog;
 
@@ -172,12 +173,12 @@ public class TaskFragment2 extends BasicFragment {
         int type = item.getServiceType();
         //1 图文 2 视频 3 续方  5 护理咨询  6远程护理
         if (type == 1 || type == 5 || type == 15) {
-            QueryConsultDoctorAppMessageByPage(item.getRelationId() + "", item.getAccountId(), item.getPatientName());
+            QueryConsultDoctorAppMessageByPage(item.getRelationId() + "", item.getPatIdentifier(), item.getPatientName());
         } else if (type == 2 || type == 6) {
-            QueryvideoDoctorAppMessageByPage(item.getRelationId() + "", item.getAccountId(), item.getPatientName());
+            QueryvideoDoctorAppMessageByPage(item.getRelationId() + "", item.getPatIdentifier(), item.getPatientName());
 
         } else if (type == 3) {
-            QueryRenewalDoctorAppMessageByPage(item.getRelationId() + "", item.getAccountId(), item.getPatientName());
+            QueryRenewalDoctorAppMessageByPage(item.getRelationId() + "", item.getPatIdentifier(), item.getPatientName());
 
         } else if (type == 50) {
             //跳转咨询im
@@ -429,11 +430,11 @@ public class TaskFragment2 extends BasicFragment {
                         Log.i("ChatActivity111", "accountId=" + imRelationRecode.getAccountId());
 
                         if (serviceCode == 1 || serviceCode == 5) {
-                            QueryConsultDoctorAppMessageByPage(recordId, imRelationRecode.getAccountId(), imRelationRecode.getPatientName());
+                         //   QueryConsultDoctorAppMessageByPage(recordId, imRelationRecode.getAccountId(), imRelationRecode.getPatientName());
                         } else if (serviceCode == 2 || serviceCode == 6) {
-                            QueryvideoDoctorAppMessageByPage(recordId, imRelationRecode.getAccountId(), imRelationRecode.getPatientName());
+                         //   QueryvideoDoctorAppMessageByPage(recordId, imRelationRecode.getAccountId(), imRelationRecode.getPatientName());
                         } else if (serviceCode == 3) {
-                            QueryRenewalDoctorAppMessageByPage(recordId, imRelationRecode.getAccountId(), imRelationRecode.getPatientName());
+                           // QueryRenewalDoctorAppMessageByPage(recordId, imRelationRecode.getAccountId(), imRelationRecode.getPatientName());
                         } else if (serviceCode == 0) {
 
                             PatientInfoEntity PatientInfo = new PatientInfoEntity();
@@ -483,7 +484,8 @@ public class TaskFragment2 extends BasicFragment {
         });
     }
 
-    private void QueryConsultDoctorAppMessageByPage(final String id, final int accoundid, final String patientname) {
+    private void QueryConsultDoctorAppMessageByPage(final String id, final String patientid, final String patientname) {
+        loading(true);
         Map<String, String> requestMap = new HashMap<>();
         requestMap.put("Id", id);
         Map<String, String> headMap = new HashMap<>();
@@ -492,6 +494,7 @@ public class TaskFragment2 extends BasicFragment {
             @Override
             public void onSuccess(int statusCode, ResponseEntity<ConsultMessageEntity> entity) {
                 //    mConsultMessageAdapter.setDatalist( entity.getData());
+
                 if (entity.getCode() == 0) {
                     ConsultMessageEntity consultMessageEntity = entity.getData();
                     Type caonsultJsonType = new TypeToken<PrescriptionMessageEntity<ConsultMessageEntity>>() {
@@ -503,19 +506,23 @@ public class TaskFragment2 extends BasicFragment {
                     String json = mGson.toJson(prescriptionMessageEntity);
                     String doctorImId = consultMessageEntity.getDoctorIMId();
                     String doctorName = consultMessageEntity.getDoctorName();
-                    Intent consultIntentTalk = new Intent(mContext, ChatActivity.class);
-                    Log.i("zdp", "json=" + json);
-                    consultIntentTalk.putExtra(Contants.FRIEND_NAME, doctorName);
-                    consultIntentTalk.putExtra(Contants.FRIEND_IDENTIFIER, consultMessageEntity.getApplicantIMId());
-                    consultIntentTalk.putExtra("consultMessageEntity", consultMessageEntity);
-                    consultIntentTalk.putExtra("drId", consultMessageEntity.getDoctorId());
-                    consultIntentTalk.putExtra("action", "pictureConsultfromhome");
-                    consultIntentTalk.putExtra("prescriptionMessage", json);
-                    consultIntentTalk.putExtra("accountId", accoundid);
-                    consultIntentTalk.putExtra("fromHome", 1);
-                    consultIntentTalk.putExtra("imgPath", consultMessageEntity.getApplicantHeadImgUrl());
-                    consultIntentTalk.putExtra(Contants.FRIEND_NAME, patientname);
-                    mContext.startActivity(consultIntentTalk);
+//                    Intent consultIntentTalk = new Intent(mContext, ChatActivity.class);
+//                    Log.i("zdp", "json=" + json);
+//                    consultIntentTalk.putExtra(Contants.FRIEND_NAME, doctorName);
+//                    consultIntentTalk.putExtra(Contants.FRIEND_IDENTIFIER, consultMessageEntity.getApplicantIMId());
+//                    consultIntentTalk.putExtra("consultMessageEntity", consultMessageEntity);
+//                    consultIntentTalk.putExtra("drId", consultMessageEntity.getDoctorId());
+//                    consultIntentTalk.putExtra("action", "pictureConsultfromhome");
+//                    consultIntentTalk.putExtra("prescriptionMessage", json);
+//                    consultIntentTalk.putExtra("accountId", accoundid);
+//                    consultIntentTalk.putExtra("fromHome", 1);
+//                    consultIntentTalk.putExtra("imgPath", consultMessageEntity.getApplicantHeadImgUrl());
+//                    consultIntentTalk.putExtra(Contants.FRIEND_NAME, patientname);
+//                    mContext.startActivity(consultIntentTalk);
+
+                    String imId = SpUtils.getString(Contants.identifier);
+                    ChatActivityUtils.getinStanse().toChat(patientid, imId, consultMessageEntity.getApplicantHeadImgUrl(),mContext);
+
                     MessageEventRecent messageEvent = new MessageEventRecent();
                     messageEvent.setmType(MainConstant.UPDATEPUSHMESSAGELIST);
                     EventBus.getDefault().post(messageEvent);
@@ -534,7 +541,8 @@ public class TaskFragment2 extends BasicFragment {
         });
     }
 
-    private void QueryRenewalDoctorAppMessageByPage(final String id, final int AccountId, final String patientname) {
+    private void QueryRenewalDoctorAppMessageByPage(final String id, final String patientid, final String patientname) {
+        loading(true);
         Map<String, String> requestMap = new HashMap<>();
         requestMap.put("Id", id);
         Map<String, String> headMap = new HashMap<>();
@@ -554,18 +562,21 @@ public class TaskFragment2 extends BasicFragment {
                     String renewalJson = mGson.toJson(renewalMessageEntity);
                     String doctorImId = onlineRenewalDataEntity.getDoctorIMId();
                     String doctorName = onlineRenewalDataEntity.getDoctorName();
-                    Intent renewalIntentTalk = new Intent(mContext, ChatActivity.class);
-                    renewalIntentTalk.putExtra(Contants.FRIEND_NAME, onlineRenewalDataEntity.getApplicantName());
-                    renewalIntentTalk.putExtra("onlineRenewalDataEntity", onlineRenewalDataEntity);
-                    renewalIntentTalk.putExtra("action", "onlineRenewalfromHome");
-                    renewalIntentTalk.putExtra("drId", onlineRenewalDataEntity.getDoctorId());
-                    renewalIntentTalk.putExtra(Contants.FRIEND_IDENTIFIER, onlineRenewalDataEntity.getApplicantIMId());
-                    renewalIntentTalk.putExtra("prescriptionMessage", renewalJson);
-                    renewalIntentTalk.putExtra("accountId", AccountId);
-                    renewalIntentTalk.putExtra(Contants.FRIEND_NAME, patientname);
-                    renewalIntentTalk.putExtra("fromHome", 1);
-                    renewalIntentTalk.putExtra("imgPath", onlineRenewalDataEntity.getApplicantHeadImgUrl());
-                    mContext.startActivity(renewalIntentTalk);
+//                    Intent renewalIntentTalk = new Intent(mContext, ChatActivity.class);
+//                    renewalIntentTalk.putExtra(Contants.FRIEND_NAME, onlineRenewalDataEntity.getApplicantName());
+//                    renewalIntentTalk.putExtra("onlineRenewalDataEntity", onlineRenewalDataEntity);
+//                    renewalIntentTalk.putExtra("action", "onlineRenewalfromHome");
+//                    renewalIntentTalk.putExtra("drId", onlineRenewalDataEntity.getDoctorId());
+//                    renewalIntentTalk.putExtra(Contants.FRIEND_IDENTIFIER, onlineRenewalDataEntity.getApplicantIMId());
+//                    renewalIntentTalk.putExtra("prescriptionMessage", renewalJson);
+//                    renewalIntentTalk.putExtra("accountId", AccountId);
+//                    renewalIntentTalk.putExtra(Contants.FRIEND_NAME, patientname);
+//                    renewalIntentTalk.putExtra("fromHome", 1);
+//                    renewalIntentTalk.putExtra("imgPath", onlineRenewalDataEntity.getApplicantHeadImgUrl());
+//                    mContext.startActivity(renewalIntentTalk);
+
+                    String imId = SpUtils.getString(Contants.identifier);
+                    ChatActivityUtils.getinStanse().toChat(patientid, imId, onlineRenewalDataEntity.getApplicantHeadImgUrl(),mContext);
                     MessageEventRecent messageEvent = new MessageEventRecent();
                     messageEvent.setmType(MainConstant.UPDATEPUSHMESSAGELIST);
                     EventBus.getDefault().post(messageEvent);
@@ -585,7 +596,8 @@ public class TaskFragment2 extends BasicFragment {
         });
     }
 
-    private void QueryvideoDoctorAppMessageByPage(final String id, final int AccountId, final String patientname) {
+    private void QueryvideoDoctorAppMessageByPage(final String id, final String patientid, final String patientname) {
+        loading(true);
         Map<String, String> requestMap = new HashMap<>();
         requestMap.put("Id", id);
         Map<String, String> headMap = new HashMap<>();
@@ -605,19 +617,21 @@ public class TaskFragment2 extends BasicFragment {
                     String videoJson = mGson.toJson(videoMessageEntity);
                     String doctorImId = inquiryRecordListDataEntity.getDoctorIMId();
                     String doctorName = inquiryRecordListDataEntity.getDoctorName();
-                    Intent videoIntentTalk = new Intent(mContext, ChatActivity.class);
-                    videoIntentTalk.putExtra(Contants.FRIEND_NAME, doctorName);
-                    videoIntentTalk.putExtra(Contants.FRIEND_IDENTIFIER, inquiryRecordListDataEntity.getApplicantIMId());
-                    videoIntentTalk.putExtra("inquiryRecordListDataEntity", inquiryRecordListDataEntity);
-                    videoIntentTalk.putExtra("action", "videoInterrogationfromhhome");
-                    videoIntentTalk.putExtra("drId", inquiryRecordListDataEntity.getDoctorId());
-                    videoIntentTalk.putExtra("prescriptionMessage", videoJson);
-                    videoIntentTalk.putExtra("accountId", AccountId);
-                    videoIntentTalk.putExtra("fromHome", 1);
-                    videoIntentTalk.putExtra("imgPath", inquiryRecordListDataEntity.getApplicantHeadImgUrl());
-
-                    videoIntentTalk.putExtra(Contants.FRIEND_NAME, patientname);
-                    mContext.startActivity(videoIntentTalk);
+//                    Intent videoIntentTalk = new Intent(mContext, ChatActivity.class);
+//                    videoIntentTalk.putExtra(Contants.FRIEND_NAME, doctorName);
+//                    videoIntentTalk.putExtra(Contants.FRIEND_IDENTIFIER, inquiryRecordListDataEntity.getApplicantIMId());
+//                    videoIntentTalk.putExtra("inquiryRecordListDataEntity", inquiryRecordListDataEntity);
+//                    videoIntentTalk.putExtra("action", "videoInterrogationfromhhome");
+//                    videoIntentTalk.putExtra("drId", inquiryRecordListDataEntity.getDoctorId());
+//                    videoIntentTalk.putExtra("prescriptionMessage", videoJson);
+//                    videoIntentTalk.putExtra("accountId", AccountId);
+//                    videoIntentTalk.putExtra("fromHome", 1);
+//                    videoIntentTalk.putExtra("imgPath", inquiryRecordListDataEntity.getApplicantHeadImgUrl());
+//
+//                    videoIntentTalk.putExtra(Contants.FRIEND_NAME, patientname);
+//                    mContext.startActivity(videoIntentTalk);
+                    String imId = SpUtils.getString(Contants.identifier);
+                    ChatActivityUtils.getinStanse().toChat(patientid, imId, inquiryRecordListDataEntity.getApplicantHeadImgUrl(),mContext);
                     MessageEventRecent messageEvent = new MessageEventRecent();
                     messageEvent.setmType(MainConstant.UPDATEPUSHMESSAGELIST);
                     EventBus.getDefault().post(messageEvent);

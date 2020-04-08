@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -26,6 +27,8 @@ public class BadgeUtil {
      * 设置Badge 目前支持Launcher
      */
     public static void setBadgeCount(Context context, int count) {
+        Log.d("BadgeUtil","BadgeUtil红点显示个数"+count);
+
         if (count <= 0) {
             count = 0;
         } else {

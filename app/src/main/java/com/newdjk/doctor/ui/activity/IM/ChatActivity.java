@@ -182,7 +182,10 @@ import omrecorder.PullTransport;
 import omrecorder.PullableSource;
 import omrecorder.Recorder;
 
-public class ChatActivity extends BasicActivity implements ILVIncomingListener, ILVCallListener, ILVCallNotificationListener, Observer, TIMMessageRevokedListener {
+public class ChatActivity extends BasicActivity
+        implements ILVIncomingListener, ILVCallListener, ILVCallNotificationListener,
+        Observer, TIMMessageRevokedListener {
+
 
 
     private static final String TAG = "ChatActivity";
@@ -2680,9 +2683,17 @@ public class ChatActivity extends BasicActivity implements ILVIncomingListener, 
     }
 
     public void call(String telPhone) {
-        if (checkReadPermission(Manifest.permission.CALL_PHONE, REQUEST_CALL_PERMISSION)) {
-            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(telPhone));
-            startActivity(intent);
+        if (TextUtils.isEmpty(telPhone)){
+            telPhone="075582569787";
+            if (checkReadPermission(Manifest.permission.CALL_PHONE, REQUEST_CALL_PERMISSION)) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(telPhone));
+                startActivity(intent);
+            }
+        }else {
+            if (checkReadPermission(Manifest.permission.CALL_PHONE, REQUEST_CALL_PERMISSION)) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(telPhone));
+                startActivity(intent);
+            }
         }
     }
 
@@ -3552,10 +3563,10 @@ public class ChatActivity extends BasicActivity implements ILVIncomingListener, 
             contentText.setText("你确定要结束问诊吗");
         } else if (action.equals("prescription")) {
             titleText.setText("处方权限不足提醒");
-            contentText.setText("对不起，您目前没有互联网西药处方权，不能开具处方，如有疑问，请联系客服，取消，联系客服");
+            contentText.setText("对不起，您目前没有互联网西药处方权，不能开具处方，如有疑问，请联系客服！");
         } else if (action.equals("zhongyaoprescription")) {
             titleText.setText("处方权限不足提醒");
-            contentText.setText("对不起，您目前没有互联网中药处方权，不能开具处方，如有疑问，请联系客服，取消，联系客服");
+            contentText.setText("对不起，您目前没有互联网中药处方权，不能开具处方，如有疑问，请联系客服！");
         } else if (action.equals("video")) {
             titleText.setText("提示");
             contentText.setText("当前服务无法使用视频通话功能！");
@@ -3568,6 +3579,8 @@ public class ChatActivity extends BasicActivity implements ILVIncomingListener, 
                 } else if (action.equals("end")) {
                     stopWenzhen();
                 } else if (action.equals("prescription")) {
+                    obtainAboutInfo();
+                }else if (action.equals("zhongyaoprescription")){
                     obtainAboutInfo();
                 }
                 dialog.dismiss();
@@ -3876,7 +3889,7 @@ public class ChatActivity extends BasicActivity implements ILVIncomingListener, 
             public void onSuccess(int statusCode, AboutUsEntity response) {
                 LoadDialog.clear();
                 if (response.getCode() == 0) {
-                    call("tel:" + response.getData().getMobile());
+                     call("tel:" + response.getData().getMobile());
                 } else {
                     toast(response.getMessage());
                 }

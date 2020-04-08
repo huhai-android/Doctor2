@@ -17,6 +17,7 @@ import com.newdjk.doctor.ui.activity.IM.ChatActivity;
 import com.newdjk.doctor.ui.entity.DoctorPatientRelationEntity;
 import com.newdjk.doctor.ui.entity.InquiryRecordListDataEntity;
 import com.newdjk.doctor.ui.entity.PrescriptionMessageEntity;
+import com.newdjk.doctor.utils.ChatActivityUtils;
 import com.newdjk.doctor.utils.GlideMediaLoader;
 import com.newdjk.doctor.utils.SpUtils;
 
@@ -104,15 +105,17 @@ public class VideoInterrogationAdapter extends BaseQuickAdapter<InquiryRecordLis
                 prescriptionMessageEntity.setPatient(item);
                 String json = mGson.toJson(prescriptionMessageEntity);
                 Log.i("zdp", "json=" + json);
-                Intent intentTalk = new Intent(mContext, ChatActivity.class);
-                intentTalk.putExtra(Contants.FRIEND_NAME, item.getPatientName());
-                intentTalk.putExtra(Contants.FRIEND_IDENTIFIER,  item.getApplicantIMId());
-                intentTalk.putExtra("inquiryRecordListDataEntity",item);
-                intentTalk.putExtra("action", "videoInterrogation");
-                intentTalk.putExtra("accountId",item.getApplicantId());
-                intentTalk.putExtra("prescriptionMessage", json);
-                intentTalk.putExtra("imgPath", item.getApplicantHeadImgUrl());
-                mContext.startActivity(intentTalk);
+//                Intent intentTalk = new Intent(mContext, ChatActivity.class);
+//                intentTalk.putExtra(Contants.FRIEND_NAME, item.getPatientName());
+//                intentTalk.putExtra(Contants.FRIEND_IDENTIFIER,  item.getApplicantIMId());
+//                intentTalk.putExtra("inquiryRecordListDataEntity",item);
+//                intentTalk.putExtra("action", "videoInterrogation");
+//                intentTalk.putExtra("accountId",item.getApplicantId());
+//                intentTalk.putExtra("prescriptionMessage", json);
+//                intentTalk.putExtra("imgPath", item.getApplicantHeadImgUrl());
+//                mContext.startActivity(intentTalk);
+                ChatActivityUtils.getinStanse().toChat(item.getApplicantIMId(), SpUtils.getString(Contants.identifier), item.getApplicantHeadImgUrl(),mContext);
+
             }
         });
     }

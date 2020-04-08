@@ -143,12 +143,15 @@ public class TaskFragment1 extends BasicFragment {
         mVideoInterrogationAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (datalist.get(position).isOpen()) {
-                    datalist.get(position).setOpen(false);
-                } else {
-                    datalist.get(position).setOpen(true);
+                if (datalist.size()>0){
+                    if (datalist.get(position).isOpen()) {
+                        datalist.get(position).setOpen(false);
+                    } else {
+                        datalist.get(position).setOpen(true);
+                    }
+                    mVideoInterrogationAdapter.notifyItemChanged(position);
                 }
-                mVideoInterrogationAdapter.notifyItemChanged(position);
+
             }
         });
 

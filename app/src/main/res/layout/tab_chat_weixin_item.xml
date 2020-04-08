@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/function"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/weixinfunctionbg"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/btn_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_marginTop="@dimen/dp_17"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_more"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/item_chat_img"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:contentDescription="TODO"
+                android:src="@mipmap/doctor_chat_icon2" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/item_chat_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:textColor="@color/black" />
+    </LinearLayout>
+</LinearLayout>

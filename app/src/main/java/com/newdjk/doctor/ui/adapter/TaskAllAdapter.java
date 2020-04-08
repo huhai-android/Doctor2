@@ -20,6 +20,7 @@ import com.newdjk.doctor.ui.entity.AllRecordForDoctorEntity;
 import com.newdjk.doctor.ui.entity.PrescriptionMessageEntity;
 import com.newdjk.doctor.ui.entity.RecordDataEntity;
 import com.newdjk.doctor.ui.entity.VideoInterrogationEntity;
+import com.newdjk.doctor.utils.ChatActivityUtils;
 import com.newdjk.doctor.utils.SpUtils;
 import com.newdjk.doctor.views.AnimatedExpandableListView;
 import com.newdjk.doctor.views.CircleImageView;
@@ -152,16 +153,20 @@ public class TaskAllAdapter extends AnimatedExpandableListView.AnimatedExpandabl
                     prescriptionMessageEntity.setPatient(recordDataEntity);
                     String   json= mGson.toJson(prescriptionMessageEntity);
 
-                    Log.i("zdp", "json=" + json);
-                    Intent intentTalk = new Intent(mContext, ChatActivity.class);
-                    intentTalk.putExtra(Contants.FRIEND_NAME, allRecordForDoctorEntity.getPatientName());
-                    intentTalk.putExtra(Contants.FRIEND_IDENTIFIER,  allRecordForDoctorEntity.getApplicantIMId());
-                    intentTalk.putExtra("inquiryRecordListDataEntity",allRecordForDoctorEntity);
-                    intentTalk.putExtra("action", "videoInterrogation");
-                    intentTalk.putExtra("accountId",allRecordForDoctorEntity.getApplicantId());
-                    intentTalk.putExtra("prescriptionMessage", json);
-                    intentTalk.putExtra("imgPath", allRecordForDoctorEntity.getApplicantHeadImgUrl());
-                    mContext.startActivity(intentTalk);
+//                    Log.i("zdp", "json=" + json);
+//                    Intent intentTalk = new Intent(mContext, ChatActivity.class);
+//                    intentTalk.putExtra(Contants.FRIEND_NAME, allRecordForDoctorEntity.getPatientName());
+//                    intentTalk.putExtra(Contants.FRIEND_IDENTIFIER,  allRecordForDoctorEntity.getApplicantIMId());
+//                    intentTalk.putExtra("inquiryRecordListDataEntity",allRecordForDoctorEntity);
+//                    intentTalk.putExtra("action", "videoInterrogation");
+//                    intentTalk.putExtra("accountId",allRecordForDoctorEntity.getApplicantId());
+//                    intentTalk.putExtra("prescriptionMessage", json);
+//                    intentTalk.putExtra("imgPath", allRecordForDoctorEntity.getApplicantHeadImgUrl());
+//
+//
+//                    mContext.startActivity(intentTalk);
+                    ChatActivityUtils.getinStanse().toChat(allRecordForDoctorEntity.getApplicantIMId(), SpUtils.getString(Contants.identifier), allRecordForDoctorEntity.getApplicantHeadImgUrl(),mContext);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -18,6 +18,7 @@ import com.newdjk.doctor.ui.entity.ZhanZhenListEntity;
 import com.newdjk.doctor.ui.fragment.ZhuanZhenFragment1;
 import com.newdjk.doctor.ui.fragment.ZhuanZhenFragment2;
 import com.newdjk.doctor.ui.fragment.ZhuanZhenFragment3;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.utils.TimeUtil;
 
 import java.util.List;
@@ -78,13 +79,13 @@ public class FenjizhuanzhenAdapter extends BaseQuickAdapter<ZhanZhenListEntity.R
             }
 
 
-            Glide.with(MyApplication.getContext())
-                    .load(item.getPicturePath())
-                    .dontAnimate()//防止设置placeholder导致第一次不显示网络图片,只显示默认图片的问题
-                    .error(R.drawable.patient_default_img)
-                    .placeholder(R.drawable.patient_default_img)
-                    .into(avatar);
-
+//            Glide.with(MyApplication.getContext())
+//                    .load(item.getPicturePath())
+//                    .dontAnimate()//防止设置placeholder导致第一次不显示网络图片,只显示默认图片的问题
+//                    .error(R.drawable.patient_default_img)
+//                    .placeholder(R.drawable.patient_default_img)
+//                    .into(avatar);
+            GlideUtils.loadPatientImage(item.getPicturePath(),avatar);
             int sexType = item.getPatientSex();
             String sex = "";
             switch (sexType) {

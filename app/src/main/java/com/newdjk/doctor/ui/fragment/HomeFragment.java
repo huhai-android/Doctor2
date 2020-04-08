@@ -515,7 +515,10 @@ public class HomeFragment extends BasicFragment {
         //首页改版新增
         topName.setText("Hi " + SpUtils.getString(Contants.Name));
         changeAuthentication();
-
+        mStatus = SpUtils.getInt(Contants.Status, 0);
+        if (mStatus == 0) {  //未认证的用户，一进来就提示
+            AppUtils.checkAuthenStatus(4, getContext());
+        }
     }
 
 
@@ -799,9 +802,18 @@ public class HomeFragment extends BasicFragment {
 
                 if (entity.getCode() == 0) {
                     if (entity.getData() != null) {
-                        todayTask.setText(entity.getData().getTodayNum() + "");
-                        acceptTask.setText(entity.getData().getReceiveNum() + "");
-                        futureTask.setText(entity.getData().getFutureNum() + "");
+                        if (todayTask!=null){
+                            todayTask.setText(entity.getData().getTodayNum() + "");
+
+                        }
+                        if (acceptTask!=null){
+                            acceptTask.setText(entity.getData().getReceiveNum() + "");
+
+                        }
+                        if (futureTask!=null){
+                            futureTask.setText(entity.getData().getFutureNum() + "");
+
+                        }
 
                     }
                 }

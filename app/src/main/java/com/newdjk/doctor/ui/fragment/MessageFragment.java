@@ -68,7 +68,6 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 
 /**
@@ -91,44 +90,42 @@ public class MessageFragment extends BasicFragment {
     RelativeLayout relatTitlebar;
     @BindView(R.id.liear_titlebar)
     LinearLayout liearTitlebar;
-    @BindView(R.id.message_recycler_view)
-    RecyclerView messageRecyclerView;
-    Unbinder unbinder;
-    @BindView(R.id.newly_reported_patients)
-    TextView newlyReportedPatients;
-    @BindView(R.id.focus_patient)
-    TextView focusPatient;
-    @BindView(R.id.grouping)
-    TextView grouping;
-    @BindView(R.id.mSearchContainer)
-    LinearLayout mSearchContainer;
-    @BindView(R.id.lv_focus_patient)
-    LinearLayout lvFocusPatient;
-    @BindView(R.id.lv_grouping)
-    LinearLayout lvGrouping;
-    @BindView(R.id.lv_newly_reported_patients)
-    LinearLayout lvNewlyReportedPatients;
-    @BindView(R.id.iv_no)
-    ImageView ivNo;
-    @BindView(R.id.tv_choose)
-    TextView tvChoose;
-    private PatientAdapter mPatientAdapter;
     @BindView(R.id.et_patient_msg)
     ClearEditText etPatientMsg;
-    @BindView(R.id.right_letter)
-    MyLetterSortView rightLetter;
-    @BindView(R.id.easylayout)
-    EasyRefreshLayout mEasylayout;
-    @BindView(R.id.mNodataContainer)
-    RelativeLayout mNodataContainer;
     @BindView(R.id.mSearchTv)
     TextView mSearchTv;
-
+    @BindView(R.id.mSearchContainer)
+    LinearLayout mSearchContainer;
+    @BindView(R.id.newly_patients)
+    LinearLayout newlyPatients;
+    @BindView(R.id.lv_grouping)
+    LinearLayout lvGrouping;
+    @BindView(R.id.group_help)
+    LinearLayout groupHelp;
+    @BindView(R.id.newly_reported_patients)
+    LinearLayout newlyReportedPatients;
+    @BindView(R.id.focus_patient)
+    TextView focusPatient;
+    @BindView(R.id.lv_focus_patient)
+    LinearLayout lvFocusPatient;
+    @BindView(R.id.message_recycler_view)
+    RecyclerView messageRecyclerView;
+    @BindView(R.id.easylayout)
+    EasyRefreshLayout easylayout;
+    @BindView(R.id.tv_choose)
+    TextView tvChoose;
+    @BindView(R.id.right_letter)
+    MyLetterSortView rightLetter;
+    @BindView(R.id.iv_no)
+    ImageView ivNo;
+    @BindView(R.id.mNodataContainer)
+    RelativeLayout mNodataContainer;
     private InputMethodManager inputMethodManager;
     private CharacterParser characterParser;
     private String mPatientNameContent = "";
     private int mIndex = 1;
     private int mDoctype;
+    private PatientAdapter mPatientAdapter;
 
     public static MessageFragment getFragment() {
         return new MessageFragment();
@@ -150,12 +147,12 @@ public class MessageFragment extends BasicFragment {
         tvLeft.setTextColor(getResources().getColor(R.color.theme));
 
         topTitle.setText("我的患者");
-        tvRight.setVisibility(View.VISIBLE);
+        tvRight.setVisibility(View.GONE);
         tvRight.setText("群发助手");
         tvLeft.setText("新报道患者");
-        tvRight.setVisibility(View.VISIBLE);
+        tvRight.setVisibility(View.GONE);
         //tvLeft.setTextColor(getResources().getColor(R.color.white));
-        tvLeft.setVisibility(View.VISIBLE);
+        tvLeft.setVisibility(View.GONE);
         topLeft.setVisibility(View.GONE);
         /*addFriends.setOnClickListener(this);*/
         mPatientAdapter = new PatientAdapter(getActivity());
@@ -170,19 +167,19 @@ public class MessageFragment extends BasicFragment {
     protected void initListener() {
         newlyReportedPatients.setOnClickListener(this);
         focusPatient.setOnClickListener(this);
-        grouping.setOnClickListener(this);
         tvLeft.setOnClickListener(this);
         mSearchTv.setOnClickListener(this);
         lvFocusPatient.setOnClickListener(this);
         lvGrouping.setOnClickListener(this);
-        lvNewlyReportedPatients.setOnClickListener(this);
+        groupHelp.setOnClickListener(this);
+        newlyPatients.setOnClickListener(this);
         mDoctype = SpUtils.getInt(Contants.DocType, 0);
-        if (mDoctype == 1) {
-            newlyReportedPatients.setText("分级转诊");
-        } else {
-            newlyReportedPatients.setText("新报道患者");
-
-        }
+//        if (mDoctype == 1) {
+//            newlyReportedPatients.setText("分级转诊");
+//        } else {
+//            newlyReportedPatients.setText("新报道患者");
+//
+//        }
         messageRecyclerViewEvent();
 
         messageRecyclerView.setOnTouchListener(new View.OnTouchListener() {
@@ -261,7 +258,7 @@ public class MessageFragment extends BasicFragment {
             }
         });
 
-        mEasylayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
+        easylayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
             @Override
             public void onLoadMore() {
                 mIndex++;
@@ -273,7 +270,7 @@ public class MessageFragment extends BasicFragment {
             public void onRefreshing() {
                 mIndex = 1;
                 letterList.clear();
-                mEasylayout.setLoadMoreModel(LoadModel.COMMON_MODEL);
+                easylayout.setLoadMoreModel(LoadModel.COMMON_MODEL);
                 requestAllPaientMessage();
             }
         });
@@ -286,7 +283,7 @@ public class MessageFragment extends BasicFragment {
     @Override
     protected void initData() {
         characterParser = CharacterParser.getInstance();
-         requestAllPaientMessage();
+        requestAllPaientMessage();
     }
 
     @Override
@@ -314,7 +311,7 @@ public class MessageFragment extends BasicFragment {
             mAccountMgr.regist(account, password, new AccountMgr.RequestCallBack() {
                 @Override
                 public void onResult(int error, String response) {
-                    Toast.makeText(mContext, response, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, response, Toast.LENGTH_SHORT).s嚜ssaghow();
                 }
             });
         }
@@ -323,7 +320,6 @@ public class MessageFragment extends BasicFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, null, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
         EventBus.getDefault().register(this);
         return rootView;
     }
@@ -332,7 +328,6 @@ public class MessageFragment extends BasicFragment {
     public void onDestroyView() {
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
-        unbinder.unbind();
     }
 
     @Override
@@ -355,11 +350,7 @@ public class MessageFragment extends BasicFragment {
                 focusIntent.putExtra("action", 2);
                 startActivity(focusIntent);
                 break;
-            case R.id.grouping:
-                Intent groupIntent = new Intent(getContext(), PatientActivity.class);
-                groupIntent.putExtra("action", 3);
-                startActivity(groupIntent);
-                break;
+
             case R.id.tv_right:
                 Intent newLyBuildIntent = new Intent(getContext(), NewlyBuildGroupActivity.class);
                 startActivity(newLyBuildIntent);
@@ -389,11 +380,6 @@ public class MessageFragment extends BasicFragment {
                 break;
 
 
-            case R.id.lv_newly_reported_patients:
-                Intent paentntintent = new Intent(getContext(), WebViewActivity.class);
-                paentntintent.putExtra("type", 7);
-                startActivity(paentntintent);
-                break;
             case R.id.lv_focus_patient:
                 Intent focusPatientIntent = new Intent(getContext(), PatientActivity.class);
                 focusPatientIntent.putExtra("action", 2);
@@ -403,6 +389,15 @@ public class MessageFragment extends BasicFragment {
                 Intent groupPatientIntent = new Intent(getContext(), PatientActivity.class);
                 groupPatientIntent.putExtra("action", 3);
                 startActivity(groupPatientIntent);
+                break;
+            case R.id.group_help:
+                Intent grouphelpIntent = new Intent(getContext(), NewlyBuildGroupActivity.class);
+                startActivity(grouphelpIntent);
+                break;
+            case R.id.newly_patients:
+                Intent reportedIntent2 = new Intent(getContext(), PatientActivity.class);
+                reportedIntent2.putExtra("action", 1);
+                startActivity(reportedIntent2);
                 break;
         }
     }
@@ -460,11 +455,11 @@ public class MessageFragment extends BasicFragment {
         mMyOkhttp.post().url(HttpUrl.QueryDoctorPatientPage).headers(headMap).params(map).tag(this).enqueue(new GsonResponseHandler<ResponseEntity<PatientListEntity>>() {
             @Override
             public void onSuccess(int statusCode, final ResponseEntity<PatientListEntity> entity) {
-                if (mEasylayout == null) {
+                if (easylayout == null) {
                     return;
                 }
-                if (mEasylayout.isRefreshing()) {
-                    mEasylayout.refreshComplete();
+                if (easylayout.isRefreshing()) {
+                    easylayout.refreshComplete();
                 }
                 //mEasylayout.setVisibility(View.VISIBLE);
                 messageRecyclerView.setVisibility(View.VISIBLE);
@@ -472,15 +467,15 @@ public class MessageFragment extends BasicFragment {
                     if (mIndex == 1) {
                         mPaintList.clear();
                     } else {
-                        mEasylayout.loadMoreComplete();
+                        easylayout.loadMoreComplete();
                     }
                     List<PatientListDataEntity> list = entity.getData().getReturnData();
                     int total = list.size();
 
                     if (total < 20) {
-                        mEasylayout.setLoadMoreModel(LoadModel.NONE);
+                        easylayout.setLoadMoreModel(LoadModel.NONE);
                     } else {
-                        mEasylayout.setLoadMoreModel(LoadModel.COMMON_MODEL);
+                        easylayout.setLoadMoreModel(LoadModel.COMMON_MODEL);
                     }
 
                     final int len = list.size();
@@ -490,23 +485,31 @@ public class MessageFragment extends BasicFragment {
 
                         PatientListDataEntity patientListDataEntity = list.get(i);
                         String patientName = patientListDataEntity.getPatientName();
+                        Log.d("名字", "位置=" + i + "   姓名=" + patientName + "   缩写=" + patientListDataEntity.getNameLetter());
                         if (patientName.length() == 0) {
                             continue;
                         }
-                        String alphabet = patientName.substring(0, 1);
+
+                        //组合首字母
                         if (!TextUtils.isEmpty(patientListDataEntity.getNameLetter())) {
                             if (!letterList.contains(patientListDataEntity.getNameLetter().substring(0, 1))) {
                                 letterList.add(patientListDataEntity.getNameLetter().substring(0, 1));
                             }
 
+                        } else {
+                            if (!letterList.contains("#")){
+                                letterList.add("#");
+                            }
+
                         }
 
+                        //组合数据
                         if (!TextUtils.isEmpty(patientListDataEntity.getNameLetter())) {
                             patientName = new StringBuffer(patientListDataEntity.getNameLetter().substring(0, 1)).append("&").append(patientName).toString();
                             patientListDataEntity.setPatientName(patientName);
                             list.set(i, patientListDataEntity);
                         } else {
-                            patientName = new StringBuffer("~").append("&").append(patientName).toString();
+                            patientName = new StringBuffer("#").append("&").append(patientName).toString();
                             patientListDataEntity.setPatientName(patientName);
                             list.set(i, patientListDataEntity);
                         }
@@ -528,6 +531,7 @@ public class MessageFragment extends BasicFragment {
                         mNodataContainer.setVisibility(View.GONE);
                     }
                     Log.i("MessageFragment", "size=" + mPaintList.size());
+                    Log.i("MessageFragment", "" + mPaintList.toString());
                     mPatientAdapter.setDatalist(mPaintList);
                     rightLetter.setdata(letterList);
                     getActivity().runOnUiThread(new Runnable() {
@@ -558,9 +562,9 @@ public class MessageFragment extends BasicFragment {
                 //mEasylayout.setVisibility(View.GONE);
                 Log.i("MessageFragment", "onFailures");
                 CommonMethod.requestError(statusCode, errorMsg);
-                if (mEasylayout != null) {
-                    mEasylayout.loadMoreComplete();
-                    mEasylayout.refreshComplete();
+                if (easylayout != null) {
+                    easylayout.loadMoreComplete();
+                    easylayout.refreshComplete();
                 }
 
 

@@ -37,10 +37,10 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:contentDescription="TODO"
-                        android:src="@mipmap/doctor_chat_icon1" />
+                        android:src="@drawable/im_photo" />
                 </RelativeLayout>
 
                 <TextView
@@ -66,10 +66,10 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
+                        android:layout_width="@dimen/dp_48"
+                        android:layout_height="@dimen/dp_48"
                         android:contentDescription="TODO"
-                        android:src="@mipmap/doctor_chat_icon2" />
+                        android:src="@drawable/im_camera" />
                 </RelativeLayout>
 
                 <TextView
@@ -95,10 +95,10 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
+                        android:layout_width="@dimen/dp_48"
+                        android:layout_height="@dimen/dp_48"
                         android:contentDescription="TODO"
-                        android:src="@mipmap/doctor_chat_icon3" />
+                        android:src="@drawable/im_reply" />
                 </RelativeLayout>
 
                 <TextView
@@ -125,10 +125,10 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
+                        android:layout_width="@dimen/dp_48"
+                        android:layout_height="@dimen/dp_48"
                         android:contentDescription="TODO"
-                        android:src="@mipmap/doctor_chat_icon4" />
+                        android:src="@drawable/im_mission" />
                 </RelativeLayout>
 
                 <TextView
@@ -190,10 +190,10 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
+                        android:layout_width="@dimen/dp_48"
+                        android:layout_height="@dimen/dp_48"
                         android:contentDescription="TODO"
-                        android:src="@mipmap/doctor_chat_icon8" />
+                        android:src="@drawable/im_mdt" />
                 </RelativeLayout>
 
                 <TextView
@@ -219,10 +219,10 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
+                        android:layout_width="@dimen/dp_48"
+                        android:layout_height="@dimen/dp_48"
                         android:contentDescription="TODO"
-                        android:src="@drawable/videowenzhen" />
+                        android:src="@drawable/im_video" />
                 </RelativeLayout>
 
                 <TextView
@@ -248,10 +248,10 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
+                        android:layout_width="@dimen/dp_48"
+                        android:layout_height="@dimen/dp_48"
                         android:contentDescription="TODO"
-                        android:src="@drawable/stop" />
+                        android:src="@drawable/im_turnoff" />
                 </RelativeLayout>
 
                 <TextView

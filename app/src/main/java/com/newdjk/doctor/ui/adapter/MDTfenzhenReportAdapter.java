@@ -27,6 +27,7 @@ import com.newdjk.doctor.ui.activity.Mdt.MDTInputReportActivity;
 import com.newdjk.doctor.ui.entity.MDTDetailEntity;
 import com.newdjk.doctor.ui.entity.ResponseEntity;
 import com.newdjk.doctor.ui.fragment.MDTfenzhenReportFragment2;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.utils.SpUtils;
 import com.newdjk.doctor.utils.ToastUtil;
 import com.newdjk.doctor.views.CircleImageView;
@@ -104,11 +105,11 @@ public class MDTfenzhenReportAdapter extends BaseQuickAdapter<MDTDetailEntity, B
 
         CircleImageView imageView = helper.getView(R.id.civImg);
 
-        Glide.with(MyApplication.getContext())
-                .load(item.getPatPicturePath())
-                .placeholder(R.drawable.patient_default_img)
-                .into(imageView);
-
+//        Glide.with(MyApplication.getContext())
+//                .load(item.getPatPicturePath())
+//                .placeholder(R.drawable.patient_default_img)
+//                .into(imageView);
+        GlideUtils.loadPatientImage(item.getPatPicturePath(),imageView);
         Log.d(TAG, "类型" + item.getSubjectType() + "  " + item.getPayTime());
         RecyclerView recyclerView = helper.itemView.findViewById(R.id.recylevie);
 

@@ -22,6 +22,7 @@ import com.newdjk.doctor.ui.activity.IM.GroupChatActivity;
 import com.newdjk.doctor.ui.entity.ImDataEntity;
 import com.newdjk.doctor.ui.entity.MDTDetailEntity;
 import com.newdjk.doctor.ui.entity.ResponseEntity;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.utils.NetworkUtil;
 import com.newdjk.doctor.utils.SpUtils;
 import com.newdjk.doctor.utils.TimeUtil;
@@ -67,11 +68,12 @@ public class GroupMessageAdapter extends BaseQuickAdapter<ImDataEntity, BaseView
         name = item.getNickName();
         String path = item.getFaceUrl();
         Log.d(TAG, "图片地址" + path);
-        Glide.with(MyApplication.getContext())
-                .load(path)
-                .dontAnimate()
-                .placeholder(R.drawable.patient_default_img)
-                .into(((CircleImageView) helper.getView(R.id.avatar)));
+//        Glide.with(MyApplication.getContext())
+//                .load(path)
+//                .dontAnimate()
+//                .placeholder(R.drawable.patient_default_img)
+//                .into(((CircleImageView) helper.getView(R.id.avatar)));
+        GlideUtils.loadPatientImage(path,((CircleImageView) helper.getView(R.id.avatar)));
         if (!TextUtils.isEmpty(name)) {
             helper.setText(R.id.name, name);
         } else {

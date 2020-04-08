@@ -159,17 +159,21 @@ public class AppUtils {
     public static void checkAuthenStatus(final int var, final Context ctx) {
 
         final int s = SpUtils.getInt(Contants.Status, 0);
-
         String content = "";
-        if (s == 0) {//未认证
-            content = "对不起，您暂未进行资格认证，此功能暂不能使用，请点击“确定”进行资格认证。";
-        } else if (s == 2) {
-            content = "对不起，您的资料审核不通过，此功能暂时不能使用，请点击“确定”重新进行资格认证。";
-        } else if (s == 3) {
-            content = "对不起，您的资料正在审核中，此功能暂时不能使用，请耐心等待";
+        if (var == 4) {
+            content = "您还未进行资格认证，部分功能将被限制。";
+        } else {
+            if (s == 0) {//未认证
+                content = "您还未进行资格认证，部分功能将被限制。";
+            } else if (s == 2) {//失败
+                content = "您的资料审核不通过，请重新认证";
+            } else if (s == 3) {
+                content = "您的资料正在审核中，请耐心等待";
+            }
         }
+
         mDialog = new GroupButtonDialog(ctx);
-        mDialog.show("温馨提示", content, new GroupButtonDialog.DialogListener() {
+        mDialog.show("温馨提示", var,content, new GroupButtonDialog.DialogListener() {
             @Override
             public void cancel() {
 
@@ -195,7 +199,8 @@ public class AppUtils {
         intent.putExtra("tip", 2);
         ctx.startActivity(intent);
     }
-    public static void showRememberDialog (final Activity context) {
+
+    public static void showRememberDialog(final Activity context) {
         RememberPasswordDialog dialog = new RememberPasswordDialog(context);
         dialog.show("", "", new RememberPasswordDialog.DialogListener() {
             @Override
@@ -205,18 +210,17 @@ public class AppUtils {
 
             @Override
             public void confirm(int keeDay) {
-                BJCASDK.getInstance().keepPin(context,Contants.clientId,keeDay,	new	YWXListener()	{
+                BJCASDK.getInstance().keepPin(context, Contants.clientId, keeDay, new YWXListener() {
                     @Override
-                    public	void	callback(String	msg)	{
+                    public void callback(String msg) {
                         YWXListenerEntity yWXListenerEntity = new Gson().fromJson(msg, YWXListenerEntity.class);
                         String status = yWXListenerEntity.getStatus();
                         String message = yWXListenerEntity.getMessage();
                         if (status.equals("0")) {
-                            Toast.makeText(context,"设置免密成功",Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                           // Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                            ToastUtil.setToast("记住密码失效，请重试！+("+status+")");
+                            Toast.makeText(context, "设置免密成功", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                            ToastUtil.setToast("记住密码失效，请重试！+(" + status + ")");
 
                         }
                     }

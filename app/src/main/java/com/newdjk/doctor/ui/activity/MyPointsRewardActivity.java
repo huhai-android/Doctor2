@@ -31,6 +31,7 @@ import com.newdjk.doctor.ui.entity.AdviceDoctorEntity;
 import com.newdjk.doctor.ui.entity.DoctorRecommend;
 import com.newdjk.doctor.ui.entity.ResponseEntity;
 import com.newdjk.doctor.ui.entity.SignRuleEntity;
+import com.newdjk.doctor.utils.GlideUtils;
 import com.newdjk.doctor.utils.SpUtils;
 import com.newdjk.doctor.views.ButtonView;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -140,10 +141,12 @@ public class MyPointsRewardActivity extends BasicActivity implements IWXAPIEvent
                 Log.d(TAG, "VVVVVV" + response.toString());
                 if (response.getCode() == 0) {
                     //Bitmap mBitmap = CodeUtils.createImage(response.getData().getCodeAddress(), 400, 400, null);
-                    Glide.with(MyApplication.getContext())
-                            .load(response.getData().getCodeAddress()).
-                            crossFade().centerCrop().
-                            into(qrCode);
+//                    Glide.with(MyApplication.getContext())
+//                            .load(response.getData().getCodeAddress()).
+//                            crossFade().centerCrop().
+//                            into(qrCode);
+
+                    GlideUtils.loadCommonmage(response.getData().getCodeAddress(), qrCode);
                     tvUrl.setText(response.getData().getLinkAddress());
                     //  qrCode.setImageBitmap(mBitmap);
                     Log.d(TAG, "XXXXXX");

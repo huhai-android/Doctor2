@@ -7,6 +7,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,9 +15,24 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.lxq.okhttp.response.GsonResponseHandler;
+import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.basic.BasicActivity;
+import com.newdjk.doctor.model.HttpUrl;
+import com.newdjk.doctor.tools.CommonMethod;
+import com.newdjk.doctor.tools.Contants;
 import com.newdjk.doctor.ui.entity.DoctorInfoByIdEntity;
+import com.newdjk.doctor.ui.entity.Entity;
+import com.newdjk.doctor.ui.entity.UpdateImageView;
+import com.newdjk.doctor.utils.SpUtils;
+import com.newdjk.doctor.views.LoadDialog;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +66,7 @@ public class UpdateInfoActivity extends BasicActivity {
     private String mAction;
     private DoctorInfoByIdEntity mDoctorInfoByIdEntity;
     private String mData;
+    private Gson mGson;
 
     @Override
     protected int initViewResId() {
@@ -58,8 +75,10 @@ public class UpdateInfoActivity extends BasicActivity {
 
     @Override
     protected void initView() {
+        mGson = new Gson();
         mAction = getIntent().getStringExtra("action");
         mData = getIntent().getStringExtra("data");
+        mDoctorInfoByIdEntity=MyApplication.mDoctorInfoByIdEntity;
         if (!TextUtils.isEmpty(mAction)) {
             if (mAction.equals("funGoodAt")) {
                 initBackTitle("我的专长");
@@ -132,11 +151,31 @@ public class UpdateInfoActivity extends BasicActivity {
     protected void otherViewClick(View view) {
         switch (view.getId()) {
             case R.id.next_step:
-                String message = etContent.getText().toString();
-                Intent intent = new Intent();
-                intent.putExtra("message", message);
-                setResult(RESULT_OK, intent);
-                finish();
+//                String message = etContent.getText().toString();
+//                Intent intent = new Intent();
+//                intent.putExtra("message", message);
+//                setResult(RESULT_OK, intent);
+                if (!TextUtils.isEmpty(etContent.getText().toString())){
+                    if (!TextUtils.isEmpty(mAction)) {
+                        if (mAction.equals("funGoodAt")) {
+                            //initBackTitle("我的专长");
+                            mDoctorInfoByIdEntity.setDoctorSkill(etContent.getText().toString());
+                            updateDoctorInfo();
+
+                        } else if (mAction.equals("funTitle")) {
+                            //initBackTitle("我的专治");
+                            mDoctorInfoByIdEntity.setTreatMent(etContent.getText().toString());
+                            updateDoctorInfo();
+                        } else if (mAction.equals("funIntroduction")) {
+                            // initBackTitle("我的简介");
+                            mDoctorInfoByIdEntity.setDescription(etContent.getText().toString());
+                            updateDoctorInfo();
+                        }
+                    }
+                }else {
+                    toast("输入内容不能为空");
+                }
+
                 break;
         }
     }
@@ -181,5 +220,50 @@ public class UpdateInfoActivity extends BasicActivity {
             }
         }
         return num;
+    }
+
+    private void updateDoctorInfo() {
+        loading(true);
+        String json = mGson.toJson(mDoctorInfoByIdEntity);
+        Log.i("PersonalDataActivity", "json=" + json);
+        Map<String, String> headMap = new HashMap<>();
+        headMap.put("Authorization", SpUtils.getString(Contants.Token));
+        mMyOkhttp.post().url(HttpUrl.UpdateDoctorInfo).headers(headMap).jsonParams(json).tag(this).enqueue(new GsonResponseHandler<Entity>() {
+            @Override
+            public void onSuccess(int statusCode, Entity entity) {
+                LoadDialog.clear();
+                if (entity.getCode() == 0) {
+                    toast("更新成功");
+                    if (mAction.equals("funGoodAt")) {
+                        //initBackTitle("我的专长");
+                        MyApplication.mDoctorInfoByIdEntity.setDoctorSkill(etContent.getText().toString());
+
+                    } else if (mAction.equals("funTitle")) {
+                        //initBackTitle("我的专治");
+                        MyApplication.mDoctorInfoByIdEntity.setTreatMent(etContent.getText().toString());
+
+                    } else if (mAction.equals("funIntroduction")) {
+                        // initBackTitle("我的简介");
+                        MyApplication.mDoctorInfoByIdEntity.setDescription(etContent.getText().toString());
+
+                    }
+                    EventBus.getDefault().post(new UpdateImageView(true));
+                    finish();
+                } else {
+                    toast(entity.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailures(int statusCode, String errorMsg) {
+                CommonMethod.requestError(statusCode, errorMsg);
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }

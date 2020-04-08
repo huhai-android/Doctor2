@@ -1,14 +1,17 @@
 package com.newdjk.doctor.ui.activity;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.basic.BasicActivity;
 
@@ -57,13 +60,11 @@ public class AdsDialogActivity extends BasicActivity {
 
         Glide.with(AdsDialogActivity.this) // could be an issue!
                 .load("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=889644352,3407849871&fm=26&gp=0.jpg")
-                .asBitmap()
-                .into(new SimpleTarget<Bitmap>() {
+
+                .into(new SimpleTarget<Drawable>() {
                     @Override
-                    public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
-                        // do something with the bitmap
-                        // for demonstration purposes, let's just set it to an ImageView
-                        image.setImageBitmap(bitmap);
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        image.setImageDrawable(resource);
                         lvRoot.setVisibility(View.VISIBLE);
                     }
                 });

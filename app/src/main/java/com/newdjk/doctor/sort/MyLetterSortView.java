@@ -62,14 +62,14 @@ public class MyLetterSortView extends View {
         }
 
         //最大27份
-        mHeith = height / 27;
+        mHeith = height / 28;
 
         for (int i = 0; i < letterListData.size(); i++) {
             paint.setColor(Color.parseColor("#3069CF"));
             //paint.setTypeface(Typeface.DEFAULT_BOLD);
             paint.setAntiAlias(true);
             //	paint.setTextSize(PixelUtil.sp2px(12));
-            paint.setTextSize(DensityUtil.dp2px(16));
+            paint.setTextSize(DensityUtil.dp2px(14));
             if (i == choose) {
                 paint.setColor(Color.parseColor("#CCCCCC"));
                 paint.setFakeBoldText(true);

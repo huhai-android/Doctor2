@@ -293,6 +293,8 @@ public class HttpUrl {
     public static String GetNoticeManageById = PlatFormAPI + "/HealthInformation/GetNoticeManageById";  //公告管理-列表
     public static String QueryUnReceiveDoctorOrderMerge = PlatFormAPI + "/PayOrder/QueryUnReceiveDoctorOrderMerge";  //待处理-待问诊(医生端)
     public static String QueryDoctorOrderMergePage = PlatFormAPI + "/PayOrder/QueryDoctorOrderMergePage";  //待处理-待问诊(医生端)
+    public static String SaveDrServiceItemPrice = Doctor + "/SaveDrServiceItemPrice";  //待处理-待问诊(医生端)
+    public static String GetDrServiceItemPriceForSet = Doctor + "/GetDrServiceItemPriceForSet";  //待处理-待问诊(医生端)
 
 
 }

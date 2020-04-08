@@ -33,6 +33,7 @@ import com.newdjk.doctor.ui.entity.PatientInfoEntity;
 import com.newdjk.doctor.ui.entity.PrescriptionMessageEntity;
 import com.newdjk.doctor.ui.entity.RecordDataEntity;
 import com.newdjk.doctor.ui.entity.ResponseEntity;
+import com.newdjk.doctor.utils.ChatActivityUtils;
 import com.newdjk.doctor.utils.GlideMediaLoader;
 import com.newdjk.doctor.utils.NetworkUtil;
 import com.newdjk.doctor.utils.SpUtils;
@@ -162,7 +163,9 @@ public class OnlineRenewalDataAdapter1  extends BaseQuickAdapter<AllRecordForDoc
                             final String faceUrl = item.getApplicantHeadImgUrl();
                             String identifier = item.getApplicantIMId();
                             String imId = SpUtils.getString(Contants.identifier);
-                            getIMRelationRecord(identifier, imId, faceUrl);
+                           // getIMRelationRecord(identifier, imId, faceUrl);
+                            ChatActivityUtils.getinStanse().toChat(identifier, imId, faceUrl,mContext);
+
                         } else {
                             ToastUtil.setToast("网络连接异常，请检查网络");
 

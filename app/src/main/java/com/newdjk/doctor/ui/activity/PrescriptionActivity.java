@@ -75,6 +75,7 @@ import com.newdjk.doctor.ui.entity.YWXListenerEntity;
 import com.newdjk.doctor.utils.AppUtils;
 import com.newdjk.doctor.utils.AppUtils2;
 import com.newdjk.doctor.utils.CertUtis;
+import com.newdjk.doctor.utils.ChatActivityUtils;
 import com.newdjk.doctor.utils.ImageBase64;
 import com.newdjk.doctor.utils.LocationUtils;
 import com.newdjk.doctor.utils.LogOutUtil;
@@ -573,7 +574,7 @@ public class PrescriptionActivity extends BasicActivity implements IWXAPIEventHa
             @Override
             public void handler(String data, CallBackFunction function) {
                 Log.i("ArchivesActivity", "data=" + data);
-                try {
+
 
                     PatientStatusEntity patientStatusEntity = mGson.fromJson(data, PatientStatusEntity.class);
                     Type jsonType = new TypeToken<PrescriptionMessageEntity<ConsultMessageEntity>>() {
@@ -585,27 +586,25 @@ public class PrescriptionActivity extends BasicActivity implements IWXAPIEventHa
                     ConsultMessageEntity.setDoctorPatientRelation(patientStatusEntity.getDoctorPatientRelation());
                     prescriptionMessageEntity.setPatient(ConsultMessageEntity);
                     String json = mGson.toJson(prescriptionMessageEntity);
-                    Intent intentTalk = new Intent(mActivity, ChatActivity.class);
-                    String name;
-                    PatientInfoEntity patientInfoEntity = patientStatusEntity.getPatientInfo();
-                    if (patientInfoEntity != null) {
-                        name = patientInfoEntity.getPatientName();
-                    } else {
-                        name = patientStatusEntity.getApplicantName();
-                    }
-                    SpUtils.put(Contants.patientName, patientInfoEntity.getPatientName());
-                    SpUtils.put(Contants.patientID, patientInfoEntity.getPatientId());
-                    intentTalk.putExtra(Contants.FRIEND_NAME, name);
-                    intentTalk.putExtra("status", 0);
-                    intentTalk.putExtra("prescriptionMessage", json);
-                    intentTalk.putExtra("accountId", patientStatusEntity.getApplicantId());
-                    intentTalk.putExtra("imgPath", patientStatusEntity.getApplicantHeadImgUrl());
-                    intentTalk.putExtra(Contants.FRIEND_IDENTIFIER, patientStatusEntity.getApplicantIMId());
-                    mActivity.startActivity(intentTalk);
+//                    Intent intentTalk = new Intent(mActivity, ChatActivity.class);
+//                    String name;
+//                    PatientInfoEntity patientInfoEntity = patientStatusEntity.getPatientInfo();
+//                    if (patientInfoEntity != null) {
+//                        name = patientInfoEntity.getPatientName();
+//                    } else {
+//                        name = patientStatusEntity.getApplicantName();
+//                    }
+//                    SpUtils.put(Contants.patientName, patientInfoEntity.getPatientName());
+//                    SpUtils.put(Contants.patientID, patientInfoEntity.getPatientId());
+//                    intentTalk.putExtra(Contants.FRIEND_NAME, name);
+//                    intentTalk.putExtra("status", 0);
+//                    intentTalk.putExtra("prescriptionMessage", json);
+//                    intentTalk.putExtra("accountId", patientStatusEntity.getApplicantId());
+//                    intentTalk.putExtra("imgPath", patientStatusEntity.getApplicantHeadImgUrl());
+//                    intentTalk.putExtra(Contants.FRIEND_IDENTIFIER, patientStatusEntity.getApplicantIMId());
+//                    mActivity.startActivity(intentTalk);
 
-                } catch (Exception e) {
-
-                }
+                ChatActivityUtils.getinStanse().toChat(patientStatusEntity.getApplicantIMId(), SpUtils.getString(Contants.identifier), patientStatusEntity.getApplicantHeadImgUrl(),mContext);
 
             }
         });
@@ -621,7 +620,8 @@ public class PrescriptionActivity extends BasicActivity implements IWXAPIEventHa
                     String identifier = patientStatusEntity.getApplicantIMId();
                     String imId = SpUtils.getString(Contants.identifier);
 
-                    getIMRelationRecord(identifier, imId, patientStatusEntity.getApplicantHeadImgUrl());
+                   // getIMRelationRecord(identifier, imId, patientStatusEntity.getApplicantHeadImgUrl());
+                    ChatActivityUtils.getinStanse().toChat(identifier, imId, patientStatusEntity.getApplicantHeadImgUrl(),mContext);
 
                 } catch (Exception e) {
 

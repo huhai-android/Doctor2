@@ -85,6 +85,9 @@ public class SQLiteUtils {
 
     //分页查询系统消息
     public List<PushDataDaoEntity> selectSystemContactsByDoctorId(int doctorId, Date time) {
+        if (pushDataDaoEntityDao==null){
+            return new ArrayList<PushDataDaoEntity>();
+        }
         pushDataDaoEntityDao.detachAll();//清除缓存
 
         // List<PushDataDaoEntity> list1 = pushDataDaoEntityDao.queryBuilder() .where(PushDataDaoEntityDao.Properties.DrId.eq(doctorId),PushDataDaoEntityDao.Properties.Title.notEq("新患者报道"),PushDataDaoEntityDao.Properties.Time.lt(time)).orderDesc(PushDataDaoEntityDao.Properties.Time).limit(20).list();
@@ -207,6 +210,10 @@ public class SQLiteUtils {
 
     //根据业务码和id查询Im数据
     public List<AllRecordForDoctorEntity> selectImDataByServiceCodeAndId(String serviceCode, String id) {
+
+       if (allRecordForDoctorEntityDao==null){
+           return new ArrayList<AllRecordForDoctorEntity>() ;
+       }
         allRecordForDoctorEntityDao.detachAll();//清除缓存
 
         List<AllRecordForDoctorEntity> list1 = allRecordForDoctorEntityDao.queryBuilder().where(AllRecordForDoctorEntityDao.Properties.ServiceCode.eq(serviceCode), AllRecordForDoctorEntityDao.Properties.ApplicantIMId.eq(id)).orderDesc(AllRecordForDoctorEntityDao.Properties.TimeStamp).list();

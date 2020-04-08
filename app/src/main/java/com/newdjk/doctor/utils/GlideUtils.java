@@ -1,6 +1,9 @@
 package com.newdjk.doctor.utils;
 
+import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.views.CircleImageView;
@@ -14,27 +17,38 @@ import com.newdjk.doctor.views.CircleImageView;
  *  @描述：
  */
 public class GlideUtils {
-    public static void loadPatientImage(String imagepath, CircleImageView view) {
+    public static void loadPatientImage(String imagepath, ImageView view) {
         Glide.with(MyApplication.getContext())
-                .load(imagepath)
-                .centerCrop()
-                .dontAnimate()//防止设置placeholder导致第一次不显示网络图片,只显示默认图片的问题
-                .error(R.drawable.patient_default_img)
-                .placeholder(R.drawable.patient_default_img)
+                .load(imagepath).apply(new RequestOptions()
+                .placeholder(R.drawable.patient_default_img).
+                        error(R.drawable.patient_default_img))
                 .into(view);
     }
 
-    public static void loadDoctorImage(String imagepath, CircleImageView view) {
+    public static void loadDoctorImage(String imagepath, ImageView view) {
         Glide.with(MyApplication.getContext())
-                .load(imagepath)
-                .centerCrop()
-                .dontAnimate()//防止设置placeholder导致第一次不显示网络图片,只显示默认图片的问题
-                .error(R.drawable.patient_default_img)
-                .placeholder(R.drawable.patient_default_img)
+                .load(imagepath).
+                apply(new RequestOptions()
+                        .placeholder(R.drawable.doctor_default_img).
+                                error(R.drawable.doctor_default_img))
                 .into(view);
     }
 
-    public static void loadCommonmage() {
+    public static void loadCommonmage(String path, ImageView imageView) {
+        Glide.with(MyApplication.getContext())
+                .load(path).
+                apply(new RequestOptions()
+                        .placeholder(R.drawable.new_nopic).
+                                error(R.drawable.new_nopic))
+                .into(imageView);
+    }
 
+    public static void loadCommonmage(String path, ImageView imageView, int placeholder) {
+        Glide.with(MyApplication.getContext())
+                .load(path).
+                apply(new RequestOptions()
+                        .placeholder(placeholder).
+                                error(placeholder))
+                .into(imageView);
     }
 }
