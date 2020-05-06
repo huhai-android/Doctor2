@@ -2,23 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    android:background="@drawable/boder_white_oval_doctor"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_4"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:clickable="false"
         android:focusable="false"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/dp_3"
-        android:paddingEnd="@dimen/dp_10"
-        android:paddingStart="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_10">
+
+        >
 
         <RelativeLayout
             android:id="@+id/title_layout"
@@ -33,24 +31,20 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:lineSpacingMultiplier="1.2"
-                tools:text="12121"
+                tools:text="一家挂断电话"
+
                 android:textColor="@color/plugin_camera_black" />
         </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/service_detail_list"
-            android:layout_width="wrap_content"
 
+            android:layout_marginTop="@dimen/dp_7"
+            android:layout_marginBottom="@dimen/dp_7"
+            android:id="@+id/service_detail_list"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="false" />
 
-
-        <!--  <com.newdjk.doctor.views.ItemView
-              android:id="@+id/check_detail"
-              android:layout_width="wrap_content"
-              android:layout_height="@dimen/dp_35"
-              app:SetRightImg="@drawable/ic_right"
-              app:leftTVText="@string/check_detail" />-->
     </LinearLayout>
 
     <View
@@ -58,10 +52,10 @@
         android:id="@+id/line"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:layout_marginTop="7dp"
         android:background="#CCCCCC" />
 
     <RelativeLayout
+        tools:visibility="gone"
         android:id="@+id/check_detail"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_35"

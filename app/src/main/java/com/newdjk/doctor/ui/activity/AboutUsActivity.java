@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -40,6 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static com.newdjk.doctor.MyApplication.getContext;
 
@@ -77,6 +79,8 @@ public class AboutUsActivity extends BasicActivity {
     LinearLayout lvUpdate;
     @BindView(R.id.tv_update_desc)
     TextView tvUpdateDesc;
+    @BindView(R.id.tv_privacy)
+    TextView tvPrivacy;
 
     private String[] mAppInfo;
     private final static String TAG = "HomeFragment---2";
@@ -133,6 +137,7 @@ public class AboutUsActivity extends BasicActivity {
         tv_agreement.setOnClickListener(this);
         tvUpdate.setOnClickListener(this);
         mVersion.setOnClickListener(this);
+        tvPrivacy.setOnClickListener(this);
 
 
 //        mVersion.setOnClickListener(new View.OnClickListener() {
@@ -204,6 +209,14 @@ public class AboutUsActivity extends BasicActivity {
 //                Intent areaintent = new Intent(AboutUsActivity.this, ChooseAreaActivity.class);
 //                startActivity(areaintent);
                 break;
+
+            case R.id.tv_privacy:
+
+                Intent intentPrivacy=new Intent(mContext, PrivacyActivity.class);
+                intentPrivacy.putExtra("userInfo", SpUtils.getString(Contants.LoginJson));
+
+                mContext.startActivity(intentPrivacy);
+                break;
         }
     }
 
@@ -216,7 +229,7 @@ public class AboutUsActivity extends BasicActivity {
                 if (entity.getCode() == 0) {
                     if (entity.getData() != null) {
                         final String apkUrl = entity.getData().getAppPath();
-                        int apkCode =Integer.parseInt(entity.getData().getAppVersion());
+                        int apkCode = Integer.parseInt(entity.getData().getAppVersion());
                         int versionCode = AppUtils.getAppVersionCode(AboutUsActivity.this);
                         mMustupdate = entity.getData().getMustUpdate();
                         Log.d(TAG, apkCode + "  " + versionCode);
@@ -263,4 +276,5 @@ public class AboutUsActivity extends BasicActivity {
             }
         });
     }
+
 }

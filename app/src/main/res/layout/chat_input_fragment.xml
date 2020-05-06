@@ -57,6 +57,7 @@
             android:visibility="visible">
 
             <TextView
+                android:layout_marginBottom="@dimen/dp_10"
                 android:id="@+id/accept_valid_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,6 +73,7 @@
                   android:layout_height="match_parent">-->
 
             <LinearLayout
+                android:layout_marginBottom="@dimen/dp_10"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/weixinfunctionbg"
@@ -153,12 +155,13 @@
                 android:paddingRight="5dp">
 
                 <ImageView
-                    android:layout_width="@dimen/dp_22"
-                    android:layout_height="@dimen/dp_22"
-                    android:src="@drawable/icon_xiyao" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/xiyaokaifang" />
 
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/prescription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -181,11 +184,12 @@
                 android:paddingRight="5dp">
 
                 <ImageView
-                    android:layout_width="@dimen/dp_22"
-                    android:layout_height="@dimen/dp_22"
-                    android:src="@drawable/icon_zhongyao" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zhongyaokaifang" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/zhongyao_prescription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -208,11 +212,12 @@
                 android:paddingRight="5dp">
 
                 <ImageView
-                    android:layout_width="@dimen/dp_22"
-                    android:layout_height="@dimen/dp_22"
-                    android:src="@drawable/icon_tuijian" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/youxuantuijianicon" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/good_advice"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -254,11 +259,12 @@
                 android:paddingRight="5dp">
 
                 <ImageView
-                    android:layout_width="@dimen/dp_22"
-                    android:layout_height="@dimen/dp_22"
-                    android:src="@drawable/icon_fuwu" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/tuijianfuwu" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/medical_service"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -282,13 +288,13 @@
                 android:paddingRight="10dp">
 
                 <ImageView
-                    android:layout_width="@dimen/dp_22"
-                    android:layout_height="@dimen/dp_22"
-                    android:src="@drawable/icon_jiancha" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/tuijianjiancha" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/checkTable"
-
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/dp_5"

@@ -35,6 +35,7 @@ import com.newdjk.doctor.ui.entity.MDTDetailEntity;
 import com.newdjk.doctor.utils.BadgeUtil;
 import com.newdjk.doctor.utils.BoxingGlideLoader;
 import com.newdjk.doctor.utils.BoxingUcrop;
+import com.newdjk.doctor.utils.CheckSysUtils;
 import com.newdjk.doctor.utils.DefaultMediaLoader;
 import com.newdjk.doctor.utils.FixDefaultMediaLoader;
 import com.newdjk.doctor.utils.MessageObservable;
@@ -192,7 +193,7 @@ public class MyApplication extends Application {
 
         initBackAndFront();
 
-
+        CheckSysUtils.isRoot();
 
     }
 

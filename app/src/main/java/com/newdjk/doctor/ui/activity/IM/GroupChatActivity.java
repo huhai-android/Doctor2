@@ -80,6 +80,7 @@ import com.newdjk.doctor.ui.activity.min.GroupMemberActivity;
 import com.newdjk.doctor.ui.adapter.GroupChatAdapter;
 import com.newdjk.doctor.ui.camera.CameraActivity;
 import com.newdjk.doctor.ui.camera.IUIKitCallBack;
+import com.newdjk.doctor.ui.camera.ImageUtil;
 import com.newdjk.doctor.ui.camera.JCameraView;
 import com.newdjk.doctor.ui.camera.MessageInfo;
 import com.newdjk.doctor.ui.camera.MessageInfoUtil;
@@ -3090,7 +3091,8 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
                 if (resultCode == RESULT_OK) {
 
                     Log.i("zdp", mPicturePath);
-                    sendPictureMessage(mPicturePath);
+                    String compresspath= ImageUtil.compressImage(mPicturePath);
+                    sendPictureMessage(compresspath);
                 }
                 break;
             case IMAGE_REQUEST_CODE:
@@ -3103,7 +3105,8 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
                         cursor.moveToFirst();
                         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                         String path = cursor.getString(columnIndex);  //获取照片路径
-                        sendPictureMessage(path);
+                        String compresspath= ImageUtil.compressImage(path);
+                        sendPictureMessage(compresspath);
                         cursor.close();
                     } catch (Exception e) {
                         // TODO Auto-generatedcatch block

@@ -68,6 +68,9 @@ public class SplashActivity extends BasicActivity {
         mGson = new Gson();
 //        splashImage.setImageResource(R.drawable.lunach);
         new Thread(new cutdown()).start();
+
+
+
     }
 
     @Override

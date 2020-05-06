@@ -2,6 +2,8 @@ package com.newdjk.doctor.ui.adapter;
 
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -19,7 +21,15 @@ public class CustomMessageDoctorAdapter extends BaseQuickAdapter< CustomMessageE
     protected void convert(BaseViewHolder helper, CustomMessageEntity.ContentBean item) {
         CustomMessageEntity.ContentBean.ContentElemBean contentElem = item.getContentElem();
         if (contentElem != null) {
-            helper.setText(R.id.service_item_name,contentElem.getText());
+//            helper.setText(R.id.service_item_name,contentElem.getText());
+            Log.d("DoctorAdapter",contentElem.getText()+"");
+
+            if (TextUtils.isEmpty(contentElem.getText())){
+                helper.setVisible(R.id.lv_root_container, false);
+            }else {
+                helper.setVisible(R.id.lv_root_container, true);
+            }
+
 
             String num = contentElem.getDetail();
             if (!TextUtils.isEmpty(num)) {

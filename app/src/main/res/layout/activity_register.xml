@@ -17,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/dp_50"
-            android:paddingRight="@dimen/dp_50">
+            android:paddingLeft="@dimen/dp_40"
+            android:paddingRight="@dimen/dp_30">
 
 
             <ImageView
@@ -240,7 +240,19 @@
                     android:textSize="13sp"
                     android:text="@string/agreementTitle"
                     android:textColor="@color/theme" />
+
+
+
             </LinearLayout>
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tv_privacy"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:text="《隐私权政策》"
+                android:textColor="@color/theme" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

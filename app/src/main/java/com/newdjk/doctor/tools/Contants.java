@@ -121,7 +121,7 @@ public class Contants {
     public static final String SubjectBuyRecordId= "SubjectBuyRecordId";
     public static final String Haslogin= "haslogin";
 
-
+    public static final String IS_HAS_AGREE= "IS_HAS_AGREE";
 
 
 

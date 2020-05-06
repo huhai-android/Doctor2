@@ -2,12 +2,17 @@ package com.newdjk.doctor.ui.activity.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,6 +24,7 @@ import com.newdjk.doctor.basic.BasicActivity;
 import com.newdjk.doctor.model.HttpUrl;
 import com.newdjk.doctor.tools.CommonMethod;
 import com.newdjk.doctor.tools.Contants;
+import com.newdjk.doctor.ui.activity.PrivacyActivity;
 import com.newdjk.doctor.ui.entity.AgreementEntity;
 import com.newdjk.doctor.ui.entity.Entity;
 import com.newdjk.doctor.ui.entity.LoginEb;
@@ -38,6 +44,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -65,6 +72,26 @@ public class RegisterActivity extends BasicActivity {
     MyCheckBox CheckBox;
     @BindView(R.id.cb_agreement)
     android.widget.CheckBox cbAgreement;
+    @BindView(R.id.top_left)
+    ImageView topLeft;
+    @BindView(R.id.tv_left)
+    TextView tvLeft;
+    @BindView(R.id.top_title)
+    TextView topTitle;
+    @BindView(R.id.top_right)
+    ImageView topRight;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
+    @BindView(R.id.relat_titlebar)
+    RelativeLayout relatTitlebar;
+    @BindView(R.id.liear_titlebar)
+    LinearLayout liearTitlebar;
+    @BindView(R.id.tv_agreement)
+    TextView tvAgreement;
+    @BindView(R.id.tv_privacy)
+    TextView tvPrivacy;
+    @BindView(R.id.btn_submit)
+    AppCompatButton btnSubmit;
     private MyCountDownTimer mcdt;
     private int index = 0;//判断发送验证码是否超过2次
 
@@ -86,6 +113,19 @@ public class RegisterActivity extends BasicActivity {
     @Override
     protected void initListener() {
         CheckBox.setOnCheckedChangeListener(onCheckedChangeListener);
+        tvPrivacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AgreementEntity agreementEntity = new AgreementEntity();
+                agreementEntity.setDoctor("1");
+                String json = new Gson().toJson(agreementEntity);
+
+                Intent intentPrivacy=new Intent(mContext, PrivacyActivity.class);
+                intentPrivacy.putExtra("userInfo", json);
+
+                mContext.startActivity(intentPrivacy);
+            }
+        });
     }
 
     @Override
@@ -163,7 +203,7 @@ public class RegisterActivity extends BasicActivity {
             Map<String, String> map = new HashMap<>();
             map.put("Mobile", StrUtil.getString(inputUser));
             map.put("MobileCode", "");
-            if (mMyOkhttp==null){
+            if (mMyOkhttp == null) {
 
                 initOKhttpClient();
             }
@@ -264,7 +304,7 @@ public class RegisterActivity extends BasicActivity {
                 vcvTxCode.refresh();
                 if (entituy.getCode() == 0) {
                     doLoginRequest();
-                }else {
+                } else {
                     toast(entituy.getMessage());
                 }
 
@@ -346,3 +386,4 @@ public class RegisterActivity extends BasicActivity {
         mcdt.cancel();
     }
 }
+

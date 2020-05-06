@@ -645,6 +645,7 @@ public class MainActivity extends BasicActivity {
 
         } else {
             Log.d(TAG, "切换到了后台");
+            toast("芸医生已经切换到后台");
             MyApplication.backTime = System.currentTimeMillis();
         }
 

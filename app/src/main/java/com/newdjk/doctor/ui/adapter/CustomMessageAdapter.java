@@ -2,6 +2,7 @@ package com.newdjk.doctor.ui.adapter;
 
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -20,7 +21,7 @@ public class CustomMessageAdapter extends BaseQuickAdapter< CustomMessageEntity.
         CustomMessageEntity.ContentBean.ContentElemBean contentElem = item.getContentElem();
         if (contentElem != null) {
             helper.setText(R.id.service_item_name,contentElem.getText());
-
+            Log.d("CustomMessageAdapter",contentElem.getText()+"");
             String num = contentElem.getDetail();
             if (!TextUtils.isEmpty(num)) {
                 helper.setText(R.id.service_item_name,contentElem.getText()+"   "+num);

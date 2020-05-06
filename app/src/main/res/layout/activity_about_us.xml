@@ -131,6 +131,14 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_above="@id/tv_agreement"
+        android:id="@+id/tv_privacy"
+        style="@style/tv_default"
+        android:layout_centerHorizontal="true"
+        android:text="《隐私权政策》"
+        android:textColor="@color/theme"
+        android:textSize="@dimen/sp_12" />
 
     <TextView
         android:id="@+id/tv_agreement"
@@ -138,7 +146,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp_44"
-        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_10"
         android:text="《芸医平台医护人员入驻服务协议》"
         android:textColor="@color/theme"
         android:textSize="@dimen/sp_12" />

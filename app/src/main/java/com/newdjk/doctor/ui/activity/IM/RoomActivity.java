@@ -164,7 +164,7 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
             Log.i("RoomActivity", "join");
             joinRoom(mCallId);
         } else {
-            Log.i("RoomActivity", "create");
+            Log.i("RoomActivity", "create"+mCallId);
             createRoom(mCallId);
         }
         ILiveSDK.getInstance().addEventHandler(new ILiveEventHandler() {
@@ -593,6 +593,8 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
                 option, new ILiveCallBack() {
                     @Override
                     public void onSuccess(Object data) {
+                        Log.i("RoomActivity", "创建房间成功"+data.toString());
+
                         afterCreate();
                     }
 
@@ -884,13 +886,15 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
         HashMap<String, String> params = new HashMap<>();
         params.put("SenderId", String.valueOf(SpUtils.getInt(Contants.Id, -1)));
         params.put("SenderName", String.valueOf(SpUtils.getString(Contants.Name)));
+        if (mAllRecordForDoctorEntity!=null){
+            params.put("ReceiverId", mAllRecordForDoctorEntity.getPatientId()+"");
+            params.put("ReceiverName", mAllRecordForDoctorEntity.getPatientName());
+            params.put("Action", "2");
+            params.put("RoomId", RoomId+"");
+            params.put("ToType", "1");
+            params.put("Message", "");
+        }
 
-        params.put("ReceiverId", mAllRecordForDoctorEntity.getPatientId()+"");
-        params.put("ReceiverName", mAllRecordForDoctorEntity.getPatientName());
-        params.put("Action", "2");
-        params.put("RoomId", RoomId+"");
-        params.put("ToType", "1");
-        params.put("Message", "");
 
         mMyOkhttp.post().url(HttpUrl.sendVideo).headers(headMap).params(params).tag(this).enqueue(new GsonResponseHandler<Entity>() {
             @Override

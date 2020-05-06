@@ -716,7 +716,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     }
                     //其他类型
                     else {
-                        holder.rightMessage.setBackgroundResource(0);
+
                         final CustomMessageEntity CustomMessageEntity = mGson.fromJson(s, CustomMessageEntity.class);
                         boolean isSystem = CustomMessageEntity.isIsSystem();
                         if (isSystem) {
@@ -751,11 +751,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
                             View serviceView = LayoutInflater.
                                     from(MyApplication.getContext()).inflate(R.layout.service_package_doctor, null);
-                            LinearLayout.LayoutParams layoutParam = new LinearLayout
-                                    .LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT
-                                    , LinearLayout.LayoutParams.WRAP_CONTENT);
+//                            LinearLayout.LayoutParams layoutParam = new LinearLayout
+//                                    .LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT
+//                                    , LinearLayout.LayoutParams.WRAP_CONTENT);
                             //layoutParam.setMargins(10, 5, 0, 5);
-                            serviceView.setLayoutParams(layoutParam);
+                           // serviceView.setLayoutParams(layoutParam);
                             final TextView servicePackageName = serviceView.findViewById(R.id.service_paceage_name);
                             RelativeLayout checkDetail = serviceView.findViewById(R.id.check_detail);
                             TextView checkDetailtext = serviceView.findViewById(R.id.check_detail_text);
@@ -804,7 +804,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 type1 = extraData.getType();
                                 Log.d(TAG, "获取type" + type1);
                                 //隐藏 右边
-                                if (type1 == 26 || type1 == 25 || type1 == 33 || type1 == 305 || type1 == 313 || type1 == 312 || type1 == 311 || type1 == 317 || type1 == 310) {
+                                if (type1 == 26 || type1 == 25 || type1 == 33 || type1 == 305 || type1 == 313 || type1 == 312 || type1 == 311 || type1 == 317 || type1 == 310|| type1 == 129|| type1 == 130|| type1 == 131|| type1 == 132|| type1 == 133|| type1 == 134) {
                                     checkDetail.setVisibility(View.GONE);
                                     line.setVisibility(View.GONE);
                                 } else {
@@ -1133,48 +1133,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 }
                             });
                             String title = CustomMessageEntity.getTitle();
-                            Log.i("ChatAdapter", s);
-                            //  视频相关功能需要将查看详情隐藏
-                            if (type1 >= 129 && type1 <= 134) {
-                                checkDetail.setVisibility(View.GONE);
-                                line.setVisibility(View.GONE);
-                            }
+                            Log.i("ChatAdapter==Title", title+"   "+s);
+
 
                             if (!TextUtils.isEmpty(title)) {
+                                titleLayout.setVisibility(View.VISIBLE);
                                 servicePackageName.setVisibility(View.VISIBLE);
                                 servicePackageName.setText(title);
 
                             } else {
-                                servicePackageName.setVisibility(View.GONE);
-                            }
 
-                            if (type1 == 134) {
-                                servicePackageName.setVisibility(View.VISIBLE);
-                                CustomMessageEntity.ExtDataBean.DataBean data = extraData.getData();
-                                String time;
-                                if (data != null) {
-                                    time = data.getTime();
-                                } else {
-                                    time = null;
-                                }
-                                if (time != null && !time.equals("")) {
-                                    servicePackageName.setText("视频通话时长：" + time);
-                                } else {
-                                    servicePackageName.setText("已挂断视频通话");
-                                }
-
-                            } else if (type1 == 133) {
-                                servicePackageName.setVisibility(View.VISIBLE);
-                                servicePackageName.setText("我拒绝了视频邀请");
-                            } else if (type1 == 132) {
-                                servicePackageName.setVisibility(View.VISIBLE);
-                                servicePackageName.setText("对方无应答视频通话");
-                            } else if (type1 == 131) {
-                                servicePackageName.setVisibility(View.VISIBLE);
-                                servicePackageName.setText("已取消视频通话");
-                            } else if (CustomMessageEntity.getFocusTitle() == null) {
                                 titleLayout.setVisibility(View.GONE);
                             }
+
+
                             if (type1 == 33) {
                                 titleLayout.setVisibility(View.VISIBLE);
                                 list.setVisibility(View.GONE);
@@ -1189,7 +1161,51 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                             } else if (type1 == 31||type1 == 303) {
                                 titleLayout.setVisibility(View.VISIBLE);
                                 servicePackageName.setText("" + title);
-                            } else {
+                            } else  if (type1 == 134) {
+
+                                CustomMessageEntity.ExtDataBean.DataBean data = extraData.getData();
+                                String time;
+                                if (data != null) {
+                                    time = data.getTime();
+                                } else {
+                                    time = null;
+                                }
+                                if (time != null && !time.equals("")) {
+                                    titleLayout.setVisibility(View.VISIBLE);
+                                    list.setVisibility(View.GONE);
+                                    servicePackageName.setVisibility(View.VISIBLE);
+                                    servicePackageName.setText("视频通话时长：" + time);
+                                } else {
+                                    titleLayout.setVisibility(View.VISIBLE);
+                                    list.setVisibility(View.GONE);
+                                    servicePackageName.setVisibility(View.VISIBLE);
+                                    servicePackageName.setText("已挂断视频通话");
+                                }
+
+
+                            } else if (type1 == 133) {
+                                titleLayout.setVisibility(View.VISIBLE);
+                                list.setVisibility(View.GONE);
+                                servicePackageName.setVisibility(View.VISIBLE);
+                                servicePackageName.setText("我拒绝了视频邀请");
+                            } else if (type1 == 132) {
+                                titleLayout.setVisibility(View.VISIBLE);
+                                list.setVisibility(View.GONE);
+                                servicePackageName.setVisibility(View.VISIBLE);
+                                servicePackageName.setText("对方无应答视频通话");
+
+                            } else if (type1 == 131) {
+                                titleLayout.setVisibility(View.VISIBLE);
+
+                                servicePackageName.setVisibility(View.VISIBLE);
+                                servicePackageName.setText("已取消视频通话");
+
+                            } else if (CustomMessageEntity.getFocusTitle() == null) {
+                                if (TextUtils.isEmpty(title)){
+                                    titleLayout.setVisibility(View.GONE);
+                                }
+
+                            }else {
                                 list.setVisibility(View.VISIBLE);
                             }
 
@@ -2054,6 +2070,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                             if (!TextUtils.isEmpty(title)) {
                                 servicePackageName.setText(title);
                             } else {
+
                                 servicePackageName.setVisibility(View.GONE);
                             }
                             //  视频相关功能需要将查看详情隐藏

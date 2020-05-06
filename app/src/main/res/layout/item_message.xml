@@ -30,7 +30,7 @@
         android:layout_marginTop="@dimen/dp_20"
         android:background="@drawable/system_message_background"
         android:padding="@dimen/dp_5"
-        android:visibility="gone">
+        tools:visibility="visible">
 
         <View
             android:id="@+id/line"
@@ -41,6 +41,10 @@
             android:visibility="gone" />
 
         <TextView
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_2"
+            tools:text="系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息"
             android:id="@+id/systemMessage1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,6 +55,8 @@
     </FrameLayout>
 
     <RelativeLayout
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -58,9 +64,9 @@
             android:id="@+id/leftPanel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp">
+            >
 
             <com.newdjk.doctor.views.CircleImageView
                 android:id="@+id/leftAvatar"
@@ -79,7 +85,6 @@
                     android:id="@+id/sender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="3dp"
                     android:layout_marginLeft="6dp"
                     android:textColor="@color/text_gray1"
                     android:textSize="12sp"
@@ -97,7 +102,7 @@
                     android:longClickable="true"
                     android:paddingBottom="5dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="5dp"
+                    android:paddingRight="10dp"
                     android:paddingTop="5dp" />
             </LinearLayout>
 
@@ -131,8 +136,8 @@
                 android:layout_marginRight="@dimen/dp_10"
                 android:longClickable="true"
                 android:paddingBottom="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:paddingTop="5dp" />
 
 
@@ -165,7 +170,7 @@
                     android:layout_height="15dp"
                     android:contentDescription="TODO"
                     android:src="@drawable/ic_error"
-                    android:visibility="gone" />
+                    tools:visibility="gone" />
 
             </RelativeLayout>
 

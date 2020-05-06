@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -27,6 +29,8 @@ import com.newdjk.doctor.model.HttpUrl;
 import com.newdjk.doctor.tools.CommonMethod;
 import com.newdjk.doctor.tools.Contants;
 import com.newdjk.doctor.ui.activity.MainActivity;
+import com.newdjk.doctor.ui.activity.PrivacyActivity;
+import com.newdjk.doctor.ui.entity.AgreementEntity;
 import com.newdjk.doctor.ui.entity.Entity;
 import com.newdjk.doctor.ui.entity.LoginEb;
 import com.newdjk.doctor.ui.entity.LoginEntity;
@@ -49,6 +53,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.org.bjca.sdk.core.kit.BJCASDK;
 import cn.org.bjca.sdk.core.values.EnvType;
@@ -71,8 +76,13 @@ public class LoginActivity extends BasicActivity {
     TextView tvForget;
     @BindView(R.id.tv_register)
     TextView tvRegister;
+    @BindView(R.id.password)
+    LinearLayout password;
+    @BindView(R.id.tv_privacy)
+    TextView tvPrivacy;
     private Gson mGson;
     public static final int REQUEST_CODE = 111;
+
     public static Intent getAct(Context context) {
         return new Intent(context, LoginActivity.class);
     }
@@ -118,6 +128,19 @@ public class LoginActivity extends BasicActivity {
                 inputPassword.setSelection(inputPassword.length());//将光标移至文字末尾
             }
         });
+        tvPrivacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AgreementEntity agreementEntity = new AgreementEntity();
+                agreementEntity.setDoctor("1");
+                String json = new Gson().toJson(agreementEntity);
+
+                Intent intentPrivacy=new Intent(mContext, PrivacyActivity.class);
+                intentPrivacy.putExtra("userInfo", json);
+
+                mContext.startActivity(intentPrivacy);
+            }
+        });
     }
 
     @Override
@@ -125,12 +148,13 @@ public class LoginActivity extends BasicActivity {
         EventBus.getDefault().post(new LoginEb(SpUtils.getString(Contants.userName), SpUtils.getString(Contants.Password)));
 
     }
+
     public void getCurrentTime() {
         Map<String, String> headMap = new HashMap<>();
         headMap.put("Authorization", SpUtils.getString(Contants.Token));
-        if (mMyOkhttp==null){
+        if (mMyOkhttp == null) {
 
-           initOKhttpClient();
+            initOKhttpClient();
         }
         mMyOkhttp.get().url(HttpUrl.getCurrentTime).headers(headMap).tag(this).enqueue(new GsonResponseHandler<ResponseEntity>() {
             @Override
@@ -188,13 +212,13 @@ public class LoginActivity extends BasicActivity {
             bodyMap.put("Mobile", StrUtil.getString(inputUser));
             bodyMap.put("Type", "2");//登录类型:1验证码，2账号
             bodyMap.put("Code", StrUtil.getString(inputPassword));
-            Log.i("MyApplication", "appId=login-----" + MyApplication.mRegistrationId+"    时间"+System.currentTimeMillis());
+            Log.i("MyApplication", "appId=login-----" + MyApplication.mRegistrationId + "    时间" + System.currentTimeMillis());
             mMyOkhttp.post().url(HttpUrl.DoctorLogin).headers(headMap).params(bodyMap).tag(this).enqueue(new GsonResponseHandler<LoginEntity>() {
                 @Override
                 public void onSuccess(int statusCode, LoginEntity entituy) {
                     LoadDialog.clear();
                     if (entituy.getCode() == 0) {
-                        SpUtils.put(Contants.canLogin,2);
+                        SpUtils.put(Contants.canLogin, 2);
                         String mobile = SpUtils.getString(Contants.userName);
                         if (mobile != null && !mobile.equals(entituy.getData().getData().getMobile())) {
                             BJCASDK.getInstance().clearCert(LoginActivity.this);
@@ -218,12 +242,12 @@ public class LoginActivity extends BasicActivity {
 
                 @Override
                 public void onFailures(int statusCode, String errorMsg) {
-                    Log.e("zdp", "statusCode=" + statusCode + ",errorMsg=" + errorMsg+Thread.currentThread());
+                    Log.e("zdp", "statusCode=" + statusCode + ",errorMsg=" + errorMsg + Thread.currentThread());
                     if (statusCode == 1001) {
                         errorMsg = getString(R.string.accountOrPassError);
                     }
                     LoadDialog.clear();
-                   CommonMethod.requestError(statusCode, errorMsg);
+                    CommonMethod.requestError(statusCode, errorMsg);
                 }
             });
         }
@@ -287,7 +311,7 @@ public class LoginActivity extends BasicActivity {
         SpUtils.put(Contants.DocType, entituy.getData().getData().getDrType());
         SpUtils.put(Contants.Position, entituy.getData().getData().getPosition());
 
-        Log.d("22222》》》》》", System.currentTimeMillis()+"");
+        Log.d("22222》》》》》", System.currentTimeMillis() + "");
     }
 
 
@@ -410,4 +434,6 @@ public class LoginActivity extends BasicActivity {
         return true;
 
     }
+
+
 }

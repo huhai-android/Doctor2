@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/boder_white_oval_patient"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_4"
         android:clickable="false"
         android:focusable="false"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/dp_3"
-        android:paddingEnd="@dimen/dp_10"
-        android:paddingStart="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_10">
+        >
 
         <RelativeLayout
             android:id="@+id/title_layout"
@@ -24,12 +22,14 @@
             android:layout_height="wrap_content">
 
             <TextView
-
+                android:gravity="center_vertical"
                 android:id="@+id/service_paceage_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
                 android:focusable="false"
+                tools:text="asdada"
+                android:layout_marginBottom="@dimen/dp_7"
                 android:lineSpacingMultiplier="1.2"
                 android:textColor="@color/plugin_camera_black" />
         </RelativeLayout>
