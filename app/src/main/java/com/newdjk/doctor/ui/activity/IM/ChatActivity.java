@@ -1912,58 +1912,58 @@ public class ChatActivity extends BasicActivity
 
     }
 
-    private void IsHasOpenPres() {
+//    private void IsHasOpenPres() {
+//
+//        Map<String, String> headMap = new HashMap<>();
+//        headMap.put("Authorization", SpUtils.getString(Contants.Token));
+//        HashMap<String, String> params = new HashMap<>();
+//        params.put("DrId", String.valueOf(SpUtils.getInt(Contants.Id, -1)));
+//        mMyOkhttp.get().url(HttpUrl.IsHasOpenPres).headers(headMap).params(params).tag(this).enqueue(new GsonResponseHandler<Entity>() {
+//            @Override
+//            public void onSuccess(int statusCode, Entity response) {
+//
+//                if (response.getCode() == 0) {
+//                    mIsHasOpenPres = (boolean) response.getData();
+//                    mAdapter.setIsHasOpenPres(mIsHasOpenPres);
+//
+//                } else {
+//                    toast(response.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailures(int statusCode, String errorMsg) {
+//                toast(errorMsg);
+//            }
+//        });
+//    }
 
-        Map<String, String> headMap = new HashMap<>();
-        headMap.put("Authorization", SpUtils.getString(Contants.Token));
-        HashMap<String, String> params = new HashMap<>();
-        params.put("DrId", String.valueOf(SpUtils.getInt(Contants.Id, -1)));
-        mMyOkhttp.get().url(HttpUrl.IsHasOpenPres).headers(headMap).params(params).tag(this).enqueue(new GsonResponseHandler<Entity>() {
-            @Override
-            public void onSuccess(int statusCode, Entity response) {
 
-                if (response.getCode() == 0) {
-                    mIsHasOpenPres = (boolean) response.getData();
-                    mAdapter.setIsHasOpenPres(mIsHasOpenPres);
-
-                } else {
-                    toast(response.getMessage());
-                }
-            }
-
-            @Override
-            public void onFailures(int statusCode, String errorMsg) {
-                toast(errorMsg);
-            }
-        });
-    }
-
-
-    private void IsHasOpenTCMPres() {
-
-        Map<String, String> headMap = new HashMap<>();
-        headMap.put("Authorization", SpUtils.getString(Contants.Token));
-        HashMap<String, String> params = new HashMap<>();
-        params.put("DrId", String.valueOf(SpUtils.getInt(Contants.Id, -1)));
-        mMyOkhttp.get().url(HttpUrl.IsHasOpenTCMPres).headers(headMap).params(params).tag(this).enqueue(new GsonResponseHandler<Entity>() {
-            @Override
-            public void onSuccess(int statusCode, Entity response) {
-
-                if (response.getCode() == 0) {
-                    mIsHasOpenTCMPres = (boolean) response.getData();
-                    mAdapter.setIsHasOpenTCMPres(mIsHasOpenTCMPres);
-
-                } else {
-                    toast(response.getMessage());
-                }
-            }
-
-            @Override
-            public void onFailures(int statusCode, String errorMsg) {
-                toast(errorMsg);
-            }
-        });
-    }
+//    private void IsHasOpenTCMPres() {
+//
+//        Map<String, String> headMap = new HashMap<>();
+//        headMap.put("Authorization", SpUtils.getString(Contants.Token));
+//        HashMap<String, String> params = new HashMap<>();
+//        params.put("DrId", String.valueOf(SpUtils.getInt(Contants.Id, -1)));
+//        mMyOkhttp.get().url(HttpUrl.IsHasOpenTCMPres).headers(headMap).params(params).tag(this).enqueue(new GsonResponseHandler<Entity>() {
+//            @Override
+//            public void onSuccess(int statusCode, Entity response) {
+//
+//                if (response.getCode() == 0) {
+//                    mIsHasOpenTCMPres = (boolean) response.getData();
+//                    mAdapter.setIsHasOpenTCMPres(mIsHasOpenTCMPres);
+//
+//                } else {
+//                    toast(response.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailures(int statusCode, String errorMsg) {
+//                toast(errorMsg);
+//            }
+//        });
+//    }
 
 
     @Override
@@ -4659,8 +4659,8 @@ public class ChatActivity extends BasicActivity
     @Override
     protected void onResume() {
         super.onResume();
-        IsHasOpenPres();
-        IsHasOpenTCMPres();
+//        IsHasOpenPres();
+//        IsHasOpenTCMPres();
         IsHasOpenMDT();
 
     }

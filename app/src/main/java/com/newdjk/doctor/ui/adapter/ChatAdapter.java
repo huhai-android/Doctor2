@@ -38,12 +38,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lxq.okhttp.response.GsonResponseHandler;
+import com.newdjk.doctor.BuildConfig;
 import com.newdjk.doctor.MyApplication;
 import com.newdjk.doctor.R;
 import com.newdjk.doctor.model.HttpUrl;
 import com.newdjk.doctor.tools.CommonMethod;
 import com.newdjk.doctor.tools.Contants;
 import com.newdjk.doctor.ui.DiseaseInformationActivity;
+import com.newdjk.doctor.ui.activity.AboutUsActivity;
 import com.newdjk.doctor.ui.activity.ArchivesActivity;
 import com.newdjk.doctor.ui.activity.CaseDetailActivity;
 import com.newdjk.doctor.ui.activity.CustomLinkActivity;
@@ -54,6 +56,7 @@ import com.newdjk.doctor.ui.activity.Mdt.MYmdtInputReportActivity;
 import com.newdjk.doctor.ui.activity.MedicalServiceActivity;
 import com.newdjk.doctor.ui.activity.PrescriptionActivity;
 import com.newdjk.doctor.ui.activity.ShowOriginPictureActivity;
+import com.newdjk.doctor.ui.activity.ZixunDoctorActivity;
 import com.newdjk.doctor.ui.camera.FileUtil;
 import com.newdjk.doctor.ui.entity.AdviceGoodDetailEntity;
 import com.newdjk.doctor.ui.entity.CustomMessageEntity;
@@ -171,6 +174,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     public void setIsHasOpenPres(boolean isHasOpenPres) {
         mIsHasOpenPres = isHasOpenPres;
+        notifyDataSetChanged();
     }
 
     public void setIsHasOpenTCMPres(boolean isHasOpenTCMPres) {
@@ -191,7 +195,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         final int pposition = position;
         final MyTIMMessage myTIMMessage = mTIMMessageList.get(position);
         final TIMMessage timMessage = myTIMMessage.getTimMessage();
-        boolean isLocalMessage = myTIMMessage.isLocalMessage();
+        final boolean isLocalMessage = myTIMMessage.isLocalMessage();
         boolean isRevoke = myTIMMessage.isRevoke();
         long timeStamp = 0;
         long lastimeStamp = 0;
@@ -285,7 +289,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 //                    //.diskCacheStrategy(DiskCacheStrategy.ALL)
 //                    .into(holder.rightAvatar);
 
-            GlideUtils.loadDoctorImage(MinFragment.doctorPath,holder.rightAvatar);
+            GlideUtils.loadDoctorImage(MinFragment.doctorPath, holder.rightAvatar);
 
             holder.leftPanel.setVisibility(View.GONE);
             holder.rightPanel.setVisibility(View.VISIBLE);
@@ -438,7 +442,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 if (FileUtil.fileIsExists(imagepath)) {
                     Log.d(TAG, "图片文件存在");
 
-                    GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, imagepath,R.drawable.new_nopic);
+                    GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, imagepath, R.drawable.new_nopic);
 
                 } else {
                     videoelem.getSnapshotInfo().getImage(imagepath, new TIMCallBack() {
@@ -449,7 +453,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
                         @Override
                         public void onSuccess() {
-                           // GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
+                            // GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
                             GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, imagepath, R.drawable.new_nopic);
 
                         }
@@ -548,7 +552,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         Log.d("zdp", "image type右边: " + timImage.getType() +
                                 " image size " + timImage.getSize() +
                                 " image height " + timImage.getHeight() +
-                                " image width " + timImage.getWidth()+timImage.getUrl());
+                                " image width " + timImage.getWidth() + timImage.getUrl());
 
                         GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, timImage.getUrl(), R.drawable.new_nopic);
                         layoutParams.setMargins(0, 0, 0, 0);
@@ -723,7 +727,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                             holder.systemMessageLayout.setVisibility(View.VISIBLE);
                             int showType = CustomMessageEntity.getShowType();
 
-                            if (showType == 0 || showType == 2) {
+                            if (showType == 0 || showType == 2) {  //1.本人 2.医生  0.两者都显示
                                 boolean IsShowDividingLine = CustomMessageEntity.isShowDividingLine();
                                 if (IsShowDividingLine) {
                                     holder.line.setVisibility(View.VISIBLE);
@@ -755,7 +759,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 //                                    .LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT
 //                                    , LinearLayout.LayoutParams.WRAP_CONTENT);
                             //layoutParam.setMargins(10, 5, 0, 5);
-                           // serviceView.setLayoutParams(layoutParam);
+                            // serviceView.setLayoutParams(layoutParam);
                             final TextView servicePackageName = serviceView.findViewById(R.id.service_paceage_name);
                             RelativeLayout checkDetail = serviceView.findViewById(R.id.check_detail);
                             TextView checkDetailtext = serviceView.findViewById(R.id.check_detail_text);
@@ -804,7 +808,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 type1 = extraData.getType();
                                 Log.d(TAG, "获取type" + type1);
                                 //隐藏 右边
-                                if (type1 == 26 || type1 == 25 || type1 == 33 || type1 == 305 || type1 == 313 || type1 == 312 || type1 == 311 || type1 == 317 || type1 == 310|| type1 == 129|| type1 == 130|| type1 == 131|| type1 == 132|| type1 == 133|| type1 == 134) {
+                                if (type1 == 26 || type1 == 25 || type1 == 33 || type1 == 305 || type1 == 313 || type1 == 312 || type1 == 311 || type1 == 317 || type1 == 310 || type1 == 129 || type1 == 130 || type1 == 131 || type1 == 132 || type1 == 133 || type1 == 134|| type1 == 325) {
                                     checkDetail.setVisibility(View.GONE);
                                     line.setVisibility(View.GONE);
                                 } else {
@@ -819,7 +823,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
 
                                 //右边
-                                if (type1 == 13 || type1 == 31 || type1 == 303 || type1 == 105 || type1 == 302 || type1 == 306 || type1 == 308 || type1 == 309) {
+                                if (type1 == 13 || type1 == 31 || type1 == 303 || type1 == 105 || type1 == 302 || type1 == 306 || type1 == 308 || type1 == 309 || type1 == 323|| type1 == 324) {
                                     checkDetail.setVisibility(View.VISIBLE);
                                     line.setVisibility(View.VISIBLE);
                                     tvxufang.setVisibility(View.VISIBLE);
@@ -833,6 +837,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 }
                                 if (type1 == 302 || type1 == 304) {
                                     tvxufang.setText("再次推荐");
+                                }
+                                if (type1 == 323||type1 == 324) {
+                                    if (mIsHasOpenPres) {
+                                        tvxufang.setText("开处方");
+                                    } else {
+                                        tvxufang.setText("转发需求");
+                                    }
+
                                 }
 
                                 try {
@@ -908,6 +920,36 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
                                                 case 304:
                                                     ToastUtil.setToast("优选推荐");
+                                                    break;
+
+                                                case 323:
+                                                  Log.d("s",extraData.getData().getMedicationCompanyOrgId()+"数据")  ;
+
+                                                    if (mIsHasOpenPres) { //有开处方权限 跳到开处方
+
+                                                        toPrescriptionActivity(extraData, 3);
+                                                    } else {
+
+                                                        Intent intent = new Intent(mContext, ZixunDoctorActivity.class);  //转需求
+                                                        intent.putExtra("MedicationCompanyOrgId",extraData.getData().getMedicationCompanyOrgId()+"");
+                                                        intent.putExtra("PatRequireOrderId",extraData.getData().getPatRequireOrderId()+"");
+                                                        mContext.startActivity(intent);
+
+                                                    }
+                                                    break;
+                                                case 324:
+                                                    Log.d("s",extraData.getData().getMedicationCompanyOrgId()+"数据")  ;
+
+                                                    if (mIsHasOpenPres) { //有开处方权限 跳到开处方
+                                                     toPrescriptionActivity(extraData, 3);
+                                                    } else {
+
+                                                        Intent intent = new Intent(mContext, ZixunDoctorActivity.class);  //转需求
+                                                        intent.putExtra("MedicationCompanyOrgId",extraData.getData().getMedicationCompanyOrgId()+"");
+                                                        intent.putExtra("PatRequireOrderId",extraData.getData().getPatRequireOrderId()+"");
+                                                        mContext.startActivity(intent);
+
+                                                    }
                                                     break;
                                             }
 
@@ -1126,14 +1168,41 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                                 GotoGroupChatEntity gotoGroupChatEntity2 = mGson.fromJson(s, GotoGroupChatEntity.class);
                                                 getIMRelationRecord(gotoGroupChatEntity2);
 
+                                                break;
 
+                                            case 323:
+                                               // ToastUtil.setToast("跳转陈捷航详情界面");
+                                                Log.d(TAG, extraData.toString());
+                                                Intent prescriptionTCMIntent = new Intent(mContext, PrescriptionActivity.class);
+                                                prescriptionTCMIntent.putExtra("action", String.valueOf(extraData.getData().getPatRequireOrderId()));
+                                                prescriptionTCMIntent.putExtra("prescriptionMessage", mDoctorMessage);
+                                                prescriptionTCMIntent.putExtra("type", 40);
+                                                mContext.startActivity(prescriptionTCMIntent);
+                                                break;
+                                            case 324:
+                                                // ToastUtil.setToast("跳转陈捷航详情界面");
+                                                Log.d(TAG, extraData.toString());
+                                                Intent prescriptionTCMIntent2 = new Intent(mContext, PrescriptionActivity.class);
+                                                prescriptionTCMIntent2.putExtra("action", String.valueOf(extraData.getData().getPatRequireOrderId()));
+                                                prescriptionTCMIntent2.putExtra("prescriptionMessage", mDoctorMessage);
+                                                prescriptionTCMIntent2.putExtra("type", 40);
+                                                mContext.startActivity(prescriptionTCMIntent2);
+                                                break;
+                                            case 326: //补充资料完成
+                                                // ToastUtil.setToast("跳转陈捷航详情界面");
+                                                Log.d(TAG, extraData.toString());
+                                                Intent prescriptionTCMIntent3 = new Intent(mContext, PrescriptionActivity.class);
+                                                prescriptionTCMIntent3.putExtra("action", String.valueOf(extraData.getData().getPatRequireOrderId()));
+                                                prescriptionTCMIntent3.putExtra("prescriptionMessage", mDoctorMessage);
+                                                prescriptionTCMIntent3.putExtra("type", 40);
+                                                mContext.startActivity(prescriptionTCMIntent3);
                                                 break;
                                         }
                                     }
                                 }
                             });
                             String title = CustomMessageEntity.getTitle();
-                            Log.i("ChatAdapter==Title", title+"   "+s);
+                            Log.i("ChatAdapter==Title", title + "   " + s);
 
 
                             if (!TextUtils.isEmpty(title)) {
@@ -1158,10 +1227,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 servicePackageName.setVisibility(View.VISIBLE);
                                 servicePackageName.setText("" + title);
 
-                            } else if (type1 == 31||type1 == 303) {
+                            } else if (type1 == 31 || type1 == 303) {
                                 titleLayout.setVisibility(View.VISIBLE);
                                 servicePackageName.setText("" + title);
-                            } else  if (type1 == 134) {
+                            } else if (type1 == 134) {
 
                                 CustomMessageEntity.ExtDataBean.DataBean data = extraData.getData();
                                 String time;
@@ -1201,11 +1270,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 servicePackageName.setText("已取消视频通话");
 
                             } else if (CustomMessageEntity.getFocusTitle() == null) {
-                                if (TextUtils.isEmpty(title)){
+                                if (TextUtils.isEmpty(title)) {
                                     titleLayout.setVisibility(View.GONE);
                                 }
 
-                            }else {
+                            } else {
                                 list.setVisibility(View.VISIBLE);
                             }
 
@@ -1307,7 +1376,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 //                        .placeholder(R.drawable.patient_default_img)
 //                        //.diskCacheStrategy(DiskCacheStrategy.ALL)
 //                        .into(holder.leftAvatar);
-                GlideUtils.loadPatientImage(mleftImagePath,holder.leftAvatar);
+                GlideUtils.loadPatientImage(mleftImagePath, holder.leftAvatar);
             }
 
 
@@ -1373,7 +1442,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
                         @Override
                         public void onSuccess() {
-                           // GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
+                            // GlideMediaLoader.load(MyApplication.getContext(), imageView, imagepath);
                             GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, imagepath, R.drawable.new_nopic);
 
                         }
@@ -1579,7 +1648,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 " image height " + timImage.getHeight() +
                                 " image width " + timImage.getWidth());
 
-                        GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, timImage.getUrl(),R.drawable.new_nopic);
+                        GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, timImage.getUrl(), R.drawable.new_nopic);
                         // layoutParams.setMargins(0, 0, 0, 0);
 
                         holder.leftMessage.addView(imageView);
@@ -1688,7 +1757,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         imageView.setScaleType(ImageView.ScaleType.CENTER);
                         final String path = extraData.getData().getImagePath();
                         Log.i("TIMImageElem", "URL=" + path);
-                        GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, path,R.drawable.new_nopic);
+                        GlideMediaLoader.loadRezise(MyApplication.getContext(), imageView, path, R.drawable.new_nopic);
                         //layoutParams.setMargins(0, 0, 0, 0);
                         holder.leftMessage.addView(imageView);
                         holder.leftMessage.setOnClickListener(new View.OnClickListener() {
@@ -1811,13 +1880,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
                                 }
                                 //显示查看详情
-                                if (type1 == 13 || type1 == 31 || type1 == 303 || type1 == 105 || type1 == 302 || type1 == 306 || type1 == 314 || type1 == 308 || type1 == 309 || type1 == 321) {
+                                if (type1 == 13 || type1 == 31 || type1 == 303 || type1 == 105 || type1 == 302 || type1 == 306 || type1 == 314 || type1 == 308 || type1 == 309 || type1 == 321|| type1 == 326||type1==324||type1==323) {
                                     checkDetail.setVisibility(View.VISIBLE);
                                     line.setVisibility(View.VISIBLE);
                                     tvxufang.setVisibility(View.VISIBLE);
                                     cutline.setVisibility(View.VISIBLE);
                                 }
-                                if (type1 == 306 || type1 == 314 || type1 == 308 || type1 == 309 || type1 == 321) {
+                                if (type1 == 306 || type1 == 314 || type1 == 308 || type1 == 309 || type1 == 321|| type1 == 326) {
                                     tvxufang.setVisibility(View.GONE);
                                     cutline.setVisibility(View.GONE);
 
@@ -1827,6 +1896,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                     tvxufang.setText("再次推荐");
                                 }
 
+                                if (type1 == 323||type1 == 324) {
+                                    if (mIsHasOpenPres) {
+                                        tvxufang.setText("开处方");
+                                    } else {
+                                        tvxufang.setText("转发需求");
+                                    }
+
+                                }
+
+
                                 if (type1 == 319) {
                                     checkDetailtext.setText("进入专家会诊群");
                                 }
@@ -1834,7 +1913,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                     checkDetailtext.setText("进入MDT会诊群");
                                 }
                             }
-                            //续方
+                            //续方  左边
                             tvxufang.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -1898,8 +1977,36 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                                 ToastUtil.setToast("查看病情详情");
 
                                                 break;
+                                            case 324:
+                                                Log.d("s",extraData.getData().getMedicationCompanyOrgId()+"数据")  ;
 
+                                                if (mIsHasOpenPres) { //有开处方权限 跳到开处方
 
+                                                    toPrescriptionActivity(extraData, 3);
+                                                } else {
+
+                                                    Intent intent = new Intent(mContext, ZixunDoctorActivity.class);  //转需求
+                                                    intent.putExtra("MedicationCompanyOrgId",extraData.getData().getMedicationCompanyOrgId()+"");
+                                                    intent.putExtra("PatRequireOrderId",extraData.getData().getPatRequireOrderId()+"");
+                                                    mContext.startActivity(intent);
+
+                                                }
+                                                break;
+                                            case 323:
+                                                Log.d("s",extraData.getData().getMedicationCompanyOrgId()+"数据")  ;
+
+                                                if (mIsHasOpenPres) { //有开处方权限 跳到开处方
+
+                                                    toPrescriptionActivity(extraData, 3);
+                                                } else {
+
+                                                    Intent intent = new Intent(mContext, ZixunDoctorActivity.class);  //转需求
+                                                    intent.putExtra("MedicationCompanyOrgId",extraData.getData().getMedicationCompanyOrgId()+"");
+                                                    intent.putExtra("PatRequireOrderId",extraData.getData().getPatRequireOrderId()+"");
+                                                    mContext.startActivity(intent);
+
+                                                }
+                                                break;
                                         }
 
                                     }
@@ -2059,6 +2166,31 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                                 prescriptionTCMIntent.putExtra("ServiceType", wenZhenDiseaseEntity.getExtData().getData().getServiceType());
                                                 mContext.startActivity(prescriptionTCMIntent);
 
+                                                break;
+
+                                            case 326:
+                                                Log.d(TAG, extraData.toString());
+                                                Intent prescriptionTCMIntent3 = new Intent(mContext, PrescriptionActivity.class);
+                                                prescriptionTCMIntent3.putExtra("action", String.valueOf(extraData.getData().getPatRequireOrderId()));
+                                                prescriptionTCMIntent3.putExtra("prescriptionMessage", mDoctorMessage);
+                                                prescriptionTCMIntent3.putExtra("type", 40);
+                                                mContext.startActivity(prescriptionTCMIntent3);
+                                                break;
+                                            case 324://查看详情
+                                                Log.d(TAG, extraData.toString());
+                                                Intent xuqiuintent = new Intent(mContext, PrescriptionActivity.class);
+                                                xuqiuintent.putExtra("action", String.valueOf(extraData.getData().getPatRequireOrderId()));
+                                                xuqiuintent.putExtra("prescriptionMessage", mDoctorMessage);
+                                                xuqiuintent.putExtra("type", 40);
+                                                mContext.startActivity(xuqiuintent);
+                                                break;
+                                            case 323: //查看详情
+                                                Log.d(TAG, extraData.toString());
+                                                Intent xuqiuintent2 = new Intent(mContext, PrescriptionActivity.class);
+                                                xuqiuintent2.putExtra("action", String.valueOf(extraData.getData().getPatRequireOrderId()));
+                                                xuqiuintent2.putExtra("prescriptionMessage", mDoctorMessage);
+                                                xuqiuintent2.putExtra("type", 40);
+                                                mContext.startActivity(xuqiuintent2);
                                                 break;
 
                                         }
@@ -2579,7 +2711,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     prescriptionIntent.putExtra("id", String.valueOf(extraData.getData().getPrescriptionId()));
                     prescriptionIntent.putExtra("prescriptionMessage", mDoctorMessage);
                     mContext.startActivity(prescriptionIntent);
-                } else {
+                } else if (type==2){
                     //西药处方
                     //ToastUtil.setToast("中药续方");
                     Log.d(TAG, extraData.toString());
@@ -2589,6 +2721,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     prescriptionTCMIntent.putExtra("type", 17);
                     mContext.startActivity(prescriptionTCMIntent);
 
+                }else if (type==3){
+                    Intent prescriptionTCMIntent = new Intent(mContext, PrescriptionActivity.class);
+                    prescriptionTCMIntent.putExtra("action", String.valueOf(extraData.getData().getPatRequireOrderId()));
+                    prescriptionTCMIntent.putExtra("prescriptionMessage", mDoctorMessage);
+                    prescriptionTCMIntent.putExtra("type", 39);
+                    mContext.startActivity(prescriptionTCMIntent);
                 }
 
             }

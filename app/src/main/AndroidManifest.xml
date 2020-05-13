@@ -861,6 +861,9 @@ l
             />
         <activity android:name=".ui.activity.SetTuwenValueActivity" />
         <activity android:name=".ui.activity.PrivacyActivity" />
+        <activity android:name=".ui.activity.ZixunDoctorActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            />
         <!-- 接入HMSSDK PUSH模块需要注册，第三方相关 :接收Push消息（注册、透传消息、通知栏点击事件）广播，
                 此receiver类需要开发者自己创建并继承com.huawei.hms.support.api.push.PushReceiver类，
                 参考示例代码中的类：com.huawei.hmsagent.HuaweiPushRevicer

@@ -279,6 +279,7 @@ public class GongGaoActivity extends BasicActivity {
                         Intent mdtIntent = new Intent(GongGaoActivity.this, PrescriptionActivity.class);
                         mdtIntent.putExtra("LinkUrl", list.get(position).getLinkUrl());
                         mdtIntent.putExtra("type", 38);
+                        mdtIntent.putExtra("Remark", list.get(position).getRemark()+"");
                         mdtIntent.putExtra("NoticeManageId", list.get(position).getNoticeManageId());
 
                         startActivity(mdtIntent);

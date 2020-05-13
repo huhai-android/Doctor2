@@ -106,10 +106,10 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
 
         }
 
-      //  设置状态栏上的字体为黑色-因为本页面是白色必须设置
+        //  设置状态栏上的字体为黑色-因为本页面是白色必须设置
         UtilsStyle.statusBarLightMode(this);
         //  setStatusBarColor(this,R.color.tm);
-        setAndroidNativeLightStatusBar(this,true);
+        setAndroidNativeLightStatusBar(this, true);
 
         titleBuilder = new TitleBuilder(this);
         mActivity = this;
@@ -117,7 +117,60 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
 
         initView();
         initListener();
+
         initData();
+    }
+
+    public void IsHasOpenPres() {
+
+        Map<String, String> headMap = new HashMap<>();
+        headMap.put("Authorization", SpUtils.getString(Contants.Token));
+        HashMap<String, String> params = new HashMap<>();
+        params.put("DrId", String.valueOf(SpUtils.getInt(Contants.Id, -1)));
+        mMyOkhttp.get().url(HttpUrl.IsHasOpenPres).headers(headMap).params(params).tag(this).enqueue(new GsonResponseHandler<Entity>() {
+            @Override
+            public void onSuccess(int statusCode, Entity response) {
+
+                if (response.getCode() == 0) {
+                    boolean mIsHasOpenPres = (boolean) response.getData();
+                    SpUtils.put("mIsHasOpenPres", mIsHasOpenPres);
+
+                } else {
+                    toast(response.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailures(int statusCode, String errorMsg) {
+                toast(errorMsg);
+            }
+        });
+    }
+
+    public void IsHasOpenTCMPres() {
+
+        Map<String, String> headMap = new HashMap<>();
+        headMap.put("Authorization", SpUtils.getString(Contants.Token));
+        HashMap<String, String> params = new HashMap<>();
+        params.put("DrId", String.valueOf(SpUtils.getInt(Contants.Id, -1)));
+        mMyOkhttp.get().url(HttpUrl.IsHasOpenTCMPres).headers(headMap).params(params).tag(this).enqueue(new GsonResponseHandler<Entity>() {
+            @Override
+            public void onSuccess(int statusCode, Entity response) {
+
+                if (response.getCode() == 0) {
+                    boolean mIsHasOpenTCMPres = (boolean) response.getData();
+
+                    SpUtils.put("mIsHasOpenTCMPres", mIsHasOpenTCMPres);
+                } else {
+                    toast(response.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailures(int statusCode, String errorMsg) {
+                toast(errorMsg);
+            }
+        });
     }
 
     public static void setAndroidNativeLightStatusBar(Activity activity, boolean dark) {
@@ -130,15 +183,15 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
     }
 
     protected void changeStatusBarTextColor(boolean isBlack) {
-       // if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            if (isBlack) {
-                //设置状态栏黑色字体
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            } else {
-                //恢复状态栏白色字体
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            }
-      //  }
+        // if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+        if (isBlack) {
+            //设置状态栏黑色字体
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        } else {
+            //恢复状态栏白色字体
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
+        //  }
     }
 
     /**
@@ -400,7 +453,7 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
         synchronized (MyApplication.mActivities) {
             MyApplication.remove(this);
         }
-        if (mMyOkhttp!=null){
+        if (mMyOkhttp != null) {
             mMyOkhttp.cancel(this);
         }
         LoadDialog.clear();
@@ -418,25 +471,24 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
         super.onResume();
         activity = this;
         if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-           // setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            // setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         //  Log.i(TAG,"isServiceWork="+isServiceWork(this,MYSERVICE)+",mIsCanStartService="+CommonMethod. mIsCanStartService);
         if (CommonMethod.mIsCanStartService && !isServiceWork(this, MYSERVICE)) {
             serviceTime = null;
             try {
-                SQLiteUtils.getInstance().deleteAllImData();
-                GetAllRecordForDoctor(null);
+//                SQLiteUtils.getInstance().deleteAllImData();
+//                GetAllRecordForDoctor(null);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     startForegroundService(new Intent(this, MyService.class));
                 } else {
                     startService(new Intent(this, MyService.class));
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
 
         }
-
 
 
     }
@@ -471,7 +523,7 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-       // PermissionReq.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // PermissionReq.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     public boolean isServiceWork(Context mContext, String className) {
@@ -573,7 +625,7 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
                         if (list.size() == 0) {
                             AllRecordForDoctorEntity allRecordForDoctorEntity = new AllRecordForDoctorEntity(null, Content, PatientName, ApplicantHeadImgUrl, EndTime, PayTime, CreateTime, RecordId, Type, Status, DealWithTime, StartTime, ApplicantIMId, unReadNum, null, 0, null, null, null, Age, AreaName, PatientSex, IsDrKey, IsPatientMain, Disease, ServiceCode, timeStamp, RecordData, ApplicantId, PatientId, DateTime);
                             SQLiteUtils.getInstance().addImData(allRecordForDoctorEntity);
-                            EventBus.getDefault().post(new UpdateImStatusEntity(allRecordForDoctorEntity));
+                         //   EventBus.getDefault().post(new UpdateImStatusEntity(allRecordForDoctorEntity));
                         }
                     }
                     for (int i = 0; i < inquiryInfoList.size(); i++) {
@@ -736,22 +788,20 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
     }
 
     /**
-     *
      * @param event
-     * @return
-     * 点击空白处隐藏键盘
+     * @return 点击空白处隐藏键盘
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        if(null != this.getCurrentFocus()){
+        if (null != this.getCurrentFocus()) {
             /**
              * 点击空白位置 隐藏软键盘
              */
             InputMethodManager mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         }
-        return super .onTouchEvent(event);
+        return super.onTouchEvent(event);
 
     }
 
@@ -765,6 +815,7 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
 
     /**
      * 修改状态栏颜色，支持4.4以上版本
+     *
      * @param activity
      * @param colorId
      */
@@ -800,7 +851,6 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
     }
 
 
-
     public void Logout() {
         Map<String, String> map = new HashMap<>();
         map.put("Token", SpUtils.getString(Contants.Token));
@@ -821,7 +871,6 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
     }
 
 
-
     /**
      * 判断颜色是不是亮色
      *
@@ -838,7 +887,8 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
      *
      * @return
      */
-    protected @ColorInt int getStatusBarColor() {
+    protected @ColorInt
+    int getStatusBarColor() {
         return Color.WHITE;
     }
 

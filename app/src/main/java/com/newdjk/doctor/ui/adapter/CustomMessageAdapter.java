@@ -28,7 +28,14 @@ public class CustomMessageAdapter extends BaseQuickAdapter< CustomMessageEntity.
             }else {
                 helper.setText(R.id.service_item_name,contentElem.getText());
             }
-          //  helper.addOnClickListener(R.id.content_item);
+
+            if (TextUtils.isEmpty(contentElem.getText())){
+                helper.setVisible(R.id.lv_root_container, false);
+            }else {
+                helper.setVisible(R.id.lv_root_container, true);
+            }
+
+            //  helper.addOnClickListener(R.id.content_item);
         }
     }
     /*  public CustomMessageAdapter(Context activity,@Nullable List<CustomMessageEntity.ContentBean> dataList) {

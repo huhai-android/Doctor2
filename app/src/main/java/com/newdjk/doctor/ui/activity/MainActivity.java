@@ -230,6 +230,10 @@ public class MainActivity extends BasicActivity {
         getImMessage();
 
         getBaiduToken();
+
+        //获取中药开方权限
+        IsHasOpenPres();
+        IsHasOpenTCMPres();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

@@ -119,8 +119,7 @@ public class PrescriptionActivity extends BasicActivity implements IWXAPIEventHa
     BridgeWebView testBridgeWebView;
     @BindView(R.id.view_cover)
     View viewCover;
-    @BindView(R.id.btn_share)
-    Button btnShare;
+
     @BindView(R.id.top_left)
     ImageView topLeft;
     @BindView(R.id.tv_left)
@@ -234,6 +233,7 @@ public class PrescriptionActivity extends BasicActivity implements IWXAPIEventHa
         mMDTDetailEntity = (MDTDetailEntity) getIntent().getSerializableExtra("MDTDetailEntity");
         mNoticeManageId = getIntent().getIntExtra("NoticeManageId", 0);
         prefRecommend = getIntent().getStringExtra("prefRecommend");
+
 
 
         Log.i("PrescriptionActivity", mPrescriptionMessage + "mSubjectBuyRecordId    " + mSubjectBuyRecordId);
@@ -395,7 +395,14 @@ public class PrescriptionActivity extends BasicActivity implements IWXAPIEventHa
             liearTitlebar.setVisibility(View.VISIBLE);
             initBackTitle("详情");
             testBridgeWebView.loadUrl(mLinkUrl);
-        } else {
+        } else if (type == 39){//开处方
+            testBridgeWebView.loadUrl("file:///android_asset/index.html#" + "/prescription?DataSource=6&DataId="+mId);
+        }else if (type == 40){//需求详情
+            testBridgeWebView.loadUrl("file:///android_asset/index.html#" + "/demandDetail?PatRequireOrderId="+mId);
+
+        }
+
+        else {
             Log.d(TAG, "是否执行了111---" + mRejectId);
             if (mId != null && !mId.equals("")) {
                 Log.d(TAG, "是否执行了222");
@@ -1044,10 +1051,11 @@ public class PrescriptionActivity extends BasicActivity implements IWXAPIEventHa
 
     @Override
     protected void initListener() {
-        btnShare.setOnClickListener(new View.OnClickListener() {
+
+        tvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBottomDialog();
+                showQQweixinDialog();
             }
         });
     }
@@ -1065,12 +1073,17 @@ public class PrescriptionActivity extends BasicActivity implements IWXAPIEventHa
                 share(SHARE_TYPE.Type_WXSceneSession);
                 mDialog.dismiss();
                 break;
-            case R.id.mWechatZone:
+            case R.id.mhuanzhe:
                 Intent intent = new Intent(PrescriptionActivity.this, PatientListActivity.class);
                 intent.putExtra("SendGoodsEntity", sharedata);
                 startActivity(intent);
                 mDialog.dismiss();
                 break;
+            case R.id.mWechatZone:
+
+
+                break;
+
             case R.id.mCancel:
                 if (mDialog.isShowing()) {
                     mDialog.dismiss();
@@ -1304,13 +1317,39 @@ public class PrescriptionActivity extends BasicActivity implements IWXAPIEventHa
 
     private Dialog mDialog;
     private View mInflate;
-    private LinearLayout mFriend, mZoom;
+    private LinearLayout mFriend, mZoom,mhuanzhe;
     private TextView mTvCancel;
 
     public void showBottomDialog() {
         mDialog = new Dialog(PrescriptionActivity.this, R.style.ActionSheetDialogStyle);
         //填充对话框的布局
         mInflate = LayoutInflater.from(PrescriptionActivity.this).inflate(R.layout.dialog_shop_share, null);
+        //初始化控件
+        mFriend = mInflate.findViewById(R.id.mWechatFriend);
+        mhuanzhe = mInflate.findViewById(R.id.mhuanzhe);
+        mTvCancel = mInflate.findViewById(R.id.mCancel);
+        mFriend.setOnClickListener(this);
+        mhuanzhe.setOnClickListener(this);
+        mTvCancel.setOnClickListener(this);
+        //将布局设置给Dialog
+        mDialog.setContentView(mInflate);
+        //获取当前Activity所在的窗体
+        Window dialogWindow = mDialog.getWindow();
+        //设置Dialog从窗体底部弹出
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        //获得窗体的属性
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.y = 10;//设置Dialog距离底部的距离
+//       将属性设置给窗体
+        lp.width = LinearLayout.LayoutParams.MATCH_PARENT;
+        dialogWindow.setAttributes(lp);
+        mDialog.show();//显示对话框
+    }
+
+    public void showQQweixinDialog() {
+        mDialog = new Dialog(PrescriptionActivity.this, R.style.ActionSheetDialogStyle);
+        //填充对话框的布局
+        mInflate = LayoutInflater.from(PrescriptionActivity.this).inflate(R.layout.dialog_weixin_share, null);
         //初始化控件
         mFriend = mInflate.findViewById(R.id.mWechatFriend);
         mZoom = mInflate.findViewById(R.id.mWechatZone);

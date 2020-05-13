@@ -173,6 +173,33 @@ public class CustomMessageEntity {
             private String CensorateRecordId;
             private  String SubjectBuyRecordId;
 
+            public String getPatMedicationOrderId() {
+                return PatMedicationOrderId;
+            }
+
+            public void setPatMedicationOrderId(String patMedicationOrderId) {
+                PatMedicationOrderId = patMedicationOrderId;
+            }
+
+            public String getPatRequireOrderId() {
+                return PatRequireOrderId;
+            }
+
+            public void setPatRequireOrderId(String patRequireOrderId) {
+                PatRequireOrderId = patRequireOrderId;
+            }
+
+            public String getMedicationCompanyOrgId() {
+                return MedicationCompanyOrgId;
+            }
+
+            public void setMedicationCompanyOrgId(String medicationCompanyOrgId) {
+                MedicationCompanyOrgId = medicationCompanyOrgId;
+            }
+
+            private String PatMedicationOrderId;
+            private String PatRequireOrderId;
+            private  String MedicationCompanyOrgId;
             public String getSubjectBuyRecordId() {
                 return SubjectBuyRecordId;
             }

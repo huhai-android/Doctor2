@@ -424,6 +424,10 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
         mStatus = getActivity().getIntent().getIntExtra("status", 8);
         mAction = getActivity().getIntent().getStringExtra("action");
         fromHome = getActivity().getIntent().getIntExtra("fromHome", 0);
+        IsHasOpenPres();
+        IsHasOpenTCMPres();
+
+
         if (mDoctype == 2) {
             prescriptionLayout.setVisibility(View.GONE);
             zhongyaoPrescriptionLayout.setVisibility(View.GONE);
@@ -1574,6 +1578,8 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
 
     @Override
     protected void initData() {
+
+
         if (BuildConfig.DEBUG) {
             BJCASDK.getInstance().setServerUrl(EnvType.INTEGRATE);
         } else {
@@ -2067,56 +2073,56 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
     }
 
     private void IsHasOpenPres() {
-
-        Map<String, String> headMap = new HashMap<>();
-        headMap.put("Authorization", SpUtils.getString(Contants.Token));
-        HashMap<String, String> params = new HashMap<>();
-        params.put("DrId", String.valueOf(SpUtils.getInt(Contants.Id, -1)));
-        mMyOkhttp.get().url(HttpUrl.IsHasOpenPres).headers(headMap).params(params).tag(this).enqueue(new GsonResponseHandler<Entity>() {
-            @Override
-            public void onSuccess(int statusCode, Entity response) {
-
-                if (response.getCode() == 0) {
-                    mIsHasOpenPres = (boolean) response.getData();
-                    mAdapter.setIsHasOpenPres(mIsHasOpenPres);
-
-                } else {
-                    toast(response.getMessage());
-                }
-            }
-
-            @Override
-            public void onFailures(int statusCode, String errorMsg) {
-                toast(errorMsg);
-            }
-        });
+        mIsHasOpenPres=SpUtils.getBoolean("mIsHasOpenPres",false);
+//        Map<String, String> headMap = new HashMap<>();
+//        headMap.put("Authorization", SpUtils.getString(Contants.Token));
+//        HashMap<String, String> params = new HashMap<>();
+//        params.put("DrId", String.valueOf(SpUtils.getInt(Contants.Id, -1)));
+//        mMyOkhttp.get().url(HttpUrl.IsHasOpenPres).headers(headMap).params(params).tag(this).enqueue(new GsonResponseHandler<Entity>() {
+//            @Override
+//            public void onSuccess(int statusCode, Entity response) {
+//
+//                if (response.getCode() == 0) {
+//                    mIsHasOpenPres = (boolean) response.getData();
+//                    mAdapter.setIsHasOpenPres(mIsHasOpenPres);
+//
+//                } else {
+//                    toast(response.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailures(int statusCode, String errorMsg) {
+//                toast(errorMsg);
+//            }
+//        });
     }
 
 
     private void IsHasOpenTCMPres() {
-
-        Map<String, String> headMap = new HashMap<>();
-        headMap.put("Authorization", SpUtils.getString(Contants.Token));
-        HashMap<String, String> params = new HashMap<>();
-        params.put("DrId", String.valueOf(SpUtils.getInt(Contants.Id, -1)));
-        mMyOkhttp.get().url(HttpUrl.IsHasOpenTCMPres).headers(headMap).params(params).tag(this).enqueue(new GsonResponseHandler<Entity>() {
-            @Override
-            public void onSuccess(int statusCode, Entity response) {
-
-                if (response.getCode() == 0) {
-                    mIsHasOpenTCMPres = (boolean) response.getData();
-                    mAdapter.setIsHasOpenTCMPres(mIsHasOpenTCMPres);
-
-                } else {
-                    toast(response.getMessage());
-                }
-            }
-
-            @Override
-            public void onFailures(int statusCode, String errorMsg) {
-                toast(errorMsg);
-            }
-        });
+        mIsHasOpenTCMPres=SpUtils.getBoolean("mIsHasOpenTCMPres",false);
+//        Map<String, String> headMap = new HashMap<>();
+//        headMap.put("Authorization", SpUtils.getString(Contants.Token));
+//        HashMap<String, String> params = new HashMap<>();
+//        params.put("DrId", String.valueOf(SpUtils.getInt(Contants.Id, -1)));
+//        mMyOkhttp.get().url(HttpUrl.IsHasOpenTCMPres).headers(headMap).params(params).tag(this).enqueue(new GsonResponseHandler<Entity>() {
+//            @Override
+//            public void onSuccess(int statusCode, Entity response) {
+//
+//                if (response.getCode() == 0) {
+//                    mIsHasOpenTCMPres = (boolean) response.getData();
+//                    mAdapter.setIsHasOpenTCMPres(mIsHasOpenTCMPres);
+//
+//                } else {
+//                    toast(response.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailures(int statusCode, String errorMsg) {
+//                toast(errorMsg);
+//            }
+//        });
     }
 
 
@@ -3739,6 +3745,7 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void userEventBus(UpdateMessageListEntity updateMessageListEntity) {
+        Log.d(TAG,"收到新消息，更新聊天界面数据"+updateMessageListEntity.toString());
         List<TIMMessage> list = updateMessageListEntity.list;
         List<MyTIMMessage> chatList = new ArrayList<>();
         for (TIMMessage timMessage : list) {
@@ -3871,6 +3878,7 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
         } else {
             getAdapterData().addAll(0, chatList);
             updateRecyclerView();
+            setAllDataRed(mIdentifier);
         }
 
     }
@@ -5018,8 +5026,7 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
     @Override
     public void onResume() {
         super.onResume();
-        IsHasOpenPres();
-        IsHasOpenTCMPres();
+
         IsHasOpenMDT();
 
     }

@@ -5221,7 +5221,7 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
     private void cancelPermissionDialog() {
         mPermissionDialog.cancel();
     }
-    private void IsHasOpenPres() {
+    private void IsHasOpenPres2() {
 
         Map<String, String> headMap = new HashMap<>();
         headMap.put("Authorization", SpUtils.getString(Contants.Token));
@@ -5248,7 +5248,7 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
     }
 
 
-    private void IsHasOpenTCMPres() {
+    private void IsHasOpenTCMPres2() {
 
         Map<String, String> headMap = new HashMap<>();
         headMap.put("Authorization", SpUtils.getString(Contants.Token));
@@ -5281,8 +5281,8 @@ public class GroupChatActivity extends BasicActivity implements ILVIncomingListe
     @Override
     protected void onResume() {
         super.onResume();
-        IsHasOpenPres();
-        IsHasOpenTCMPres();
+        IsHasOpenPres2();
+        IsHasOpenTCMPres2();
     }
 
 

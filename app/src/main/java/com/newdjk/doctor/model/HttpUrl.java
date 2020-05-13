@@ -296,5 +296,15 @@ public class HttpUrl {
     public static String SaveDrServiceItemPrice = Doctor + "/SaveDrServiceItemPrice";  //待处理-待问诊(医生端)
     public static String GetDrServiceItemPriceForSet = Doctor + "/GetDrServiceItemPriceForSet";  //待处理-待问诊(医生端)
 
+    //保存意见与反馈
+    public static String QueryOrgDoctorSearchByPage = PlatFormAPI + "/OrganizationInfo/QueryOrgDoctorSearchByPage";
+
+    //获取需求单状态（
+    public static String GetRequireOrderStatus = PRESCRIPTION + "/SellingMedication/GetRequireOrderStatus";
+
+    public static String DistributeRequireOrder = PRESCRIPTION + "/SellingMedication/DistributeRequireOrder";
+
+
+
 
 }

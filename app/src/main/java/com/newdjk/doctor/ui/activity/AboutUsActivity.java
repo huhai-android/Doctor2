@@ -81,6 +81,8 @@ public class AboutUsActivity extends BasicActivity {
     TextView tvUpdateDesc;
     @BindView(R.id.tv_privacy)
     TextView tvPrivacy;
+    @BindView(R.id.imlogo)
+    ImageView imlogo;
 
     private String[] mAppInfo;
     private final static String TAG = "HomeFragment---2";
@@ -140,13 +142,14 @@ public class AboutUsActivity extends BasicActivity {
         tvPrivacy.setOnClickListener(this);
 
 
-//        mVersion.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(AboutUsActivity.this, AdsDialogActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        imlogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AboutUsActivity.this, ZixunDoctorActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -212,7 +215,7 @@ public class AboutUsActivity extends BasicActivity {
 
             case R.id.tv_privacy:
 
-                Intent intentPrivacy=new Intent(mContext, PrivacyActivity.class);
+                Intent intentPrivacy = new Intent(mContext, PrivacyActivity.class);
                 intentPrivacy.putExtra("userInfo", SpUtils.getString(Contants.LoginJson));
 
                 mContext.startActivity(intentPrivacy);
@@ -276,5 +279,6 @@ public class AboutUsActivity extends BasicActivity {
             }
         });
     }
+
 
 }
