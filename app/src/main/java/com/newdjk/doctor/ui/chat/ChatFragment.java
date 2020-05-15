@@ -2786,6 +2786,7 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
         if (mRecorder != null) {
             mRecorder.release();
         }
+        MyApplication.gotoMainactivity=1;
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
@@ -4463,6 +4464,7 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        MyApplication.gotoMainactivity=2;
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }

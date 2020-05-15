@@ -165,18 +165,18 @@ public class MyService extends Service implements TIMMessageListener {
                 List<TIMMessage> lastMsgs = mConversation.getLastMsgs(1);
                 TIMMessage msg = lastMsgs.get(0);
                 TIMElem element = msg.getElement(0);
+                timeStamp = msg.timestamp();
                 if (element.getType() == TIMElemType.Text) {
                     TIMTextElem textElem = (TIMTextElem) element;
                     mContent = textElem.getText();
                 } else if (element.getType() == TIMElemType.Sound) {
                     mContent = "[语音消息]";
-                } else if (element.getType() == TIMElemType.Custom) {
-                    mContent = "[回复一条新消息]";
+                } else if (element.getType() == TIMElemType.Video) {
+                    mContent = "[视频消息]";
                 } else if (element.getType() == TIMElemType.Image) {
                     mContent = "[图片消息]";
                 }
-                timeStamp = msg.timestamp();
-                if (timMessage.getElement(0).getType() == TIMElemType.Custom) {
+                else if (element.getType() == TIMElemType.Custom) {
                     //只要有自定义消息过来，就需要去刷新数据
                     Log.i("zdp", "tipsTHFGH");
                     TIMCustomElem customElem = (TIMCustomElem) timMessage.getElement(0);
@@ -184,6 +184,20 @@ public class MyService extends Service implements TIMMessageListener {
                     Log.i("MyService", "s=" + s);
                     CustomMessageEntity CustomMessageEntity = mGson.fromJson(s, CustomMessageEntity.class);
                     CustomMessageEntity.ExtDataBean extraData = CustomMessageEntity.getExtData();
+                    Log.d(TAG, "自定义消息----" + s);
+                    if (CustomMessageEntity != null) {
+                        Log.d(TAG, "自定义消息pushdesc" + CustomMessageEntity.getPushDesc()+"  "+timMessage.getSender()+"   "+SpUtils.getString(Contants.identifier)+" "+ timMessage.getSenderProfile().getNickName());
+                        if (!TextUtils.isEmpty(CustomMessageEntity.getPushDesc())) {
+                            mContent =CustomMessageEntity.getPushDesc();
+                        } else if (!TextUtils.isEmpty(CustomMessageEntity.getTitle())) {
+                            Log.d(TAG, "自定义消息----" +timMessage.getSender()+"   "+SpUtils.getString(Contants.identifier));
+                            mContent =CustomMessageEntity.getTitle();
+
+                        } else {
+                            mContent ="[系统消息]";
+                        }
+                    }
+
                     if (extraData != null) {
                         int type = extraData.getType();
                         if (type == 38) {
@@ -195,7 +209,7 @@ public class MyService extends Service implements TIMMessageListener {
                            /* Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                             vibrator.vibrate(new long[]{0, 200, 200, 200}, -1);
                             mRingtone.play();*/
-                            return false;
+
                         } else if (type == 36) {
                             com.newdjk.doctor.ui.entity.CustomMessageEntity.ExtDataBean.DataBean dataBean = extraData.getData();
                             Log.i("MyService", "dataBean=" + dataBean);
@@ -222,7 +236,7 @@ public class MyService extends Service implements TIMMessageListener {
                                 }
 
                                 EventBus.getDefault().post(new UpdateImMessageEntity(null));
-                                return false;
+
                             }
                         }
                         switch (type) {
@@ -276,7 +290,48 @@ public class MyService extends Service implements TIMMessageListener {
 
                 }
                 needToNotify = !timMessage.isSelf();
+                Log.d(TAG, "发送id----" + timMessage.getSender()+" 登录"+SpUtils.getString(Contants.identifier));
+                if (MyApplication.gotoMainactivity==1){
+                    if (timMessage.getSender().startsWith("pat")) {     //如果是病人发送的消息
+                        String name = timMessage.getSenderProfile().getNickName();
 
+                        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            NotificationChannel channel = new NotificationChannel(PUSH_CHANNEL_ID, PUSH_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+                            channel.enableLights(true);
+                            channel.enableVibration(true);
+                            if (mNotificationManager != null) {
+                                mNotificationManager.createNotificationChannel(channel);
+                            }
+                        }
+                        MyApplication.badgeNumber++;
+                        Log.d("BadgeUtil","Myservice红点显示个数"+MyApplication.badgeNumber);
+
+                        BadgeUtil.setBadgeCount(this,MyApplication.badgeNumber);
+                        Log.i("Myservice", "99999");
+                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "default");
+                        Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
+                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        PendingIntent intent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent, 0);
+                        mBuilder.setChannelId("com.newdjk.doctor")
+                                .setContentTitle(name)//设置通知栏标题
+                                .setContentText(mContent)
+                                .setChannelId(PUSH_CHANNEL_ID)
+                                .setContentIntent(intent) //设置通知栏单击意图
+                                .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
+                                .setPriority(Notification.PRIORITY_DEFAULT)
+                                .setDefaults(Notification.DEFAULT_VIBRATE)
+                                .setOnlyAlertOnce(true)
+                                .setWhen(System.currentTimeMillis())
+                                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.icon))
+                                .setSmallIcon(R.mipmap.icon);
+
+                        Notification notify = mBuilder.build();
+                        notify.flags |= Notification.FLAG_AUTO_CANCEL;
+                        mNotificationManager.notify(1110, notify);
+
+                    }
+                }
             } else if (timMessage.getConversation().getType().equals(TIMConversationType.System)) {
                 //如果有系统通知，刷新好友列表
                       /*  ContactModel contactModel = new ContactModel();
@@ -322,22 +377,6 @@ public class MyService extends Service implements TIMMessageListener {
             return false;
         }
 
-            /*    NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
-                Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
-                notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                PendingIntent intent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent, 0);
-                mBuilder.setContentTitle(imId)//设置通知栏标题
-                        .setContentText("这是一条未读消息")
-                        .setContentIntent(intent) //设置通知栏单击意图
-                        *//*.setNumber(++pushNum) //设置通知集合的数量
-                        .setTicker(senderStr+":"+contentStr) //通知首次出现在通知栏，带上升动画效果的*//*
-                        .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
-                        .setDefaults(Notification.DEFAULT_ALL)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
-                        .setSmallIcon(R.mipmap.logo);//设置通知小 ICON
-                Notification notify = mBuilder.build();
-                notify.flags |= Notification.FLAG_AUTO_CANCEL;
-                mNotificationManager.notify(1, notify);*/
         String serviceCode = null;
         List<AllRecordForDoctorEntity> videoList = SQLiteUtils.getInstance().selectImDataByServiceCodeAndId("1102", imId);
         AllRecordForDoctorEntity allRecordForDoctorEntity = null;
@@ -382,41 +421,7 @@ public class MyService extends Service implements TIMMessageListener {
         }
         else {*/
         Log.i("MyService", "imId=" + imId);
-        String name = SQLiteUtils.getInstance().selectImNameByImId(imId);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(PUSH_CHANNEL_ID, PUSH_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
-            channel.enableLights(true);
-            channel.enableVibration(true);
-            if (mNotificationManager != null) {
-                mNotificationManager.createNotificationChannel(channel);
-            }
-        }
-        MyApplication.badgeNumber++;
-        Log.d("BadgeUtil","Myservice红点显示个数"+MyApplication.badgeNumber);
 
-        BadgeUtil.setBadgeCount(this,MyApplication.badgeNumber);
-        Log.i("Myservice", "99999");
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "default");
-        Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent intent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent, 0);
-        mBuilder.setChannelId("com.newdjk.doctor")
-                .setContentTitle(name)//设置通知栏标题
-                .setContentText(mContent)
-                .setChannelId(PUSH_CHANNEL_ID)
-                .setContentIntent(intent) //设置通知栏单击意图
-                .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
-                .setPriority(Notification.PRIORITY_DEFAULT)
-                .setDefaults(Notification.DEFAULT_VIBRATE)
-                .setOnlyAlertOnce(true)
-                .setWhen(System.currentTimeMillis())
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.icon))
-                .setSmallIcon(R.mipmap.icon);
-
-        Notification notify = mBuilder.build();
-        notify.flags |= Notification.FLAG_AUTO_CANCEL;
-        mNotificationManager.notify(1110, notify);
         //    }
 
         return true;

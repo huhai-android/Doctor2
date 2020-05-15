@@ -36,8 +36,13 @@ public class TransmitDoctorDialog {
             TextView tvConfirm = view.findViewById(R.id.tv_confirm);
             if (orderstatus==1){
                 tvContent.setText(doctorname+"医生正在处理，如有问题请联系医生");
-            }else {
+            }else if (orderstatus==2){
                 tvContent.setText(doctorname+"医生已开出处方，如有问题请联系医生");
+            }else if (orderstatus==3){
+                tvContent.setText(doctorname+"医生正在处理，如有问题请联系医生");
+            }else if (orderstatus==4){
+                tvContent.setText(doctorname+"医生正在处理，如有问题请联系医生");
+
             }
             tvCancel.setOnClickListener(new View.OnClickListener() {
                 @Override

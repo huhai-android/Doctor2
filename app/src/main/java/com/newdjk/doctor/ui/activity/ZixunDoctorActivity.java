@@ -174,7 +174,7 @@ public class ZixunDoctorActivity extends BasicActivity {
             @Override
             public void onSuccess(int statusCode, ResponseEntity<RequireOrderStatusEntity> response) {
                 LoadDialog.clear();
-                //需求单状态（0：待处理，1：医生处理中，2：已开处方/完成）
+                //需求单状态（0：待处理，1：医生处理中，2：已开处方/完成 3:审方中）
                 orderstatus = response.getData().getStatus();
                 orderdoctorname = TextUtils.isEmpty(response.getData().getDoctorName()) ? "" : response.getData().getDoctorName();
                 if (orderstatus !=0 ) {

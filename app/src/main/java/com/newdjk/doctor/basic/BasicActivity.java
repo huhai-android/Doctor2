@@ -625,7 +625,7 @@ public abstract class BasicActivity<T> extends FragmentActivity implements View.
                         if (list.size() == 0) {
                             AllRecordForDoctorEntity allRecordForDoctorEntity = new AllRecordForDoctorEntity(null, Content, PatientName, ApplicantHeadImgUrl, EndTime, PayTime, CreateTime, RecordId, Type, Status, DealWithTime, StartTime, ApplicantIMId, unReadNum, null, 0, null, null, null, Age, AreaName, PatientSex, IsDrKey, IsPatientMain, Disease, ServiceCode, timeStamp, RecordData, ApplicantId, PatientId, DateTime);
                             SQLiteUtils.getInstance().addImData(allRecordForDoctorEntity);
-                         //   EventBus.getDefault().post(new UpdateImStatusEntity(allRecordForDoctorEntity));
+                           EventBus.getDefault().post(new UpdateImStatusEntity(allRecordForDoctorEntity));
                         }
                     }
                     for (int i = 0; i < inquiryInfoList.size(); i++) {

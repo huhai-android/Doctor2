@@ -44,7 +44,7 @@
             android:paddingLeft="@dimen/dp_5"
             android:paddingRight="@dimen/dp_5"
             android:paddingBottom="@dimen/dp_2"
-            tools:text="系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息"
+            tools:text="您以为继续的处方药订单开出处方，处方单号为是吧啊XQD202005141010481045"
             android:id="@+id/systemMessage1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
