@@ -1871,8 +1871,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                                 checkDetail.setVisibility(View.GONE);
                                 line.setVisibility(View.GONE);
                             } else {
-                                type1 = extraData.getType();  //左边
-                                if (type1 == 0 || type1 == 34 || type1 > 100 || type1 == 313 || type1 == 312 || type1 == 311 || type1 == 317 || type1 == 310) {
+                                type1 = extraData.getType();  //左边,不显示底部查看详情按钮
+                                if (type1 == 0 || type1 == 34 || type1 > 100 || type1 == 313 || type1 == 312 || type1 == 311 || type1 == 317 || type1 == 310|| type1 == 326) {
                                     checkDetail.setVisibility(View.GONE);
                                     line.setVisibility(View.GONE);
                                 } else {
@@ -1880,7 +1880,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
                                 }
                                 //显示查看详情
-                                if (type1 == 13 || type1 == 31 || type1 == 303 || type1 == 105 || type1 == 302 || type1 == 306 || type1 == 314 || type1 == 308 || type1 == 309 || type1 == 321|| type1 == 326||type1==324||type1==323) {
+                                if (type1 == 13 || type1 == 31 || type1 == 303 || type1 == 105 || type1 == 302 || type1 == 306 || type1 == 314 || type1 == 308 || type1 == 309 || type1 == 321||type1==324||type1==323) {
                                     checkDetail.setVisibility(View.VISIBLE);
                                     line.setVisibility(View.VISIBLE);
                                     tvxufang.setVisibility(View.VISIBLE);

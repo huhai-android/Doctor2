@@ -145,6 +145,9 @@ public class MyService extends Service implements TIMMessageListener {
         String imId = null;
         long unreadNum = 0;
         long timeStamp = 0;
+        try {
+
+
         EventBus.getDefault().post(new UpdateMessageListEntity(list));
 
         MessageEventRecent messageEvent = new MessageEventRecent();
@@ -175,8 +178,7 @@ public class MyService extends Service implements TIMMessageListener {
                     mContent = "[视频消息]";
                 } else if (element.getType() == TIMElemType.Image) {
                     mContent = "[图片消息]";
-                }
-                else if (element.getType() == TIMElemType.Custom) {
+                } else if (element.getType() == TIMElemType.Custom) {
                     //只要有自定义消息过来，就需要去刷新数据
                     Log.i("zdp", "tipsTHFGH");
                     TIMCustomElem customElem = (TIMCustomElem) timMessage.getElement(0);
@@ -425,6 +427,9 @@ public class MyService extends Service implements TIMMessageListener {
         //    }
 
         return true;
+        }catch (Exception e){
+            return true;
+        }
     }
 
     @Override
