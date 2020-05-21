@@ -333,6 +333,12 @@ public class AppLicationUtils {
             appLicationEntity9.setIsselect(true);
             listall.add(appLicationEntity9);
 
+            AppLicationEntity appLicationEntity21 = new AppLicationEntity();
+            appLicationEntity21.setAppDesc("抢单大厅");
+            appLicationEntity21.setImageID(21);
+            appLicationEntity21.setAppID(21);
+            appLicationEntity21.setIsselect(true);
+            listall.add(appLicationEntity21);
 //            AppLicationEntity appLicationEntity = new AppLicationEntity();
 //            appLicationEntity.setAppDesc("图文问诊");
 //            appLicationEntity.setImageID(1);
@@ -873,6 +879,9 @@ public class AppLicationUtils {
                 defaultiID = R.mipmap.icon_fuwubaojilu;
                 break;
 
+            case 21:
+                defaultiID = R.mipmap.icon_fuwubaojilu;
+                break;
 
 
             default:

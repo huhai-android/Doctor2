@@ -2505,6 +2505,11 @@ public class HomeFragment extends BasicFragment {
                 startActivity(helpcenter);
                 //  ExistDoctorDisGroup();
                 break;
+
+
+            case 21:
+                toast("抢单大厅");
+                break;
         }
     }
 
