@@ -74,6 +74,7 @@ import com.newdjk.doctor.tools.MainConstant;
 import com.newdjk.doctor.ui.activity.ArchivesActivity;
 import com.newdjk.doctor.ui.activity.ChickUnitActivity;
 import com.newdjk.doctor.ui.activity.IM.CallActivity;
+import com.newdjk.doctor.ui.activity.IM.ChatActivity;
 import com.newdjk.doctor.ui.activity.IM.GroupChatActivity;
 import com.newdjk.doctor.ui.activity.IM.RoomActivity;
 import com.newdjk.doctor.ui.activity.Mdt.AddMDTDocumentActivity;
@@ -4146,7 +4147,7 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
                         }
                     }.start();
                 } else {
-                    inputBorder.setVisibility(View.VISIBLE);
+                    inputBorder.setVisibility(View.GONE);
                     accept.setVisibility(View.VISIBLE);
                     reject.setVisibility(View.VISIBLE);
                     mTimer = new CountDownTimer(mAcceptLastTime - mNowTime, 1000) {
@@ -4214,6 +4215,7 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
 
                 if (mServiceCode.equals("1102")) {
                     getCurrentTimeToUpdateCountTime();
+                    return;
                 }
 
                 //更新业务状态
@@ -4619,48 +4621,43 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
 
 
             case "视频通话":
-                if (NetworkUtil.isNetworkAvailable(getActivity())) {
+                if (NetworkUtil.isNetworkAvailable(getContext())) {
+                    // makeCall(ILVCallConstants.CALL_TYPE_VIDEO, mIdentifier);
+                    int callId = ILiveFunc.generateAVCallRoomID();
+                    CustomMessageEntity customMessageEntity = new CustomMessageEntity();
+                    //   customMessageEntity.setTitle(SpUtils.getString(Contants.Name)+"医生提醒您填写一下病历，这对于您的病情很有帮助");
+                    customMessageEntity.setIsSystem(false);
+                    customMessageEntity.setContent(null);
+                    CustomMessageEntity.ExtDataBean extData = new CustomMessageEntity.ExtDataBean();
+                    CustomMessageEntity.ExtDataBean.DataBean data = new CustomMessageEntity.ExtDataBean.DataBean();
+                    extData.setType(129);
+                    data.setAVRoomID(callId);
+                    data.setId(SpUtils.getString(Contants.identifier));
+                    data.setTargets(SpUtils.getString(Contants.Name));
+                    extData.setData(data);
+                    customMessageEntity.setExtData(extData);
+                    String json = new Gson().toJson(customMessageEntity);
+                    sendCustomMessage(json, "");
+                    sendPushVideo(callId);
+                    mTimer = new CountDownTimer(30000, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
 
-                    if (cancallVideo) {
-                        // makeCall(ILVCallConstants.CALL_TYPE_VIDEO, mIdentifier);
-                        int callId = ILiveFunc.generateAVCallRoomID();
-                        CustomMessageEntity customMessageEntity = new CustomMessageEntity();
-                        //   customMessageEntity.setTitle(SpUtils.getString(Contants.Name)+"医生提醒您填写一下病历，这对于您的病情很有帮助");
-                        customMessageEntity.setIsSystem(false);
-                        customMessageEntity.setContent(null);
-                        CustomMessageEntity.ExtDataBean extData = new CustomMessageEntity.ExtDataBean();
-                        CustomMessageEntity.ExtDataBean.DataBean data = new CustomMessageEntity.ExtDataBean.DataBean();
-                        extData.setType(129);
-                        data.setAVRoomID(callId);
-                        data.setId(SpUtils.getString(Contants.identifier));
-                        data.setTargets(SpUtils.getString(Contants.Name));
-                        extData.setData(data);
-                        customMessageEntity.setExtData(extData);
-                        String json = new Gson().toJson(customMessageEntity);
-                        sendCustomMessage(json, "");
-                        sendPushVideo(callId);
-                        mTimer = new CountDownTimer(30000, 1000) {
-                            @Override
-                            public void onTick(long millisUntilFinished) {
+                        }
 
-                            }
+                        @Override
+                        public void onFinish() {
+                            sendVideoMessage(132, -1);
+                            EventBus.getDefault().post(new RejectCallTip(true));
+                        }
+                    }.start();
+                    Intent roomIntent = new Intent(getActivity(), RoomActivity.class);
+                    roomIntent.putExtra("callId", callId);
+                    roomIntent.putExtra("identifier", mIdentifier);
+                    roomIntent.putExtra("patientiinfo", mAllRecordForDoctorEntity);
+                    Log.d("sendPushVideo",callId+"   "+mIdentifier+"  ");
 
-                            @Override
-                            public void onFinish() {
-                                sendVideoMessage(132, -1);
-                                EventBus.getDefault().post(new RejectCallTip(true));
-                            }
-                        }.start();
-                        Intent roomIntent = new Intent(getContext(), RoomActivity.class);
-                        roomIntent.putExtra("callId", callId);
-                        roomIntent.putExtra("identifier", mIdentifier);
-                        roomIntent.putExtra("patientiinfo", mAllRecordForDoctorEntity);
-
-                        startActivity(roomIntent);
-                    } else {
-                        alertDialog("video");
-                    }
-
+                    startActivity(roomIntent);
                 } else {
                     toast("网络连接异常，请检查网络连接");
                 }

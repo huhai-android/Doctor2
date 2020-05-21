@@ -133,13 +133,7 @@ public class MyApplication extends Application {
         ILiveLog.setLogLevel(ILiveLog.TILVBLogLevel.DEBUG);
 
         Log.i("MyApplication", "BuildConfig.DEBUG=" + BuildConfig.DEBUG);
-        if (BuildConfig.DEBUG) {
-            //ILiveSDK.getInstance().initSdk(this, 1400161483, 36862);//测试环境
-            ILiveSDK.getInstance().initSdk(this, 1400197132, 36862);//测试环境
-        } else {
-            ILiveSDK.getInstance().initSdk(this, 1400129246, 36176);//正式环境
-        }
-
+        ILiveSDK.getInstance().initSdk(this, BuildConfig.IM_APP_ID, BuildConfig.IM_ACCOUNT_TYPE);
 
         // 老用户使用IMSDK通道
         ILiveSDK.getInstance().setChannelMode(CommonConstants.E_ChannelMode.E_ChannelIMSDK);

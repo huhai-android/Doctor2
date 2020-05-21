@@ -80,7 +80,8 @@ public class ChooseDepartmentActivity extends BasicActivity {
         Map<String, String> bodyMap = new HashMap<>();
         bodyMap.put("DepartmentName", "");
         bodyMap.put("ParentId", 0 + "");
-        bodyMap.put("PageSize", 100 + "");
+        bodyMap.put("PageSize", 1000 + "");
+        bodyMap.put("PageIndex", "1");
         mMyOkhttp.post().url(HttpUrl.QueryDepartmentPage).params(bodyMap).tag(this).enqueue(new GsonResponseHandler<DePartmentEntity>() {
             @Override
             public void onSuccess(int statusCode, DePartmentEntity entituy) {
@@ -131,7 +132,8 @@ public class ChooseDepartmentActivity extends BasicActivity {
         Map<String, String> bodyMap = new HashMap<>();
         bodyMap.put("DepartmentName", "");
         bodyMap.put("ParentId", departmentId + "");
-        bodyMap.put("PageSize", 100 + "");
+        bodyMap.put("PageSize", 1000 + "");
+        bodyMap.put("PageIndex", "1");
         mMyOkhttp.post().url(HttpUrl.QueryDepartmentPage).params(bodyMap).tag(this).enqueue(new GsonResponseHandler<DePartmentEntity>() {
             @Override
             public void onSuccess(int statusCode, DePartmentEntity entituy) {

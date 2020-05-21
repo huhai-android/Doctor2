@@ -48,6 +48,7 @@ import com.tencent.TIMMessage;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
 import com.tencent.av.sdk.AVVideoCtrl;
+import com.tencent.av.sdk.AVView;
 import com.tencent.callsdk.ILVBCallMemberListener;
 import com.tencent.ilivesdk.ILiveCallBack;
 import com.tencent.ilivesdk.ILiveConstants;
@@ -158,13 +159,13 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
         userSig = getIntent().getStringExtra("userSig");
         mAction = getIntent().getStringExtra("action");
         mIdentify = getIntent().getStringExtra("identifier");
-        mAllRecordForDoctorEntity =  (AllRecordForDoctorEntity) getIntent().getSerializableExtra("patientiinfo");
+        mAllRecordForDoctorEntity = (AllRecordForDoctorEntity) getIntent().getSerializableExtra("patientiinfo");
         getUserData();
         if (target != null && !target.equals("")) {
             Log.i("RoomActivity", "join");
             joinRoom(mCallId);
         } else {
-            Log.i("RoomActivity", "create"+mCallId);
+            Log.i("RoomActivity", "create");
             createRoom(mCallId);
         }
         ILiveSDK.getInstance().addEventHandler(new ILiveEventHandler() {
@@ -191,7 +192,7 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
             }
         });
         ILVLiveManager.getInstance().setAvVideoView(arvRoot);
-          MessageObservable.getInstance().addObserver(this);
+        MessageObservable.getInstance().addObserver(this);
 
 
         //   initRoleDialog();
@@ -227,8 +228,6 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
             }
         });
     }
-
-
 
 
     private void getUserData() {
@@ -312,19 +311,18 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
                     roleDialog.show();*/
                 break;
             case R.id.btn_end:
-                long time ;
+                long time;
                 if (mIsCountTime) {
-                     time = SystemClock.elapsedRealtime() - chronometer.getBase();
+                    time = SystemClock.elapsedRealtime() - chronometer.getBase();
                     Log.i("RoomActivity", "time=" + time);
                     chronometer.stop();
-                }
-                else {
+                } else {
                     time = -1;
                 }
                 if (mAction != null && mAction.equals("dialogActivity")) {
-                    EventBus.getDefault().post(new NotifyServiceToSendMessageEntity(134, mIdentify,time));
+                    EventBus.getDefault().post(new NotifyServiceToSendMessageEntity(134, mIdentify, time));
                 } else {
-                    EventBus.getDefault().post(new HangUpTipEntity(134,time));
+                    EventBus.getDefault().post(new HangUpTipEntity(134, time));
                 }
                 finish();
                /* if (null != roleDialog)
@@ -394,7 +392,7 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
             ILiveRoomManager.getInstance().enableCamera(ILiveRoomManager.getInstance().getActiveCameraId(), false);
         }
         quitRoom();
-         MessageObservable.getInstance().deleteObserver(this);
+        MessageObservable.getInstance().deleteObserver(this);
         EventBus.getDefault().unregister(this);
         //  StatusObservable.getInstance().deleteObserver(this);
         ILVLiveManager.getInstance().onDestory();
@@ -406,12 +404,12 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
         return ILiveRoomManager.getInstance().quitRoom(new ILiveCallBack() {
             @Override
             public void onSuccess(Object data) {
-                Log.i("RoomActivity","quitSuccess:data="+data.toString());
+                Log.i("RoomActivity", "quitSuccess:data=" + data.toString());
             }
 
             @Override
             public void onError(String module, int errCode, String errMsg) {
-                Log.i("RoomActivity","quitFail:module="+module+",errCode="+errCode+",errMsg="+errMsg);
+                Log.i("RoomActivity", "quitFail:module=" + module + ",errCode=" + errCode + ",errMsg=" + errMsg);
             }
         });
     }
@@ -433,7 +431,7 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
 
     @Override
     public void onNewOtherMsg(TIMMessage message) {
-
+        Log.d(TAG, message.toString());
     }
 
     @Override
@@ -485,7 +483,7 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
             return;
         }
 
-        if (BuildConfig.IS_DEBUG){
+        if (BuildConfig.IS_DEBUG) {
             ILVLiveRoomOption option = new ILVLiveRoomOption("")
                     .privateMapKey(userSig)
                     .autoCamera(ILiveConstants.NONE_CAMERA == ILiveRoomManager.getInstance().getActiveCameraId())
@@ -506,7 +504,7 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
                     //  DlgMgr.showMsg(getContenxt(), "create failed:"+module+"|"+errCode+"|"+errMsg);
                 }
             });
-        }else {
+        } else {
             ILVLiveRoomOption option = new ILVLiveRoomOption("")
                     .privateMapKey(userSig)
                     .autoCamera(ILiveConstants.NONE_CAMERA == ILiveRoomManager.getInstance().getActiveCameraId())
@@ -583,7 +581,31 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
             return;
         }
         ILVLiveRoomOption option = new ILVLiveRoomOption(ILiveLoginManager.getInstance().getMyUserId())
-                .autoCamera(true)
+                .autoCamera(true).
+                        audioInitCompletedListener(new ILiveRoomOption.onAudioInitCompletedListener() {
+                            @Override
+                            public void onAudioInitCompleted() {
+                                Log.e(TAG, "onAudioInitCompleted: 视频初始化完成");
+                            }
+                        })
+                .setRequestViewLisenter(new ILiveRoomOption.onRequestViewListener() {
+
+                    @Override
+                    public void onComplete(String[] identifierList, AVView[] viewList, int count, int result, String errMsg) {
+                        Log.e(TAG, "onComplete: 请求画面回来了" + identifierList.toString() + result + "  errmsg" + errMsg);
+                        if (identifierList!=null){
+                        if (identifierList.length>0){
+                            mSoundPool.release();
+                            chronometer.setVisibility(View.VISIBLE);
+                            chronometer.setBase(SystemClock.elapsedRealtime());
+                            //启动计时器
+                            chronometer.start();
+                            mIsCountTime = true;
+                            userDataLayout.setVisibility(View.GONE);
+                        }
+                        }
+                    }
+                })
                 .videoMode(ILiveConstants.VIDEOMODE_NORMAL)
                 .controlRole("ed640")
                 .imsupport(true)
@@ -593,22 +615,22 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
                 option, new ILiveCallBack() {
                     @Override
                     public void onSuccess(Object data) {
-                        Log.i("RoomActivity", "创建房间成功"+data.toString());
+                        Log.e(TAG, "创建房间成功");
 
                         afterCreate();
                     }
 
                     @Override
                     public void onError(String module, int errCode, String errMsg) {
-                        Log.i("RoomActivity", "module1=" + module + ",errCode=" + errCode + ",errMsg=" + errMsg);
+                        Log.i(TAG, "module1=" + module + ",errCode=" + errCode + ",errMsg=" + errMsg);
                         if (module.equals(ILiveConstants.Module_IMSDK) && 10021 == errCode) {
                             // 被占用，改加入
                             showChoiceDlg(roomId);
                         } else {
                             if (mAction != null && mAction.equals("dialogActivity")) {
-                                EventBus.getDefault().post(new NotifyServiceToSendMessageEntity(134, mIdentify,-1));
+                                EventBus.getDefault().post(new NotifyServiceToSendMessageEntity(134, mIdentify, -1));
                             } else {
-                                EventBus.getDefault().post(new HangUpTipEntity(134,-1));
+                                EventBus.getDefault().post(new HangUpTipEntity(134, -1));
                             }
                             finish();
                             //     toast( "create failed:" + module + "|" + errCode + "|" + errMsg);
@@ -824,7 +846,7 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
 
     @Override
     public void onException(int exceptionId, int errCode, String errMsg) {
-        Log.i("room", "exceptionId=" + exceptionId+"   errCode"+errCode+"   errMsg"+errMsg);
+        Log.i("room", "exceptionId=" + exceptionId + "   errCode" + errCode + "   errMsg" + errMsg);
     }
 
     @Override
@@ -886,20 +908,19 @@ public class RoomActivity extends BasicActivity implements ILVLiveConfig.ILVLive
         HashMap<String, String> params = new HashMap<>();
         params.put("SenderId", String.valueOf(SpUtils.getInt(Contants.Id, -1)));
         params.put("SenderName", String.valueOf(SpUtils.getString(Contants.Name)));
-        if (mAllRecordForDoctorEntity!=null){
-            params.put("ReceiverId", mAllRecordForDoctorEntity.getPatientId()+"");
+        if (mAllRecordForDoctorEntity != null) {
+            params.put("ReceiverId", mAllRecordForDoctorEntity.getPatientId() + "");
             params.put("ReceiverName", mAllRecordForDoctorEntity.getPatientName());
-            params.put("Action", "2");
-            params.put("RoomId", RoomId+"");
-            params.put("ToType", "1");
-            params.put("Message", "");
         }
-
+        params.put("Action", "2");
+        params.put("RoomId", RoomId + "");
+        params.put("ToType", "1");
+        params.put("Message", "");
 
         mMyOkhttp.post().url(HttpUrl.sendVideo).headers(headMap).params(params).tag(this).enqueue(new GsonResponseHandler<Entity>() {
             @Override
             public void onSuccess(int statusCode, Entity response) {
-                Log.d("chat","给IOS发送视频聊天成功");
+                Log.d("chat", "给IOS发送视频聊天成功");
             }
 
             @Override

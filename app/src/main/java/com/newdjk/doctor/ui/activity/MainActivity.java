@@ -639,12 +639,12 @@ public class MainActivity extends BasicActivity {
             if (vendor.toLowerCase(Locale.ENGLISH).contains("huawei")) {
 
             } else {
-                if (time > 15) {
-                    Log.d(TAG, "切换到了前台时间大于15s，刷新数据");
-                    SQLiteUtils.getInstance().deleteAllImData();
-                    serviceTime = null;
-                    GetAllRecordForDoctor(null);
-                }
+//                if (time > 15) {
+//                    Log.d(TAG, "切换到了前台时间大于15s，刷新数据");
+//                    SQLiteUtils.getInstance().deleteAllImData();
+//                    serviceTime = null;
+//                    GetAllRecordForDoctor(null);
+//                }
             }
 
         } else {

@@ -49,29 +49,38 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.release
             shrinkResources false
+
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "IP", "\"https://api.newstartcare.com\""
             buildConfigField "String", "CLIENTID", "\"2018090313463149\""
             buildConfigField "String", "APKNAME", "\"yunyisheng.apk\""
             buildConfigField "Boolean", "IS_DEBUG", "false"
             buildConfigField "Boolean", "IS_SWITCH_ENVIRONMENT", "false"
-
+            buildConfigField("int", "IM_APP_ID", "1400129246")//腾讯 im appId
+            buildConfigField("int", "IM_ACCOUNT_TYPE", "36176")//腾讯 im accountType
             buildConfigField "String", "SHOP_IP", "\"http://cflz.newstartcare.com/#/\""
-            lintOptions {
-                checkReleaseBuilds false
-                abortOnError false
-            }
+
         }
         debug {
             signingConfig signingConfigs.debug
             debuggable true
             jniDebuggable true
             renderscriptDebuggable true
+
             minifyEnabled false
             buildConfigField "String", "IP", "\"http://testapi.newstarthealth.cn\""
             buildConfigField "String", "CLIENTID", "\"2018090310541968\""
             buildConfigField "String", "APKNAME", "\"yunyisheng_test.apk\""
             buildConfigField "Boolean", "IS_DEBUG", "true"
+            buildConfigField("int", "IM_APP_ID", "1400197132")//腾讯 im appId
+            buildConfigField("int", "IM_ACCOUNT_TYPE", "36862")//腾讯 im accountType
             buildConfigField "Boolean", "IS_SWITCH_ENVIRONMENT", "true"
             buildConfigField "String", "SHOP_IP", "\"http://cf.newstarthealth.cn/#/\""
 
