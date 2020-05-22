@@ -404,6 +404,8 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
     private int fromHome = 0;
     private boolean cancallVideo = false;
     List<AppLicationEntity> listuse = new ArrayList<>();
+    private String servicetype;
+    private String mRecordId;
 
     public static ChatFragment newInstance() {
         Bundle args = new Bundle();
@@ -424,7 +426,11 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
         mLoginStatus = SpUtils.getInt(Contants.Status, 0);
         mStatus = getActivity().getIntent().getIntExtra("status", 8);
         mAction = getActivity().getIntent().getStringExtra("action");
+        servicetype = getActivity().getIntent().getStringExtra("serviceCode");
+        mRecordId = getActivity().getIntent().getStringExtra("RecordId");
         fromHome = getActivity().getIntent().getIntExtra("fromHome", 0);
+
+
         IsHasOpenPres();
         IsHasOpenTCMPres();
 
@@ -1606,6 +1612,13 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
                     data.setAVRoomID(callId);
                     data.setId(SpUtils.getString(Contants.identifier));
                     data.setTargets(SpUtils.getString(Contants.Name));
+                    if (!TextUtils.isEmpty(mRecordId)){
+                        data.setRecordId(Integer.parseInt(mRecordId));
+                    }
+                    if (!TextUtils.isEmpty(servicetype)){
+                        data.setServiceType(Integer.parseInt(servicetype));
+                    }
+
                     extData.setData(data);
                     customMessageEntity.setExtData(extData);
                     String json = new Gson().toJson(customMessageEntity);
@@ -4634,6 +4647,14 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
                     data.setAVRoomID(callId);
                     data.setId(SpUtils.getString(Contants.identifier));
                     data.setTargets(SpUtils.getString(Contants.Name));
+                    if (!TextUtils.isEmpty(mRecordId)){
+                        data.setRecordId(Integer.parseInt(mRecordId));
+                    }
+                    if (!TextUtils.isEmpty(servicetype)){
+                        data.setServiceType(Integer.parseInt(servicetype));
+                    }
+
+
                     extData.setData(data);
                     customMessageEntity.setExtData(extData);
                     String json = new Gson().toJson(customMessageEntity);
@@ -4783,6 +4804,13 @@ public class ChatFragment extends BasicFragment implements ILVIncomingListener, 
                         data.setAVRoomID(callId);
                         data.setId(SpUtils.getString(Contants.identifier));
                         data.setTargets(SpUtils.getString(Contants.Name));
+                        if (!TextUtils.isEmpty(mRecordId)){
+                            data.setRecordId(Integer.parseInt(mRecordId));
+                        }
+                        if (!TextUtils.isEmpty(servicetype)){
+                            data.setServiceType(Integer.parseInt(servicetype));
+                        }
+
                         extData.setData(data);
                         customMessageEntity.setExtData(extData);
                         String json = new Gson().toJson(customMessageEntity);

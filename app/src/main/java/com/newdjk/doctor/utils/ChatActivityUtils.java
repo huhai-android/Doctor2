@@ -78,7 +78,7 @@ public class ChatActivityUtils {
                         if (serviceCode == 1 || serviceCode == 5) {
                             QueryConsultDoctorAppMessageByPage(recordId, imRelationRecode.getAccountId(), imRelationRecode.getPatientName(),mActivity);
                         } else if (serviceCode == 2 || serviceCode == 6) {
-                            QueryvideoDoctorAppMessageByPage(recordId, imRelationRecode.getAccountId(), imRelationRecode.getPatientName(),mActivity);
+                            QueryvideoDoctorAppMessageByPage(serviceCode,recordId, imRelationRecode.getAccountId(), imRelationRecode.getPatientName(),mActivity);
                         } else if (serviceCode == 3) {
                             QueryRenewalDoctorAppMessageByPage(recordId, imRelationRecode.getAccountId(), imRelationRecode.getPatientName(),mActivity);
                         } else if (serviceCode == 0) {
@@ -232,7 +232,7 @@ public class ChatActivityUtils {
         });
     }
 
-    private void QueryvideoDoctorAppMessageByPage(final String id, final int AccountId, final String patientname,final android.content.Context mActivity) {
+    private void QueryvideoDoctorAppMessageByPage(final  int serviceCode,final String id, final int AccountId, final String patientname,final android.content.Context mActivity) {
         Map<String, String> requestMap = new HashMap<>();
         requestMap.put("Id", id);
         Map<String, String> headMap = new HashMap<>();
@@ -261,6 +261,8 @@ public class ChatActivityUtils {
                     videoIntentTalk.putExtra("prescriptionMessage", videoJson);
                     videoIntentTalk.putExtra("accountId", AccountId);
                     videoIntentTalk.putExtra("fromHome", 1);
+                    videoIntentTalk.putExtra("serviceCode", serviceCode+"");
+                    videoIntentTalk.putExtra("RecordId", id);
                     videoIntentTalk.putExtra("imgPath", inquiryRecordListDataEntity.getApplicantHeadImgUrl());
                     videoIntentTalk.putExtra(Contants.FRIEND_NAME, patientname);
                     videoIntentTalk.putExtra("AccountId", AccountId+"");

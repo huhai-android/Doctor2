@@ -50,9 +50,9 @@ android {
             signingConfig signingConfigs.release
             shrinkResources false
 
-            debuggable true
-            jniDebuggable true
-            renderscriptDebuggable true
+       //    debuggable true
+//            jniDebuggable true
+//            renderscriptDebuggable true
             lintOptions {
                 checkReleaseBuilds false
                 abortOnError false
